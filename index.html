@@ -4,10 +4,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MA2 Fixture Generator V3.1</title>
+<title>MA2 Fixture Generator V3.2</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -41,7 +43,7 @@ h1{
 }
 
 .card h2{
-    margin:0 0 16px;
+    margin:0 0 15px;
     font-size:18px;
 }
 
@@ -58,7 +60,9 @@ h1{
     margin-bottom:6px;
 }
 
-input,select{
+input,
+select,
+textarea{
     width:100%;
     background:#0b1016;
     border:1px solid #303b48;
@@ -68,8 +72,17 @@ input,select{
     outline:none;
 }
 
-input:focus,select:focus{
+input:focus,
+select:focus,
+textarea:focus{
     border-color:#388cff;
+}
+
+textarea{
+    min-height:220px;
+    resize:vertical;
+    font-family:Consolas,monospace;
+    line-height:1.5;
 }
 
 button{
@@ -97,6 +110,10 @@ button.danger{
     background:#8d3030;
 }
 
+button.warning{
+    background:#9a6b16;
+}
+
 button.small{
     padding:6px 10px;
     font-size:12px;
@@ -117,6 +134,12 @@ button.small{
     margin-bottom:14px;
 }
 
+.help{
+    color:#7e8b9b;
+    font-size:13px;
+    line-height:1.7;
+}
+
 .channel-card{
     background:#0d131a;
     border:1px solid #28333f;
@@ -127,15 +150,21 @@ button.small{
 
 .channel-header{
     display:grid;
-    grid-template-columns:55px 180px 140px 140px 140px 100px 100px 100px 1fr;
+    grid-template-columns:
+        50px
+        180px
+        130px
+        130px
+        130px
+        90px
+        90px
+        90px
+        100px
+        90px;
     gap:8px;
     align-items:center;
     padding:10px;
     background:#18212b;
-}
-
-.channel-header input{
-    padding:7px;
 }
 
 .channel-number{
@@ -157,12 +186,10 @@ button.small{
 .function-row{
     display:grid;
     grid-template-columns:
-        50px
+        45px
         180px
-        110px
-        110px
-        110px
-        110px
+        100px
+        100px
         1fr
         70px;
     gap:8px;
@@ -173,15 +200,23 @@ button.small{
     border-radius:7px;
 }
 
-.function-row span{
-    color:#7890a8;
+.function-number{
+    color:#71869c;
     font-size:12px;
+    text-align:center;
 }
 
-.empty{
-    color:#667383;
-    font-size:13px;
-    padding:8px 0;
+.preview-box{
+    background:#080c11;
+    border:1px solid #26313d;
+    border-radius:8px;
+    padding:14px;
+    margin-top:12px;
+    color:#b9c8d8;
+    font-family:Consolas,monospace;
+    white-space:pre-wrap;
+    line-height:1.6;
+    min-height:80px;
 }
 
 pre{
@@ -199,36 +234,34 @@ pre{
     color:#c8d5e3;
 }
 
-.help{
-    color:#7e8b9b;
-    font-size:13px;
-    line-height:1.7;
+.badge{
+    display:inline-block;
+    padding:3px 7px;
+    border-radius:5px;
+    background:#203348;
+    color:#7fc1ff;
+    font-size:11px;
+    margin-right:5px;
 }
 
-.drop-zone{
-    border:2px dashed #354253;
-    border-radius:10px;
-    padding:24px;
-    text-align:center;
-    margin-bottom:15px;
-    color:#8995a5;
-}
+@media(max-width:1200px){
 
-@media(max-width:1100px){
     .grid{
         grid-template-columns:repeat(2,1fr);
     }
 
     .channel-header{
-        grid-template-columns:50px 1fr 1fr;
+        grid-template-columns:
+            50px
+            1fr
+            1fr
+            1fr;
     }
 
-    .function-row{
-        grid-template-columns:40px 1fr 90px 90px;
-    }
 }
 
 @media(max-width:650px){
+
     .container{
         padding:12px;
     }
@@ -236,6 +269,17 @@ pre{
     .grid{
         grid-template-columns:1fr;
     }
+
+    .function-row{
+        grid-template-columns:
+            40px
+            1fr
+            80px
+            80px
+            1fr
+            60px;
+    }
+
 }
 </style>
 </head>
@@ -244,16 +288,16 @@ pre{
 
 <div class="container">
 
-<h1>MA2 Fixture Generator V3.1</h1>
+<h1>MA2 Fixture Generator V3.2</h1>
 
 <div class="subtitle">
-    grandMA2 3.1.2 Fixture XML Generator · Multi Function / ChannelSet
+grandMA2 3.1.2 · 智能通道表解析 · Multi Function / ChannelSet
 </div>
 
 
-<!-- =========================
-     基本信息
-========================= -->
+<!-- ======================================
+     ① 基本信息
+======================================= -->
 
 <div class="card">
 
@@ -286,68 +330,82 @@ pre{
 </div>
 
 
-<!-- =========================
-     CSV
-========================= -->
+<!-- ======================================
+     ② 智能解析
+======================================= -->
 
 <div class="card">
 
-<h2>② 导入通道表</h2>
+<h2>② 智能解析厂家通道表</h2>
 
-<div class="drop-zone">
+<textarea
+id="smartInput"
+placeholder="把厂家通道表文字粘贴到这里，例如：
 
-<input
-    type="file"
-    id="csvFile"
-    accept=".csv,.txt"
->
+1 Dimmer
+2 Pan
+3 Pan Fine
+4 Tilt
+5 Tilt Fine
+6 Red
+7 Green
+8 Blue
+9 White
+10 Strobe 0-10 Open
+10 Strobe 11-100 Strobe
+10 Strobe 101-255 Fast
+11 Gobo 0-20 Open
+11 Gobo 21-40 Gobo 1
+11 Gobo 41-60 Gobo 2
+12 Prism 0-10 Open
+12 Prism 11-255 Prism
+13 Focus
+14 Zoom
+"></textarea>
 
-<div style="margin-top:10px">
-支持 CSV / TXT
+<div class="toolbar" style="margin-top:12px">
+
+<button
+class="primary"
+onclick="smartParse()">
+⚡ 智能解析
+</button>
+
+<button
+onclick="loadSmartExample()">
+加载解析示例
+</button>
+
+<button
+class="danger"
+onclick="clearSmartInput()">
+清空
+</button>
+
+</div>
+
+<div
+id="parseStatus"
+class="status">
+等待输入通道表
+</div>
+
+<div
+id="parsePreview"
+class="preview-box">
+解析结果将在这里显示
 </div>
 
 </div>
 
-<div class="help">
 
-CSV 第一行可以使用：
-
-<br>
-
-Channel,Name,Attribute,Feature,Preset,Fine,Default,Highlight
-
-<br><br>
-
-Function 可以继续使用：
-
-<br>
-
-Channel,FunctionName,From,To
-
-<br><br>
-
-例如：
-
-<br>
-
-19,Open,0,10
-<br>
-19,Strobe,11,100
-<br>
-19,Fast,101,255
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     通道控制
-========================= -->
+<!-- ======================================
+     ③ 通道编辑器
+======================================= -->
 
 <div class="card">
 
-<h2>③ 通道配置</h2>
+<h2>③ 通道编辑器</h2>
 
 <div class="toolbar">
 
@@ -363,13 +421,17 @@ Channel,FunctionName,From,To
 ＋ 添加通道
 </button>
 
-<button class="danger" onclick="clearChannels()">
+<button
+class="danger"
+onclick="clearChannels()">
 清空
 </button>
 
 </div>
 
-<div class="status" id="channelStatus">
+<div
+id="channelStatus"
+class="status">
 当前通道数：0
 </div>
 
@@ -378,9 +440,9 @@ Channel,FunctionName,From,To
 </div>
 
 
-<!-- =========================
-     XML
-========================= -->
+<!-- ======================================
+     ④ XML
+======================================= -->
 
 <div class="card">
 
@@ -388,11 +450,15 @@ Channel,FunctionName,From,To
 
 <div class="toolbar">
 
-<button class="primary" onclick="generateXML()">
+<button
+class="primary"
+onclick="generateXML()">
 ⚙ 生成 XML
 </button>
 
-<button class="success" onclick="downloadXML()">
+<button
+class="success"
+onclick="downloadXML()">
 ↓ 下载 XML
 </button>
 
@@ -409,24 +475,25 @@ Channel,FunctionName,From,To
 
 <script>
 
-let channels = [];
-let generatedXML = "";
+let channels=[];
+let generatedXML="";
 
 
-/* =========================================
+/* ======================================
    初始化
-========================================= */
+======================================= */
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener(
+    "DOMContentLoaded",
+    ()=>{
+        load20CH();
+    }
+);
 
-    load20CH();
 
-});
-
-
-/* =========================================
+/* ======================================
    创建 Function
-========================================= */
+======================================= */
 
 function createFunction(
     name="Open",
@@ -434,20 +501,18 @@ function createFunction(
     to="255"
 ){
 
-    return {
-
+    return{
         name:name,
-        from:from,
-        to:to
-
+        from:String(from),
+        to:String(to)
     };
 
 }
 
 
-/* =========================================
+/* ======================================
    创建 Channel
-========================================= */
+======================================= */
 
 function createChannel(
     index,
@@ -458,7 +523,7 @@ function createChannel(
     fine=""
 ){
 
-    return {
+    return{
 
         index:index,
 
@@ -477,7 +542,11 @@ function createChannel(
         highlight:"0",
 
         functions:[
-            createFunction("Open","0","255")
+            createFunction(
+                "Open",
+                "0",
+                "255"
+            )
         ]
 
     };
@@ -485,9 +554,667 @@ function createChannel(
 }
 
 
-/* =========================================
+/* ======================================
+   自动判断 Attribute
+======================================= */
+
+function detectAttribute(name){
+
+    const n=
+        String(name)
+        .toLowerCase()
+        .trim();
+
+
+    if(
+        n.includes("pan")
+    ){
+        return "Pan";
+    }
+
+
+    if(
+        n.includes("tilt")
+    ){
+        return "Tilt";
+    }
+
+
+    if(
+        n.includes("dimmer")
+        ||
+        n==="intensity"
+        ||
+        n.includes("brightness")
+    ){
+        return "Dimmer";
+    }
+
+
+    if(
+        n.includes("red")
+        ||
+        n.includes("green")
+        ||
+        n.includes("blue")
+        ||
+        n.includes("white")
+        ||
+        n.includes("cyan")
+        ||
+        n.includes("magenta")
+        ||
+        n.includes("yellow")
+        ||
+        n.includes("cto")
+        ||
+        n.includes("color")
+    ){
+        return "Color";
+    }
+
+
+    if(
+        n.includes("gobo")
+    ){
+        return "Gobo";
+    }
+
+
+    if(
+        n.includes("prism")
+    ){
+        return "Prism";
+    }
+
+
+    if(
+        n.includes("focus")
+    ){
+        return "Focus";
+    }
+
+
+    if(
+        n.includes("zoom")
+    ){
+        return "Zoom";
+    }
+
+
+    if(
+        n.includes("strobe")
+        ||
+        n.includes("shutter")
+    ){
+        return "Shutter";
+    }
+
+
+    if(
+        n.includes("reset")
+        ||
+        n.includes("lamp")
+        ||
+        n.includes("control")
+        ||
+        n.includes("mode")
+    ){
+        return "Control";
+    }
+
+
+    if(
+        n.includes("speed")
+    ){
+        return "Control";
+    }
+
+
+    return "Control";
+
+}
+
+
+/* ======================================
+   自动 Feature
+======================================= */
+
+function detectFeature(name){
+
+    return detectAttribute(name);
+
+}
+
+
+/* ======================================
+   自动 Preset
+======================================= */
+
+function detectPreset(name){
+
+    const a=
+        detectAttribute(name);
+
+
+    if(
+        a==="Pan"
+        ||
+        a==="Tilt"
+    ){
+        return "Position";
+    }
+
+
+    return a;
+
+}
+
+
+/* ======================================
+   判断 Fine
+======================================= */
+
+function detectFine(name){
+
+    const n=
+        String(name)
+        .toLowerCase();
+
+
+    if(
+        n.includes("fine")
+        ||
+        n.includes("16bit")
+        ||
+        n.includes("16 bit")
+    ){
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* ======================================
+   HTML 转义
+======================================= */
+
+function escapeHTML(value){
+
+    return String(value??"")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* ======================================
+   XML 转义
+======================================= */
+
+function escapeXML(value){
+
+    return String(value??"")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&apos;");
+
+}
+
+
+/* ======================================
+   解析 DMX 范围
+======================================= */
+
+function parseDMXRange(text){
+
+    if(!text){
+
+        return null;
+
+    }
+
+
+    const t=
+        String(text)
+        .replace(/–/g,"-")
+        .replace(/—/g,"-");
+
+
+    let m=
+        t.match(
+            /(\d{1,3})\s*[-~]\s*(\d{1,3})/
+        );
+
+
+    if(m){
+
+        return{
+            from:m[1],
+            to:m[2]
+        };
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ======================================
+   解析一行
+======================================= */
+
+function parseLine(line){
+
+    let text=
+        line
+        .replace(/\t+/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+
+
+    if(!text){
+
+        return null;
+
+    }
+
+
+    /*
+       格式：
+
+       10 Strobe 11-100 Strobe
+    */
+
+    let match=
+        text.match(
+            /^(\d+)\s+(.+?)\s+(\d{1,3})\s*[-~]\s*(\d{1,3})\s*(.*)$/i
+        );
+
+
+    if(match){
+
+        return{
+
+            channel:Number(match[1]),
+
+            name:match[2].trim(),
+
+            from:match[3],
+
+            to:match[4],
+
+            functionName:
+                match[5].trim()
+                ||
+                match[2].trim()
+
+        };
+
+    }
+
+
+    /*
+       格式：
+
+       10 Strobe 11-100
+    */
+
+    match=
+        text.match(
+            /^(\d+)\s+(.+?)\s+(\d{1,3})\s*[-~]\s*(\d{1,3})$/i
+        );
+
+
+    if(match){
+
+        return{
+
+            channel:Number(match[1]),
+
+            name:match[2].trim(),
+
+            from:match[3],
+
+            to:match[4],
+
+            functionName:
+                match[2].trim()
+
+        };
+
+    }
+
+
+    /*
+       普通：
+
+       1 Dimmer
+    */
+
+    match=
+        text.match(
+            /^(\d+)\s+(.+)$/
+        );
+
+
+    if(match){
+
+        return{
+
+            channel:Number(match[1]),
+
+            name:match[2].trim(),
+
+            from:null,
+
+            to:null,
+
+            functionName:null
+
+        };
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ======================================
+   智能解析
+======================================= */
+
+function smartParse(){
+
+    const input=
+        document
+        .getElementById("smartInput")
+        .value;
+
+
+    if(!input.trim()){
+
+        alert("请先粘贴厂家通道表");
+
+        return;
+
+    }
+
+
+    const lines=
+        input
+        .split(/\r?\n/)
+        .map(x=>x.trim())
+        .filter(Boolean);
+
+
+    const map={};
+
+
+    lines.forEach(line=>{
+
+        const item=
+            parseLine(line);
+
+
+        if(!item){
+
+            return;
+
+        }
+
+
+        const ch=item.channel;
+
+
+        if(!map[ch]){
+
+            const baseName=
+                item.name;
+
+
+            const attribute=
+                detectAttribute(baseName);
+
+
+            map[ch]=
+                createChannel(
+                    ch,
+                    baseName,
+                    attribute,
+                    detectFeature(baseName),
+                    detectPreset(baseName),
+                    detectFine(baseName)
+                        ? "FINE"
+                        : ""
+                );
+
+
+            /*
+               如果第一行是 Function 行
+               删除默认 Function
+            */
+
+            if(
+                item.from!==null
+                &&
+                item.to!==null
+            ){
+
+                map[ch].functions=[];
+
+            }
+
+        }
+
+
+        /*
+           有 DMX 范围
+        */
+
+        if(
+            item.from!==null
+            &&
+            item.to!==null
+        ){
+
+            map[ch]
+                .functions
+                .push(
+                    createFunction(
+                        item.functionName
+                        ||
+                        item.name,
+                        item.from,
+                        item.to
+                    )
+                );
+
+        }
+
+    });
+
+
+    channels=
+        Object
+        .values(map)
+        .sort(
+            (a,b)=>
+                a.index-b.index
+        );
+
+
+    /*
+       补默认 Function
+    */
+
+    channels.forEach(ch=>{
+
+        if(
+            !ch.functions.length
+        ){
+
+            ch.functions=[
+                createFunction(
+                    "Open",
+                    "0",
+                    "255"
+                )
+            ];
+
+        }
+
+    });
+
+
+    renderChannels();
+
+
+    /*
+       生成解析预览
+    */
+
+    let preview="";
+
+
+    channels.forEach(ch=>{
+
+        preview+=
+            `CH ${ch.index}  ${ch.name}\n`;
+
+        preview+=
+            `  Attribute: ${ch.attribute}\n`;
+
+        preview+=
+            `  Feature:   ${ch.feature}\n`;
+
+        preview+=
+            `  Preset:    ${ch.preset}\n`;
+
+
+        if(ch.fine){
+
+            preview+=
+                `  Fine:      ${ch.fine}\n`;
+
+        }
+
+
+        ch.functions
+            .forEach((fn,i)=>{
+
+                preview+=
+                    `  ├─ ${fn.name}  `
+                    +
+                    `${fn.from}-${fn.to}\n`;
+
+            });
+
+
+        preview+="\n";
+
+    });
+
+
+    document
+        .getElementById("parsePreview")
+        .textContent=
+            preview;
+
+
+    document
+        .getElementById("parseStatus")
+        .innerText=
+            `解析完成：${channels.length} 个通道，`
+            +
+            `${channels.reduce(
+                (sum,ch)=>
+                    sum+ch.functions.length,
+                0
+            )} 个 Function`;
+
+}
+
+
+/* ======================================
+   加载智能解析示例
+======================================= */
+
+function loadSmartExample(){
+
+    document
+        .getElementById("smartInput")
+        .value=
+`1 Dimmer
+2 Pan
+3 Pan Fine
+4 Tilt
+5 Tilt Fine
+6 Red
+7 Green
+8 Blue
+9 White
+10 Strobe 0-10 Open
+10 Strobe 11-100 Strobe
+10 Strobe 101-255 Fast
+11 Gobo 0-20 Open
+11 Gobo 21-40 Gobo 1
+11 Gobo 41-60 Gobo 2
+12 Prism 0-10 Open
+12 Prism 11-255 Prism
+13 Focus
+14 Zoom
+15 Reset 0-20 Normal
+15 Reset 21-100 Reset`;
+
+
+    smartParse();
+
+}
+
+
+/* ======================================
+   清空输入
+======================================= */
+
+function clearSmartInput(){
+
+    document
+        .getElementById("smartInput")
+        .value="";
+
+
+    document
+        .getElementById("parsePreview")
+        .textContent=
+            "解析结果将在这里显示";
+
+
+    document
+        .getElementById("parseStatus")
+        .innerText=
+            "等待输入通道表";
+
+}
+
+
+/* ======================================
    8CH
-========================================= */
+======================================= */
 
 function load8CH(){
 
@@ -559,9 +1286,6 @@ function load8CH(){
 
     ];
 
-    /*
-       给 Strobe 做一个多 Function 示例
-    */
 
     channels[7].functions=[
 
@@ -573,80 +1297,227 @@ function load8CH(){
 
     ];
 
+
     renderChannels();
 
 }
 
 
-/* =========================================
+/* ======================================
    20CH
-========================================= */
+======================================= */
 
 function load20CH(){
 
     channels=[
 
-        createChannel(1,"Dimmer","Dimmer","Dimmer","Dimmer"),
+        createChannel(
+            1,
+            "Dimmer",
+            "Dimmer",
+            "Dimmer",
+            "Dimmer"
+        ),
 
-        createChannel(2,"Pan","Pan","Pan","Position"),
+        createChannel(
+            2,
+            "Pan",
+            "Pan",
+            "Pan",
+            "Position"
+        ),
 
-        createChannel(3,"Pan Fine","Pan","Pan","Position",2),
+        createChannel(
+            3,
+            "Pan Fine",
+            "Pan",
+            "Pan",
+            "Position",
+            2
+        ),
 
-        createChannel(4,"Tilt","Tilt","Tilt","Position"),
+        createChannel(
+            4,
+            "Tilt",
+            "Tilt",
+            "Tilt",
+            "Position"
+        ),
 
-        createChannel(5,"Tilt Fine","Tilt","Tilt","Position",4),
+        createChannel(
+            5,
+            "Tilt Fine",
+            "Tilt",
+            "Tilt",
+            "Position",
+            4
+        ),
 
-        createChannel(6,"Speed","Control","Speed","Control"),
+        createChannel(
+            6,
+            "Speed",
+            "Control",
+            "Speed",
+            "Control"
+        ),
 
-        createChannel(7,"Red","Color","Color","Color"),
+        createChannel(
+            7,
+            "Red",
+            "Color",
+            "Color",
+            "Color"
+        ),
 
-        createChannel(8,"Green","Color","Color","Color"),
+        createChannel(
+            8,
+            "Green",
+            "Color",
+            "Color",
+            "Color"
+        ),
 
-        createChannel(9,"Blue","Color","Color","Color"),
+        createChannel(
+            9,
+            "Blue",
+            "Color",
+            "Color",
+            "Color"
+        ),
 
-        createChannel(10,"White","Color","Color","Color"),
+        createChannel(
+            10,
+            "White",
+            "Color",
+            "Color",
+            "Color"
+        ),
 
-        createChannel(11,"Color Macro","Color","Color","Color"),
+        createChannel(
+            11,
+            "Color Macro",
+            "Color",
+            "Color",
+            "Color"
+        ),
 
-        createChannel(12,"CTO","Color","Color","Color"),
+        createChannel(
+            12,
+            "CTO",
+            "Color",
+            "Color",
+            "Color"
+        ),
 
-        createChannel(13,"Gobo","Gobo","Gobo","Gobo"),
+        createChannel(
+            13,
+            "Gobo",
+            "Gobo",
+            "Gobo",
+            "Gobo"
+        ),
 
-        createChannel(14,"Gobo Rotate","Gobo","Gobo","Gobo"),
+        createChannel(
+            14,
+            "Gobo Rotate",
+            "Gobo",
+            "Gobo",
+            "Gobo"
+        ),
 
-        createChannel(15,"Prism","Prism","Prism","Prism"),
+        createChannel(
+            15,
+            "Prism",
+            "Prism",
+            "Prism",
+            "Prism"
+        ),
 
-        createChannel(16,"Prism Rotate","Prism","Prism","Prism"),
+        createChannel(
+            16,
+            "Prism Rotate",
+            "Prism",
+            "Prism",
+            "Prism"
+        ),
 
-        createChannel(17,"Focus","Focus","Focus","Focus"),
+        createChannel(
+            17,
+            "Focus",
+            "Focus",
+            "Focus",
+            "Focus"
+        ),
 
-        createChannel(18,"Zoom","Zoom","Zoom","Focus"),
+        createChannel(
+            18,
+            "Zoom",
+            "Zoom",
+            "Zoom",
+            "Zoom"
+        ),
 
-        createChannel(19,"Strobe","Shutter","Shutter","Shutter"),
+        createChannel(
+            19,
+            "Strobe",
+            "Shutter",
+            "Shutter",
+            "Shutter"
+        ),
 
-        createChannel(20,"Reset","Control","Control","Control")
+        createChannel(
+            20,
+            "Reset",
+            "Control",
+            "Control",
+            "Control"
+        )
 
     ];
 
 
     channels[18].functions=[
 
-        createFunction("Open","0","10"),
+        createFunction(
+            "Open",
+            "0",
+            "10"
+        ),
 
-        createFunction("Strobe","11","100"),
+        createFunction(
+            "Strobe",
+            "11",
+            "100"
+        ),
 
-        createFunction("Fast","101","255")
+        createFunction(
+            "Fast",
+            "101",
+            "255"
+        )
 
     ];
 
 
     channels[19].functions=[
 
-        createFunction("Normal","0","20"),
+        createFunction(
+            "Normal",
+            "0",
+            "20"
+        ),
 
-        createFunction("Reset","21","100"),
+        createFunction(
+            "Reset",
+            "21",
+            "100"
+        ),
 
-        createFunction("Other","101","255")
+        createFunction(
+            "Other",
+            "101",
+            "255"
+        )
 
     ];
 
@@ -656,13 +1527,15 @@ function load20CH(){
 }
 
 
-/* =========================================
+/* ======================================
    添加通道
-========================================= */
+======================================= */
 
 function addChannel(){
 
-    const index=channels.length+1;
+    const index=
+        channels.length+1;
+
 
     channels.push(
         createChannel(
@@ -671,33 +1544,39 @@ function addChannel(){
         )
     );
 
+
     renderChannels();
 
 }
 
 
-/* =========================================
+/* ======================================
    删除通道
-========================================= */
+======================================= */
 
 function deleteChannel(index){
 
-    channels.splice(index,1);
+    channels.splice(
+        index,
+        1
+    );
 
-    channels.forEach((ch,i)=>{
 
-        ch.index=i+1;
+    channels.forEach(
+        (ch,i)=>{
+            ch.index=i+1;
+        }
+    );
 
-    });
 
     renderChannels();
 
 }
 
 
-/* =========================================
+/* ======================================
    清空
-========================================= */
+======================================= */
 
 function clearChannels(){
 
@@ -708,59 +1587,76 @@ function clearChannels(){
 }
 
 
-/* =========================================
+/* ======================================
    添加 Function
-========================================= */
+======================================= */
 
-function addFunction(channelIndex){
-
-    channels[channelIndex].functions.push(
-        createFunction(
-            "Function "
-            +(channels[channelIndex].functions.length+1),
-            "0",
-            "255"
-        )
-    );
-
-    renderChannels();
-
-}
-
-
-/* =========================================
-   删除 Function
-========================================= */
-
-function deleteFunction(channelIndex,functionIndex){
+function addFunction(
+    channelIndex
+){
 
     channels[channelIndex]
         .functions
-        .splice(functionIndex,1);
+        .push(
+            createFunction(
+                "Function "
+                +
+                (
+                    channels[channelIndex]
+                    .functions
+                    .length+1
+                ),
+                "0",
+                "255"
+            )
+        );
+
 
     renderChannels();
 
 }
 
 
-/* =========================================
+/* ======================================
+   删除 Function
+======================================= */
+
+function deleteFunction(
+    channelIndex,
+    functionIndex
+){
+
+    channels[channelIndex]
+        .functions
+        .splice(
+            functionIndex,
+            1
+        );
+
+
+    renderChannels();
+
+}
+
+
+/* ======================================
    更新 Channel
-========================================= */
+======================================= */
 
 function updateChannel(
-    channelIndex,
+    index,
     key,
     value
 ){
 
-    channels[channelIndex][key]=value;
+    channels[index][key]=value;
 
 }
 
 
-/* =========================================
+/* ======================================
    更新 Function
-========================================= */
+======================================= */
 
 function updateFunction(
     channelIndex,
@@ -770,218 +1666,62 @@ function updateFunction(
 ){
 
     channels[channelIndex]
-        .functions[functionIndex][key]=value;
+        .functions[functionIndex][key]=
+            value;
 
 }
 
 
-/* =========================================
-   HTML 安全
-========================================= */
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================
-   XML 安全
-========================================= */
-
-function escapeXML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&apos;");
-
-}
-
-
-/* =========================================
+/* ======================================
    渲染
-========================================= */
+======================================= */
 
 function renderChannels(){
 
     const container=
-        document.getElementById("channels");
+        document.getElementById(
+            "channels"
+        );
+
 
     container.innerHTML="";
 
 
-    channels.forEach((ch,cIndex)=>{
+    channels.forEach(
+        (ch,cIndex)=>{
 
-        const card=
-            document.createElement("div");
-
-        card.className="channel-card";
-
-
-        /* Channel Header */
-
-        const header=
-            document.createElement("div");
-
-        header.className="channel-header";
+            const card=
+                document.createElement(
+                    "div"
+                );
 
 
-        header.innerHTML=`
-
-            <div class="channel-number">
-                ${ch.index}
-            </div>
-
-            <input
-                value="${escapeHTML(ch.name)}"
-                placeholder="通道名称"
-                onchange="
-                    updateChannel(
-                        ${cIndex},
-                        'name',
-                        this.value
-                    )
-                "
-            >
-
-            <input
-                value="${escapeHTML(ch.attribute)}"
-                placeholder="Attribute"
-                onchange="
-                    updateChannel(
-                        ${cIndex},
-                        'attribute',
-                        this.value
-                    )
-                "
-            >
-
-            <input
-                value="${escapeHTML(ch.feature)}"
-                placeholder="Feature"
-                onchange="
-                    updateChannel(
-                        ${cIndex},
-                        'feature',
-                        this.value
-                    )
-                "
-            >
-
-            <input
-                value="${escapeHTML(ch.preset)}"
-                placeholder="Preset"
-                onchange="
-                    updateChannel(
-                        ${cIndex},
-                        'preset',
-                        this.value
-                    )
-                "
-            >
-
-            <input
-                type="number"
-                value="${escapeHTML(ch.fine)}"
-                placeholder="Fine"
-                onchange="
-                    updateChannel(
-                        ${cIndex},
-                        'fine',
-                        this.value
-                    )
-                "
-            >
-
-            <input
-                type="number"
-                value="${escapeHTML(ch.default)}"
-                placeholder="Default"
-                onchange="
-                    updateChannel(
-                        ${cIndex},
-                        'default',
-                        this.value
-                    )
-                "
-            >
-
-            <input
-                type="number"
-                value="${escapeHTML(ch.highlight)}"
-                placeholder="Highlight"
-                onchange="
-                    updateChannel(
-                        ${cIndex},
-                        'highlight',
-                        this.value
-                    )
-                "
-            >
-
-            <button
-                class="danger small"
-                onclick="deleteChannel(${cIndex})"
-            >
-                删除通道
-            </button>
-
-        `;
+            card.className=
+                "channel-card";
 
 
-        card.appendChild(header);
+            const header=
+                document.createElement(
+                    "div"
+                );
 
 
-        /* Function Area */
-
-        const functionArea=
-            document.createElement("div");
-
-        functionArea.className="functions";
+            header.className=
+                "channel-header";
 
 
-        const title=
-            document.createElement("div");
+            header.innerHTML=`
 
-        title.className="function-title";
-
-        title.innerText=
-            "Channel Functions / Channel Sets";
-
-
-        functionArea.appendChild(title);
-
-
-        ch.functions.forEach((fn,fIndex)=>{
-
-            const row=
-                document.createElement("div");
-
-            row.className="function-row";
-
-
-            row.innerHTML=`
-
-                <span>
-                    #${fIndex+1}
-                </span>
+                <div class="channel-number">
+                    ${ch.index}
+                </div>
 
                 <input
-                    value="${escapeHTML(fn.name)}"
-                    placeholder="Function Name"
+                    value="${escapeHTML(ch.name)}"
+                    placeholder="名称"
                     onchange="
-                        updateFunction(
+                        updateChannel(
                             ${cIndex},
-                            ${fIndex},
                             'name',
                             this.value
                         )
@@ -989,16 +1729,48 @@ function renderChannels(){
                 >
 
                 <input
-                    type="number"
-                    min="0"
-                    max="255"
-                    value="${escapeHTML(fn.from)}"
-                    placeholder="From"
+                    value="${escapeHTML(ch.attribute)}"
+                    placeholder="Attribute"
                     onchange="
-                        updateFunction(
+                        updateChannel(
                             ${cIndex},
-                            ${fIndex},
-                            'from',
+                            'attribute',
+                            this.value
+                        )
+                    "
+                >
+
+                <input
+                    value="${escapeHTML(ch.feature)}"
+                    placeholder="Feature"
+                    onchange="
+                        updateChannel(
+                            ${cIndex},
+                            'feature',
+                            this.value
+                        )
+                    "
+                >
+
+                <input
+                    value="${escapeHTML(ch.preset)}"
+                    placeholder="Preset"
+                    onchange="
+                        updateChannel(
+                            ${cIndex},
+                            'preset',
+                            this.value
+                        )
+                    "
+                >
+
+                <input
+                    value="${escapeHTML(ch.fine)}"
+                    placeholder="Fine"
+                    onchange="
+                        updateChannel(
+                            ${cIndex},
+                            'fine',
                             this.value
                         )
                     "
@@ -1006,38 +1778,46 @@ function renderChannels(){
 
                 <input
                     type="number"
-                    min="0"
-                    max="255"
-                    value="${escapeHTML(fn.to)}"
-                    placeholder="To"
+                    value="${escapeHTML(ch.default)}"
+                    placeholder="Default"
                     onchange="
-                        updateFunction(
+                        updateChannel(
                             ${cIndex},
-                            ${fIndex},
-                            'to',
+                            'default',
                             this.value
                         )
                     "
                 >
 
-                <div>
-                    <span>DMX：</span>
-                    ${fn.from} - ${fn.to}
-                </div>
+                <input
+                    type="number"
+                    value="${escapeHTML(ch.highlight)}"
+                    placeholder="Highlight"
+                    onchange="
+                        updateChannel(
+                            ${cIndex},
+                            'highlight',
+                            this.value
+                        )
+                    "
+                >
 
-                <div>
-                    <span>名称：</span>
-                    ${escapeHTML(fn.name)}
-                </div>
-
-                <div></div>
+                <button
+                    class="small"
+                    onclick="
+                        addFunction(
+                            ${cIndex}
+                        )
+                    "
+                >
+                    ＋ Function
+                </button>
 
                 <button
                     class="danger small"
                     onclick="
-                        deleteFunction(
-                            ${cIndex},
-                            ${fIndex}
+                        deleteChannel(
+                            ${cIndex}
                         )
                     "
                 >
@@ -1047,65 +1827,189 @@ function renderChannels(){
             `;
 
 
-            functionArea.appendChild(row);
-
-        });
-
-
-        const addButton=
-            document.createElement("button");
-
-        addButton.className="small";
-
-        addButton.innerText="＋ 添加 Function";
-
-        addButton.onclick=()=>{
-
-            addFunction(cIndex);
-
-        };
+            card.appendChild(
+                header
+            );
 
 
-        functionArea.appendChild(addButton);
-
-        card.appendChild(functionArea);
-
-        container.appendChild(card);
-
-    });
+            const functionArea=
+                document.createElement(
+                    "div"
+                );
 
 
-    document.getElementById("channelStatus")
+            functionArea.className=
+                "functions";
+
+
+            const title=
+                document.createElement(
+                    "div"
+                );
+
+
+            title.className=
+                "function-title";
+
+
+            title.innerHTML=
+                `<span class="badge">
+                    ${ch.functions.length}
+                </span>
+                Channel Functions / Channel Sets`;
+
+
+            functionArea.appendChild(
+                title
+            );
+
+
+            ch.functions.forEach(
+                (fn,fIndex)=>{
+
+                    const row=
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    row.className=
+                        "function-row";
+
+
+                    row.innerHTML=`
+
+                        <div class="function-number">
+                            #${fIndex+1}
+                        </div>
+
+                        <input
+                            value="${escapeHTML(fn.name)}"
+                            placeholder="Function Name"
+                            onchange="
+                                updateFunction(
+                                    ${cIndex},
+                                    ${fIndex},
+                                    'name',
+                                    this.value
+                                )
+                            "
+                        >
+
+                        <input
+                            type="number"
+                            min="0"
+                            max="255"
+                            value="${escapeHTML(fn.from)}"
+                            placeholder="From"
+                            onchange="
+                                updateFunction(
+                                    ${cIndex},
+                                    ${fIndex},
+                                    'from',
+                                    this.value
+                                )
+                            "
+                        >
+
+                        <input
+                            type="number"
+                            min="0"
+                            max="255"
+                            value="${escapeHTML(fn.to)}"
+                            placeholder="To"
+                            onchange="
+                                updateFunction(
+                                    ${cIndex},
+                                    ${fIndex},
+                                    'to',
+                                    this.value
+                                )
+                            "
+                        >
+
+                        <div>
+                            DMX：
+                            ${fn.from}
+                            -
+                            ${fn.to}
+                        </div>
+
+                        <button
+                            class="danger small"
+                            onclick="
+                                deleteFunction(
+                                    ${cIndex},
+                                    ${fIndex}
+                                )
+                            "
+                        >
+                            删除
+                        </button>
+
+                    `;
+
+
+                    functionArea.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+
+            card.appendChild(
+                functionArea
+            );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "channelStatus"
+        )
         .innerText=
             "当前通道数："
-            +channels.length
-            +"　|　Functions："
-            +channels.reduce(
-                (sum,ch)=>sum+ch.functions.length,
+            +
+            channels.length
+            +
+            "　|　Functions："
+            +
+            channels.reduce(
+                (sum,ch)=>
+                    sum+ch.functions.length,
                 0
             );
 
 }
 
 
-/* =========================================
-   生成 Channel XML
-========================================= */
+/* ======================================
+   XML Channel
+======================================= */
 
 function buildChannelXML(ch){
 
     let fine="";
 
+
     if(
-        ch.fine !== ""
+        ch.fine
         &&
-        ch.fine !== null
-        &&
-        ch.fine !== undefined
+        ch.fine!=="FINE"
     ){
 
         fine=
-            ` fine="${escapeXML(ch.fine)}"`;
+            ` fine="${escapeXML(
+                ch.fine
+            )}"`;
 
     }
 
@@ -1113,42 +2017,77 @@ function buildChannelXML(ch){
     let functionsXML="";
 
 
-    ch.functions.forEach((fn,index)=>{
+    ch.functions.forEach(
+        (fn,index)=>{
 
-        functionsXML+=`
+            functionsXML+=`
 
                 <ChannelFunction
                     index="${index}"
-                    name="${escapeXML(fn.name)}"
+                    name="${escapeXML(
+                        fn.name
+                    )}"
                     from="0"
                     to="100"
-                    min_dmx_24="${escapeXML(fn.from)}"
-                    max_dmx_24="${escapeXML(fn.to)}"
-                    attribute="${escapeXML(ch.attribute)}"
-                    feature="${escapeXML(ch.feature)}"
-                    preset="${escapeXML(ch.preset)}">
+                    min_dmx_24="${escapeXML(
+                        fn.from
+                    )}"
+                    max_dmx_24="${escapeXML(
+                        fn.to
+                    )}"
+                    attribute="${escapeXML(
+                        ch.attribute
+                    )}"
+                    feature="${escapeXML(
+                        ch.feature
+                    )}"
+                    preset="${escapeXML(
+                        ch.preset
+                    )}">
 
                     <ChannelSet
                         index="0"
-                        name="${escapeXML(fn.name)}"
-                        from_dmx="${escapeXML(fn.from)}"
-                        to_dmx="${escapeXML(fn.to)}"/>
+                        name="${escapeXML(
+                            fn.name
+                        )}"
+                        from_dmx="${escapeXML(
+                            fn.from
+                        )}"
+                        to_dmx="${escapeXML(
+                            fn.to
+                        )}"/>
 
                 </ChannelFunction>`;
 
-    });
+        }
+    );
 
 
-    return `
+    return`
 
             <ChannelType
-                index="${escapeXML(ch.index)}"
-                attribute="${escapeXML(ch.attribute)}"
-                feature="${escapeXML(ch.feature)}"
-                preset="${escapeXML(ch.preset)}"
-                coarse="${escapeXML(ch.index)}"${fine}
-                default="${escapeXML(ch.default)}"
-                highlight_value="${escapeXML(ch.highlight)}">
+                index="${escapeXML(
+                    ch.index
+                )}"
+                attribute="${escapeXML(
+                    ch.attribute
+                )}"
+                feature="${escapeXML(
+                    ch.feature
+                )}"
+                preset="${escapeXML(
+                    ch.preset
+                )}"
+                coarse="${escapeXML(
+                    ch.index
+                )}"
+                ${fine}
+                default="${escapeXML(
+                    ch.default
+                )}"
+                highlight_value="${escapeXML(
+                    ch.highlight
+                )}">
 
                 ${functionsXML}
 
@@ -1157,36 +2096,52 @@ function buildChannelXML(ch){
 }
 
 
-/* =========================================
-   生成 XML
-========================================= */
+/* ======================================
+   XML
+======================================= */
 
 function generateXML(){
 
     const fixtureName=
-        document.getElementById("fixtureName")
-        .value.trim()
+        document
+        .getElementById(
+            "fixtureName"
+        )
+        .value
+        .trim()
         ||
         "Fixture";
 
 
     const modeName=
-        document.getElementById("modeName")
-        .value.trim()
+        document
+        .getElementById(
+            "modeName"
+        )
+        .value
+        .trim()
         ||
         "1CH";
 
 
     const manufacturer=
-        document.getElementById("manufacturer")
-        .value.trim()
+        document
+        .getElementById(
+            "manufacturer"
+        )
+        .value
+        .trim()
         ||
         "Unknown";
 
 
     const shortName=
-        document.getElementById("shortName")
-        .value.trim()
+        document
+        .getElementById(
+            "shortName"
+        )
+        .value
+        .trim()
         ||
         fixtureName;
 
@@ -1194,29 +2149,32 @@ function generateXML(){
     let channelXML="";
 
 
-    channels.forEach(ch=>{
-
-        channelXML+=
-            buildChannelXML(ch);
-
-    });
+    channels.forEach(
+        ch=>{
+            channelXML+=
+                buildChannelXML(ch);
+        }
+    );
 
 
     let instances="";
 
 
-    channels.forEach((ch,i)=>{
+    channels.forEach(
+        (ch,i)=>{
 
-        instances+=`
+            instances+=`
 
             <Instance
                 index="${i}"
                 module_index="0"/>`;
 
-    });
+        }
+    );
 
 
-    generatedXML=`<?xml version="1.0" encoding="UTF-8"?>
+    generatedXML=
+`<?xml version="1.0" encoding="UTF-8"?>
 
 <MA
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1228,23 +2186,33 @@ function generateXML(){
 
     <Info
         datetime="${new Date().toISOString()}"
-        showfile="MA2 Fixture Generator V3.1"/>
+        showfile="MA2 Fixture Generator V3.2"/>
 
     <FixtureType
         index="21"
-        name="${escapeXML(fixtureName)}"
-        mode="${escapeXML(modeName)}">
+        name="${escapeXML(
+            fixtureName
+        )}"
+        mode="${escapeXML(
+            modeName
+        )}">
 
         <short_name>
-            ${escapeXML(shortName)}
+            ${escapeXML(
+                shortName
+            )}
         </short_name>
 
         <manufacturer>
-            ${escapeXML(manufacturer)}
+            ${escapeXML(
+                manufacturer
+            )}
         </manufacturer>
 
         <short_manufacturer>
-            ${escapeXML(manufacturer)}
+            ${escapeXML(
+                manufacturer
+            )}
         </short_manufacturer>
 
         <Modules index="0">
@@ -1292,28 +2260,39 @@ function generateXML(){
 </MA>`;
 
 
-    document.getElementById("xmlPreview")
+    document
+        .getElementById(
+            "xmlPreview"
+        )
         .textContent=
             generatedXML;
 
 
-    document.getElementById("channelStatus")
+    document
+        .getElementById(
+            "channelStatus"
+        )
         .innerText=
             "XML 已生成："
-            +channels.length
-            +" 个通道 / "
-            +channels.reduce(
-                (sum,ch)=>sum+ch.functions.length,
+            +
+            channels.length
+            +
+            " 个通道 / "
+            +
+            channels.reduce(
+                (sum,ch)=>
+                    sum+ch.functions.length,
                 0
             )
-            +" 个 Function";
+            +
+            " 个 Function";
 
 }
 
 
-/* =========================================
+/* ======================================
    下载
-========================================= */
+======================================= */
 
 function downloadXML(){
 
@@ -1325,15 +2304,23 @@ function downloadXML(){
 
 
     const fixtureName=
-        document.getElementById("fixtureName")
-        .value.trim()
+        document
+        .getElementById(
+            "fixtureName"
+        )
+        .value
+        .trim()
         ||
         "Fixture";
 
 
     const modeName=
-        document.getElementById("modeName")
-        .value.trim()
+        document
+        .getElementById(
+            "modeName"
+        )
+        .value
+        .trim()
         ||
         "Mode";
 
@@ -1353,11 +2340,16 @@ function downloadXML(){
 
 
     const url=
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
 
 
     const a=
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
+
 
     a.href=url;
 
@@ -1370,225 +2362,6 @@ function downloadXML(){
     document.body.removeChild(a);
 
     URL.revokeObjectURL(url);
-
-}
-
-
-/* =========================================
-   CSV 导入
-========================================= */
-
-document
-.getElementById("csvFile")
-.addEventListener(
-    "change",
-    function(e){
-
-        const file=e.target.files[0];
-
-        if(!file)return;
-
-
-        const reader=
-            new FileReader();
-
-
-        reader.onload=
-            function(event){
-
-                parseCSV(
-                    event.target.result
-                );
-
-            };
-
-
-        reader.readAsText(
-            file,
-            "UTF-8"
-        );
-
-    }
-);
-
-
-/* =========================================
-   CSV 解析
-========================================= */
-
-function parseCSV(text){
-
-    const lines=
-        text
-        .split(/\r?\n/)
-        .map(x=>x.trim())
-        .filter(Boolean);
-
-
-    if(lines.length<2){
-
-        alert("CSV 内容不足");
-
-        return;
-
-    }
-
-
-    const headers=
-        lines[0]
-        .split(",")
-        .map(x=>x.trim().toLowerCase());
-
-
-    const channelMap={};
-
-
-    lines.slice(1).forEach(line=>{
-
-        const values=
-            line
-            .split(",")
-            .map(x=>x.trim());
-
-
-        const get=(name,def="")=>{
-
-            const i=
-                headers.indexOf(
-                    name.toLowerCase()
-                );
-
-            return i>=0
-                ?values[i]??def
-                :def;
-
-        };
-
-
-        const channelNumber=
-            Number(
-                get("channel","0")
-            );
-
-
-        if(!channelNumber)return;
-
-
-        if(!channelMap[channelNumber]){
-
-            channelMap[channelNumber]=
-                createChannel(
-                    channelNumber,
-                    get(
-                        "name",
-                        "Channel "+channelNumber
-                    ),
-                    get("attribute",""),
-                    get("feature",""),
-                    get("preset",""),
-                    get("fine","")
-                );
-
-
-            channelMap[channelNumber]
-                .default=
-                    get("default","0");
-
-
-            channelMap[channelNumber]
-                .highlight=
-                    get("highlight","0");
-
-
-            /*
-              如果 CSV 本身有 Function 数据
-              就把默认 Function 删除
-            */
-
-            channelMap[channelNumber]
-                .functions=[];
-
-        }
-
-
-        const functionName=
-            get(
-                "functionname",
-                get(
-                    "function name",
-                    get(
-                        "function",
-                        get(
-                            "name",
-                            "Open"
-                        )
-                    )
-                )
-            );
-
-
-        const from=
-            get("from","0");
-
-
-        const to=
-            get("to","255");
-
-
-        channelMap[channelNumber]
-            .functions
-            .push(
-                createFunction(
-                    functionName,
-                    from,
-                    to
-                )
-            );
-
-    });
-
-
-    channels=
-        Object
-        .values(channelMap)
-        .sort(
-            (a,b)=>
-                Number(a.index)
-                -
-                Number(b.index)
-        );
-
-
-    /*
-       如果某个通道没有 Function
-       给它补一个
-    */
-
-    channels.forEach(ch=>{
-
-        if(!ch.functions.length){
-
-            ch.functions.push(
-                createFunction(
-                    "Open",
-                    "0",
-                    "255"
-                )
-            );
-
-        }
-
-    });
-
-
-    renderChannels();
-
-
-    alert(
-        "CSV 导入成功："
-        +channels.length
-        +" 个通道"
-    );
 
 }
 
