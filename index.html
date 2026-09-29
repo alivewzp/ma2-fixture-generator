@@ -1,24 +1,23 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MA2 Fixture Generator V3</title>
+<title>MA2 Fixture Generator V3.1</title>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
-    background:#0b0f14;
+    background:#090d12;
     color:#e8edf3;
     font-family:Arial,"Microsoft YaHei",sans-serif;
 }
 
 .container{
-    max-width:1500px;
+    max-width:1600px;
     margin:auto;
     padding:24px;
 }
@@ -29,13 +28,13 @@ h1{
 }
 
 .subtitle{
-    color:#8e9aaa;
-    margin-bottom:24px;
+    color:#8793a3;
+    margin-bottom:22px;
 }
 
 .card{
-    background:#121821;
-    border:1px solid #26303d;
+    background:#121820;
+    border:1px solid #27313d;
     border-radius:12px;
     padding:20px;
     margin-bottom:18px;
@@ -54,51 +53,40 @@ h1{
 
 .field label{
     display:block;
-    font-size:13px;
     color:#9ca8b7;
+    font-size:13px;
     margin-bottom:6px;
 }
 
 input,select{
     width:100%;
-    background:#0c1118;
-    border:1px solid #303b49;
-    border-radius:7px;
+    background:#0b1016;
+    border:1px solid #303b48;
     color:#fff;
-    padding:10px;
+    border-radius:7px;
+    padding:9px;
     outline:none;
 }
 
 input:focus,select:focus{
-    border-color:#4d9cff;
-}
-
-.toolbar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:15px;
+    border-color:#388cff;
 }
 
 button{
     border:0;
     border-radius:7px;
-    padding:10px 15px;
+    padding:9px 14px;
+    background:#293544;
+    color:#fff;
     cursor:pointer;
-    color:white;
-    background:#273342;
 }
 
 button:hover{
-    background:#344457;
+    background:#39495b;
 }
 
 button.primary{
     background:#1677ff;
-}
-
-button.primary:hover{
-    background:#3290ff;
 }
 
 button.success{
@@ -106,100 +94,141 @@ button.success{
 }
 
 button.danger{
-    background:#9e3030;
+    background:#8d3030;
+}
+
+button.small{
+    padding:6px 10px;
+    font-size:12px;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-bottom:14px;
 }
 
 .status{
     padding:10px 14px;
-    background:#0c1118;
+    background:#0b1016;
     border-radius:7px;
-    color:#65b7ff;
-    margin-bottom:15px;
+    color:#69b8ff;
+    margin-bottom:14px;
 }
 
-.table-wrap{
-    overflow:auto;
+.channel-card{
+    background:#0d131a;
+    border:1px solid #28333f;
+    border-radius:10px;
+    margin-bottom:12px;
+    overflow:hidden;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:1300px;
+.channel-header{
+    display:grid;
+    grid-template-columns:55px 180px 140px 140px 140px 100px 100px 100px 1fr;
+    gap:8px;
+    align-items:center;
+    padding:10px;
+    background:#18212b;
 }
 
-th{
-    background:#1a222d;
-    color:#aeb9c7;
-    padding:10px 8px;
-    text-align:left;
-    font-size:12px;
-    white-space:nowrap;
-}
-
-td{
-    border-top:1px solid #252f3a;
+.channel-header input{
     padding:7px;
 }
 
-td input,
-td select{
-    padding:7px;
-    min-width:80px;
-}
-
-.channel-index{
-    width:55px;
-    text-align:center;
-    color:#6eb8ff;
+.channel-number{
+    color:#63b4ff;
     font-weight:bold;
+    text-align:center;
 }
 
-.delete-btn{
-    background:#742b2b;
-    padding:7px 10px;
+.functions{
+    padding:12px;
+}
+
+.function-title{
+    color:#aeb9c7;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.function-row{
+    display:grid;
+    grid-template-columns:
+        50px
+        180px
+        110px
+        110px
+        110px
+        110px
+        1fr
+        70px;
+    gap:8px;
+    align-items:center;
+    padding:8px;
+    margin-bottom:7px;
+    background:#151d26;
+    border-radius:7px;
+}
+
+.function-row span{
+    color:#7890a8;
+    font-size:12px;
+}
+
+.empty{
+    color:#667383;
+    font-size:13px;
+    padding:8px 0;
 }
 
 pre{
     margin:0;
-    background:#080c11;
-    border:1px solid #222c37;
+    background:#070a0e;
+    border:1px solid #222c36;
     border-radius:8px;
     padding:16px;
-    max-height:600px;
+    max-height:650px;
     overflow:auto;
     white-space:pre-wrap;
     word-break:break-all;
-    color:#c7d4e2;
     font-size:12px;
     line-height:1.5;
-}
-
-.drop-zone{
-    border:2px dashed #354354;
-    border-radius:10px;
-    padding:25px;
-    text-align:center;
-    color:#8f9bab;
-    margin-bottom:15px;
-}
-
-.drop-zone:hover{
-    border-color:#438fff;
+    color:#c8d5e3;
 }
 
 .help{
-    color:#8793a3;
+    color:#7e8b9b;
     font-size:13px;
     line-height:1.7;
 }
 
-@media(max-width:900px){
+.drop-zone{
+    border:2px dashed #354253;
+    border-radius:10px;
+    padding:24px;
+    text-align:center;
+    margin-bottom:15px;
+    color:#8995a5;
+}
+
+@media(max-width:1100px){
     .grid{
         grid-template-columns:repeat(2,1fr);
     }
+
+    .channel-header{
+        grid-template-columns:50px 1fr 1fr;
+    }
+
+    .function-row{
+        grid-template-columns:40px 1fr 90px 90px;
+    }
 }
 
-@media(max-width:600px){
+@media(max-width:650px){
     .container{
         padding:12px;
     }
@@ -215,154 +244,165 @@ pre{
 
 <div class="container">
 
-    <h1>MA2 Fixture Generator V3</h1>
-    <div class="subtitle">
-        grandMA2 3.1.2 Fixture XML Generator
-    </div>
+<h1>MA2 Fixture Generator V3.1</h1>
 
-    <!-- 灯具基本信息 -->
-    <div class="card">
-
-        <h2>① 灯具基本信息</h2>
-
-        <div class="grid">
-
-            <div class="field">
-                <label>Fixture Name</label>
-                <input id="fixtureName" value="480">
-            </div>
-
-            <div class="field">
-                <label>Mode</label>
-                <input id="modeName" value="20CH">
-            </div>
-
-            <div class="field">
-                <label>Manufacturer</label>
-                <input id="manufacturer" value="leite">
-            </div>
-
-            <div class="field">
-                <label>Short Name</label>
-                <input id="shortName" value="480beam">
-            </div>
-
-        </div>
-
-    </div>
+<div class="subtitle">
+    grandMA2 3.1.2 Fixture XML Generator · Multi Function / ChannelSet
+</div>
 
 
-    <!-- CSV -->
-    <div class="card">
+<!-- =========================
+     基本信息
+========================= -->
 
-        <h2>② 导入通道表</h2>
+<div class="card">
 
-        <div class="drop-zone">
+<h2>① 灯具基本信息</h2>
 
-            <input
-                type="file"
-                id="csvFile"
-                accept=".csv,.txt"
-            >
+<div class="grid">
 
-            <div style="margin-top:10px;">
-                支持 CSV / TXT
-            </div>
+<div class="field">
+<label>Fixture Name</label>
+<input id="fixtureName" value="480">
+</div>
 
-        </div>
+<div class="field">
+<label>Mode</label>
+<input id="modeName" value="20CH">
+</div>
 
-        <div class="help">
-            推荐格式：<br>
-            Channel,Name,Attribute,Feature,Preset,Fine,Default,Highlight<br>
-            1,Dimmer,Dimmer,Dimmer,Dimmer,,0,255<br>
-            2,Pan,Pan,Pan,Position,,128,128<br>
-            3,Pan Fine,Pan,Pan,Position,2,128,128
-        </div>
+<div class="field">
+<label>Manufacturer</label>
+<input id="manufacturer" value="leite">
+</div>
 
-    </div>
+<div class="field">
+<label>Short Name</label>
+<input id="shortName" value="480beam">
+</div>
 
+</div>
 
-    <!-- 通道 -->
-    <div class="card">
-
-        <h2>③ 通道配置</h2>
-
-        <div class="toolbar">
-
-            <button onclick="load8CH()">
-                加载 8CH 示例
-            </button>
-
-            <button onclick="load20CH()">
-                加载 20CH 示例
-            </button>
-
-            <button onclick="addChannel()">
-                ＋ 添加通道
-            </button>
-
-            <button onclick="clearChannels()" class="danger">
-                清空
-            </button>
-
-        </div>
-
-        <div class="status" id="channelStatus">
-            当前通道数：0
-        </div>
-
-        <div class="table-wrap">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>#</th>
-                        <th>名称</th>
-                        <th>Attribute</th>
-                        <th>Feature</th>
-                        <th>Preset</th>
-                        <th>Fine</th>
-                        <th>Default</th>
-                        <th>Highlight</th>
-                        <th>Function Name</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>操作</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="channelBody"></tbody>
-
-            </table>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <!-- XML -->
-    <div class="card">
+<!-- =========================
+     CSV
+========================= -->
 
-        <h2>④ 生成 MA2 XML</h2>
+<div class="card">
 
-        <div class="toolbar">
+<h2>② 导入通道表</h2>
 
-            <button class="primary" onclick="generateXML()">
-                ⚙ 生成 XML
-            </button>
+<div class="drop-zone">
 
-            <button class="success" onclick="downloadXML()">
-                ↓ 下载 XML
-            </button>
+<input
+    type="file"
+    id="csvFile"
+    accept=".csv,.txt"
+>
 
-        </div>
+<div style="margin-top:10px">
+支持 CSV / TXT
+</div>
 
-        <pre id="xmlPreview">等待生成 XML...</pre>
+</div>
 
-    </div>
+<div class="help">
+
+CSV 第一行可以使用：
+
+<br>
+
+Channel,Name,Attribute,Feature,Preset,Fine,Default,Highlight
+
+<br><br>
+
+Function 可以继续使用：
+
+<br>
+
+Channel,FunctionName,From,To
+
+<br><br>
+
+例如：
+
+<br>
+
+19,Open,0,10
+<br>
+19,Strobe,11,100
+<br>
+19,Fast,101,255
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     通道控制
+========================= -->
+
+<div class="card">
+
+<h2>③ 通道配置</h2>
+
+<div class="toolbar">
+
+<button onclick="load8CH()">
+加载 8CH 示例
+</button>
+
+<button onclick="load20CH()">
+加载 20CH 示例
+</button>
+
+<button onclick="addChannel()">
+＋ 添加通道
+</button>
+
+<button class="danger" onclick="clearChannels()">
+清空
+</button>
+
+</div>
+
+<div class="status" id="channelStatus">
+当前通道数：0
+</div>
+
+<div id="channels"></div>
+
+</div>
+
+
+<!-- =========================
+     XML
+========================= -->
+
+<div class="card">
+
+<h2>④ 生成 MA2 XML</h2>
+
+<div class="toolbar">
+
+<button class="primary" onclick="generateXML()">
+⚙ 生成 XML
+</button>
+
+<button class="success" onclick="downloadXML()">
+↓ 下载 XML
+</button>
+
+</div>
+
+<pre id="xmlPreview">
+等待生成 XML...
+</pre>
+
+</div>
 
 </div>
 
@@ -370,108 +410,44 @@ pre{
 <script>
 
 let channels = [];
-
 let generatedXML = "";
 
 
-/* =========================
+/* =========================================
    初始化
-========================= */
+========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
     load20CH();
 
 });
 
 
-/* =========================
-   HTML 转 XML 安全字符
-========================= */
+/* =========================================
+   创建 Function
+========================================= */
 
-function escapeXML(value){
+function createFunction(
+    name="Open",
+    from="0",
+    to="255"
+){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&apos;");
+    return {
 
-}
+        name:name,
+        from:from,
+        to:to
 
-
-/* =========================
-   8CH 示例
-========================= */
-
-function load8CH(){
-
-    channels = [
-
-        createChannel(1,"Dimmer","Dimmer","Dimmer","Dimmer"),
-        createChannel(2,"Red","Color","Color","Color"),
-        createChannel(3,"Green","Color","Color","Color"),
-        createChannel(4,"Blue","Color","Color","Color"),
-        createChannel(5,"White","Color","Color","Color"),
-        createChannel(6,"Pan","Pan","Pan","Position"),
-        createChannel(7,"Tilt","Tilt","Tilt","Position"),
-        createChannel(8,"Strobe","Shutter","Shutter","Shutter")
-
-    ];
-
-    renderChannels();
+    };
 
 }
 
 
-/* =========================
-   20CH 示例
-========================= */
-
-function load20CH(){
-
-    channels = [
-
-        createChannel(1,"Dimmer","Dimmer","Dimmer","Dimmer"),
-
-        createChannel(2,"Pan","Pan","Pan","Position"),
-        createChannel(3,"Pan Fine","Pan","Pan","Position",2),
-
-        createChannel(4,"Tilt","Tilt","Tilt","Position"),
-        createChannel(5,"Tilt Fine","Tilt","Tilt","Position",4),
-
-        createChannel(6,"Speed","Control","Speed","Control"),
-
-        createChannel(7,"Red","Color","Color","Color"),
-        createChannel(8,"Green","Color","Color","Color"),
-        createChannel(9,"Blue","Color","Color","Color"),
-        createChannel(10,"White","Color","Color","Color"),
-
-        createChannel(11,"Color Macro","Color","Color","Color"),
-        createChannel(12,"CTO","Color","Color","Color"),
-
-        createChannel(13,"Gobo","Gobo","Gobo","Gobo"),
-        createChannel(14,"Gobo Rotate","Gobo","Gobo","Gobo"),
-        createChannel(15,"Prism","Prism","Prism","Prism"),
-        createChannel(16,"Prism Rotate","Prism","Prism","Prism"),
-
-        createChannel(17,"Focus","Focus","Focus","Focus"),
-        createChannel(18,"Zoom","Zoom","Zoom","Focus"),
-
-        createChannel(19,"Strobe","Shutter","Shutter","Shutter"),
-        createChannel(20,"Reset","Control","Control","Control")
-
-    ];
-
-    renderChannels();
-
-}
-
-
-/* =========================
-   创建通道
-========================= */
+/* =========================================
+   创建 Channel
+========================================= */
 
 function createChannel(
     index,
@@ -500,27 +476,198 @@ function createChannel(
 
         highlight:"0",
 
-        functionName:"Open",
-
-        from:"0",
-
-        to:"255"
+        functions:[
+            createFunction("Open","0","255")
+        ]
 
     };
 
 }
 
 
-/* =========================
+/* =========================================
+   8CH
+========================================= */
+
+function load8CH(){
+
+    channels=[
+
+        createChannel(
+            1,
+            "Dimmer",
+            "Dimmer",
+            "Dimmer",
+            "Dimmer"
+        ),
+
+        createChannel(
+            2,
+            "Red",
+            "Color",
+            "Color",
+            "Color"
+        ),
+
+        createChannel(
+            3,
+            "Green",
+            "Color",
+            "Color",
+            "Color"
+        ),
+
+        createChannel(
+            4,
+            "Blue",
+            "Color",
+            "Color",
+            "Color"
+        ),
+
+        createChannel(
+            5,
+            "White",
+            "Color",
+            "Color",
+            "Color"
+        ),
+
+        createChannel(
+            6,
+            "Pan",
+            "Pan",
+            "Pan",
+            "Position"
+        ),
+
+        createChannel(
+            7,
+            "Tilt",
+            "Tilt",
+            "Tilt",
+            "Position"
+        ),
+
+        createChannel(
+            8,
+            "Strobe",
+            "Shutter",
+            "Shutter",
+            "Shutter"
+        )
+
+    ];
+
+    /*
+       给 Strobe 做一个多 Function 示例
+    */
+
+    channels[7].functions=[
+
+        createFunction("Open","0","10"),
+
+        createFunction("Strobe","11","100"),
+
+        createFunction("Fast","101","255")
+
+    ];
+
+    renderChannels();
+
+}
+
+
+/* =========================================
+   20CH
+========================================= */
+
+function load20CH(){
+
+    channels=[
+
+        createChannel(1,"Dimmer","Dimmer","Dimmer","Dimmer"),
+
+        createChannel(2,"Pan","Pan","Pan","Position"),
+
+        createChannel(3,"Pan Fine","Pan","Pan","Position",2),
+
+        createChannel(4,"Tilt","Tilt","Tilt","Position"),
+
+        createChannel(5,"Tilt Fine","Tilt","Tilt","Position",4),
+
+        createChannel(6,"Speed","Control","Speed","Control"),
+
+        createChannel(7,"Red","Color","Color","Color"),
+
+        createChannel(8,"Green","Color","Color","Color"),
+
+        createChannel(9,"Blue","Color","Color","Color"),
+
+        createChannel(10,"White","Color","Color","Color"),
+
+        createChannel(11,"Color Macro","Color","Color","Color"),
+
+        createChannel(12,"CTO","Color","Color","Color"),
+
+        createChannel(13,"Gobo","Gobo","Gobo","Gobo"),
+
+        createChannel(14,"Gobo Rotate","Gobo","Gobo","Gobo"),
+
+        createChannel(15,"Prism","Prism","Prism","Prism"),
+
+        createChannel(16,"Prism Rotate","Prism","Prism","Prism"),
+
+        createChannel(17,"Focus","Focus","Focus","Focus"),
+
+        createChannel(18,"Zoom","Zoom","Zoom","Focus"),
+
+        createChannel(19,"Strobe","Shutter","Shutter","Shutter"),
+
+        createChannel(20,"Reset","Control","Control","Control")
+
+    ];
+
+
+    channels[18].functions=[
+
+        createFunction("Open","0","10"),
+
+        createFunction("Strobe","11","100"),
+
+        createFunction("Fast","101","255")
+
+    ];
+
+
+    channels[19].functions=[
+
+        createFunction("Normal","0","20"),
+
+        createFunction("Reset","21","100"),
+
+        createFunction("Other","101","255")
+
+    ];
+
+
+    renderChannels();
+
+}
+
+
+/* =========================================
    添加通道
-========================= */
+========================================= */
 
 function addChannel(){
 
+    const index=channels.length+1;
+
     channels.push(
         createChannel(
-            channels.length + 1,
-            "Channel " + (channels.length + 1)
+            index,
+            "Channel "+index
         )
     );
 
@@ -529,16 +676,18 @@ function addChannel(){
 }
 
 
-/* =========================
-   删除
-========================= */
+/* =========================================
+   删除通道
+========================================= */
 
 function deleteChannel(index){
 
     channels.splice(index,1);
 
     channels.forEach((ch,i)=>{
-        ch.index = i + 1;
+
+        ch.index=i+1;
+
     });
 
     renderChannels();
@@ -546,264 +695,520 @@ function deleteChannel(index){
 }
 
 
-/* =========================
+/* =========================================
    清空
-========================= */
+========================================= */
 
 function clearChannels(){
 
-    channels = [];
+    channels=[];
 
     renderChannels();
 
 }
 
 
-/* =========================
-   渲染表格
-========================= */
+/* =========================================
+   添加 Function
+========================================= */
+
+function addFunction(channelIndex){
+
+    channels[channelIndex].functions.push(
+        createFunction(
+            "Function "
+            +(channels[channelIndex].functions.length+1),
+            "0",
+            "255"
+        )
+    );
+
+    renderChannels();
+
+}
+
+
+/* =========================================
+   删除 Function
+========================================= */
+
+function deleteFunction(channelIndex,functionIndex){
+
+    channels[channelIndex]
+        .functions
+        .splice(functionIndex,1);
+
+    renderChannels();
+
+}
+
+
+/* =========================================
+   更新 Channel
+========================================= */
+
+function updateChannel(
+    channelIndex,
+    key,
+    value
+){
+
+    channels[channelIndex][key]=value;
+
+}
+
+
+/* =========================================
+   更新 Function
+========================================= */
+
+function updateFunction(
+    channelIndex,
+    functionIndex,
+    key,
+    value
+){
+
+    channels[channelIndex]
+        .functions[functionIndex][key]=value;
+
+}
+
+
+/* =========================================
+   HTML 安全
+========================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   XML 安全
+========================================= */
+
+function escapeXML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&apos;");
+
+}
+
+
+/* =========================================
+   渲染
+========================================= */
 
 function renderChannels(){
 
-    const body =
-        document.getElementById("channelBody");
+    const container=
+        document.getElementById("channels");
 
-    body.innerHTML = "";
+    container.innerHTML="";
 
-    channels.forEach((ch,index)=>{
 
-        const tr =
-            document.createElement("tr");
+    channels.forEach((ch,cIndex)=>{
 
-        tr.innerHTML = `
+        const card=
+            document.createElement("div");
 
-            <td class="channel-index">
+        card.className="channel-card";
+
+
+        /* Channel Header */
+
+        const header=
+            document.createElement("div");
+
+        header.className="channel-header";
+
+
+        header.innerHTML=`
+
+            <div class="channel-number">
                 ${ch.index}
-            </td>
+            </div>
 
-            <td>
-                <input
-                    value="${escapeAttr(ch.name)}"
-                    onchange="updateChannel(${index},'name',this.value)"
-                >
-            </td>
+            <input
+                value="${escapeHTML(ch.name)}"
+                placeholder="通道名称"
+                onchange="
+                    updateChannel(
+                        ${cIndex},
+                        'name',
+                        this.value
+                    )
+                "
+            >
 
-            <td>
-                <input
-                    value="${escapeAttr(ch.attribute)}"
-                    onchange="updateChannel(${index},'attribute',this.value)"
-                >
-            </td>
+            <input
+                value="${escapeHTML(ch.attribute)}"
+                placeholder="Attribute"
+                onchange="
+                    updateChannel(
+                        ${cIndex},
+                        'attribute',
+                        this.value
+                    )
+                "
+            >
 
-            <td>
-                <input
-                    value="${escapeAttr(ch.feature)}"
-                    onchange="updateChannel(${index},'feature',this.value)"
-                >
-            </td>
+            <input
+                value="${escapeHTML(ch.feature)}"
+                placeholder="Feature"
+                onchange="
+                    updateChannel(
+                        ${cIndex},
+                        'feature',
+                        this.value
+                    )
+                "
+            >
 
-            <td>
-                <input
-                    value="${escapeAttr(ch.preset)}"
-                    onchange="updateChannel(${index},'preset',this.value)"
-                >
-            </td>
+            <input
+                value="${escapeHTML(ch.preset)}"
+                placeholder="Preset"
+                onchange="
+                    updateChannel(
+                        ${cIndex},
+                        'preset',
+                        this.value
+                    )
+                "
+            >
 
-            <td>
-                <input
-                    type="number"
-                    value="${escapeAttr(ch.fine)}"
-                    onchange="updateChannel(${index},'fine',this.value)"
-                >
-            </td>
+            <input
+                type="number"
+                value="${escapeHTML(ch.fine)}"
+                placeholder="Fine"
+                onchange="
+                    updateChannel(
+                        ${cIndex},
+                        'fine',
+                        this.value
+                    )
+                "
+            >
 
-            <td>
-                <input
-                    type="number"
-                    min="0"
-                    max="255"
-                    value="${escapeAttr(ch.default)}"
-                    onchange="updateChannel(${index},'default',this.value)"
-                >
-            </td>
+            <input
+                type="number"
+                value="${escapeHTML(ch.default)}"
+                placeholder="Default"
+                onchange="
+                    updateChannel(
+                        ${cIndex},
+                        'default',
+                        this.value
+                    )
+                "
+            >
 
-            <td>
-                <input
-                    type="number"
-                    min="0"
-                    max="255"
-                    value="${escapeAttr(ch.highlight)}"
-                    onchange="updateChannel(${index},'highlight',this.value)"
-                >
-            </td>
+            <input
+                type="number"
+                value="${escapeHTML(ch.highlight)}"
+                placeholder="Highlight"
+                onchange="
+                    updateChannel(
+                        ${cIndex},
+                        'highlight',
+                        this.value
+                    )
+                "
+            >
 
-            <td>
-                <input
-                    value="${escapeAttr(ch.functionName)}"
-                    onchange="updateChannel(${index},'functionName',this.value)"
-                >
-            </td>
-
-            <td>
-                <input
-                    type="number"
-                    min="0"
-                    max="255"
-                    value="${escapeAttr(ch.from)}"
-                    onchange="updateChannel(${index},'from',this.value)"
-                >
-            </td>
-
-            <td>
-                <input
-                    type="number"
-                    min="0"
-                    max="255"
-                    value="${escapeAttr(ch.to)}"
-                    onchange="updateChannel(${index},'to',this.value)"
-                >
-            </td>
-
-            <td>
-                <button
-                    class="delete-btn"
-                    onclick="deleteChannel(${index})"
-                >
-                    删除
-                </button>
-            </td>
+            <button
+                class="danger small"
+                onclick="deleteChannel(${cIndex})"
+            >
+                删除通道
+            </button>
 
         `;
 
-        body.appendChild(tr);
+
+        card.appendChild(header);
+
+
+        /* Function Area */
+
+        const functionArea=
+            document.createElement("div");
+
+        functionArea.className="functions";
+
+
+        const title=
+            document.createElement("div");
+
+        title.className="function-title";
+
+        title.innerText=
+            "Channel Functions / Channel Sets";
+
+
+        functionArea.appendChild(title);
+
+
+        ch.functions.forEach((fn,fIndex)=>{
+
+            const row=
+                document.createElement("div");
+
+            row.className="function-row";
+
+
+            row.innerHTML=`
+
+                <span>
+                    #${fIndex+1}
+                </span>
+
+                <input
+                    value="${escapeHTML(fn.name)}"
+                    placeholder="Function Name"
+                    onchange="
+                        updateFunction(
+                            ${cIndex},
+                            ${fIndex},
+                            'name',
+                            this.value
+                        )
+                    "
+                >
+
+                <input
+                    type="number"
+                    min="0"
+                    max="255"
+                    value="${escapeHTML(fn.from)}"
+                    placeholder="From"
+                    onchange="
+                        updateFunction(
+                            ${cIndex},
+                            ${fIndex},
+                            'from',
+                            this.value
+                        )
+                    "
+                >
+
+                <input
+                    type="number"
+                    min="0"
+                    max="255"
+                    value="${escapeHTML(fn.to)}"
+                    placeholder="To"
+                    onchange="
+                        updateFunction(
+                            ${cIndex},
+                            ${fIndex},
+                            'to',
+                            this.value
+                        )
+                    "
+                >
+
+                <div>
+                    <span>DMX：</span>
+                    ${fn.from} - ${fn.to}
+                </div>
+
+                <div>
+                    <span>名称：</span>
+                    ${escapeHTML(fn.name)}
+                </div>
+
+                <div></div>
+
+                <button
+                    class="danger small"
+                    onclick="
+                        deleteFunction(
+                            ${cIndex},
+                            ${fIndex}
+                        )
+                    "
+                >
+                    删除
+                </button>
+
+            `;
+
+
+            functionArea.appendChild(row);
+
+        });
+
+
+        const addButton=
+            document.createElement("button");
+
+        addButton.className="small";
+
+        addButton.innerText="＋ 添加 Function";
+
+        addButton.onclick=()=>{
+
+            addFunction(cIndex);
+
+        };
+
+
+        functionArea.appendChild(addButton);
+
+        card.appendChild(functionArea);
+
+        container.appendChild(card);
 
     });
 
+
     document.getElementById("channelStatus")
-        .innerText =
-        "当前通道数：" + channels.length;
+        .innerText=
+            "当前通道数："
+            +channels.length
+            +"　|　Functions："
+            +channels.reduce(
+                (sum,ch)=>sum+ch.functions.length,
+                0
+            );
 
 }
 
 
-/* =========================
-   更新通道
-========================= */
-
-function updateChannel(index,key,value){
-
-    channels[index][key] = value;
-
-}
-
-
-/* =========================
-   XML 属性安全
-========================= */
-
-function escapeAttr(value){
-
-    return escapeXML(value);
-
-}
-
-
-/* =========================
-   生成 ChannelType
-========================= */
+/* =========================================
+   生成 Channel XML
+========================================= */
 
 function buildChannelXML(ch){
 
-    let fineAttr = "";
+    let fine="";
 
-    if(ch.fine !== "" && ch.fine !== null){
+    if(
+        ch.fine !== ""
+        &&
+        ch.fine !== null
+        &&
+        ch.fine !== undefined
+    ){
 
-        fineAttr =
+        fine=
             ` fine="${escapeXML(ch.fine)}"`;
 
     }
 
-    let highlightAttr = "";
 
-    if(ch.highlight !== ""){
-
-        highlightAttr =
-            ` highlight_value="${escapeXML(ch.highlight)}"`;
-
-    }
-
-    return `
-
-        <ChannelType
-            index="${escapeXML(ch.index)}"
-            attribute="${escapeXML(ch.attribute)}"
-            feature="${escapeXML(ch.feature)}"
-            preset="${escapeXML(ch.preset)}"
-            coarse="${escapeXML(ch.index)}"${fineAttr}
-            default="${escapeXML(ch.default)}"${highlightAttr}>
-
-            <ChannelFunction
-                index="0"
-                name="${escapeXML(ch.functionName)}"
-                from="0"
-                to="100"
-                min_dmx_24="${escapeXML(ch.from)}"
-                max_dmx_24="${escapeXML(ch.to)}"
-                attribute="${escapeXML(ch.attribute)}"
-                feature="${escapeXML(ch.feature)}"
-                preset="${escapeXML(ch.preset)}">
-
-                <ChannelSet
-                    index="0"
-                    name="${escapeXML(ch.functionName)}"
-                    from_dmx="${escapeXML(ch.from)}"
-                    to_dmx="${escapeXML(ch.to)}"
-                />
-
-            </ChannelFunction>
-
-        </ChannelType>`;
-
-}
+    let functionsXML="";
 
 
-/* =========================
-   生成完整 XML
-========================= */
+    ch.functions.forEach((fn,index)=>{
 
-function generateXML(){
+        functionsXML+=`
 
-    const fixtureName =
-        document.getElementById("fixtureName").value.trim()
-        || "Fixture";
+                <ChannelFunction
+                    index="${index}"
+                    name="${escapeXML(fn.name)}"
+                    from="0"
+                    to="100"
+                    min_dmx_24="${escapeXML(fn.from)}"
+                    max_dmx_24="${escapeXML(fn.to)}"
+                    attribute="${escapeXML(ch.attribute)}"
+                    feature="${escapeXML(ch.feature)}"
+                    preset="${escapeXML(ch.preset)}">
 
-    const modeName =
-        document.getElementById("modeName").value.trim()
-        || "1CH";
+                    <ChannelSet
+                        index="0"
+                        name="${escapeXML(fn.name)}"
+                        from_dmx="${escapeXML(fn.from)}"
+                        to_dmx="${escapeXML(fn.to)}"/>
 
-    const manufacturer =
-        document.getElementById("manufacturer").value.trim()
-        || "Unknown";
-
-    const shortName =
-        document.getElementById("shortName").value.trim()
-        || fixtureName;
-
-
-    let channelXML = "";
-
-    channels.forEach(ch=>{
-
-        channelXML += buildChannelXML(ch);
+                </ChannelFunction>`;
 
     });
 
 
-    let instances = "";
+    return `
+
+            <ChannelType
+                index="${escapeXML(ch.index)}"
+                attribute="${escapeXML(ch.attribute)}"
+                feature="${escapeXML(ch.feature)}"
+                preset="${escapeXML(ch.preset)}"
+                coarse="${escapeXML(ch.index)}"${fine}
+                default="${escapeXML(ch.default)}"
+                highlight_value="${escapeXML(ch.highlight)}">
+
+                ${functionsXML}
+
+            </ChannelType>`;
+
+}
+
+
+/* =========================================
+   生成 XML
+========================================= */
+
+function generateXML(){
+
+    const fixtureName=
+        document.getElementById("fixtureName")
+        .value.trim()
+        ||
+        "Fixture";
+
+
+    const modeName=
+        document.getElementById("modeName")
+        .value.trim()
+        ||
+        "1CH";
+
+
+    const manufacturer=
+        document.getElementById("manufacturer")
+        .value.trim()
+        ||
+        "Unknown";
+
+
+    const shortName=
+        document.getElementById("shortName")
+        .value.trim()
+        ||
+        fixtureName;
+
+
+    let channelXML="";
+
+
+    channels.forEach(ch=>{
+
+        channelXML+=
+            buildChannelXML(ch);
+
+    });
+
+
+    let instances="";
+
 
     channels.forEach((ch,i)=>{
 
-        instances += `
+        instances+=`
+
             <Instance
                 index="${i}"
                 module_index="0"/>`;
@@ -811,7 +1216,7 @@ function generateXML(){
     });
 
 
-    generatedXML = `<?xml version="1.0" encoding="UTF-8"?>
+    generatedXML=`<?xml version="1.0" encoding="UTF-8"?>
 
 <MA
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -823,7 +1228,7 @@ function generateXML(){
 
     <Info
         datetime="${new Date().toISOString()}"
-        showfile="MA2 Fixture Generator V3"/>
+        showfile="MA2 Fixture Generator V3.1"/>
 
     <FixtureType
         index="21"
@@ -888,20 +1293,27 @@ function generateXML(){
 
 
     document.getElementById("xmlPreview")
-        .textContent = generatedXML;
+        .textContent=
+            generatedXML;
+
 
     document.getElementById("channelStatus")
-        .innerText =
-        "XML 已生成："
-        + channels.length
-        + " 个通道";
+        .innerText=
+            "XML 已生成："
+            +channels.length
+            +" 个通道 / "
+            +channels.reduce(
+                (sum,ch)=>sum+ch.functions.length,
+                0
+            )
+            +" 个 Function";
 
 }
 
 
-/* =========================
-   下载 XML
-========================= */
+/* =========================================
+   下载
+========================================= */
 
 function downloadXML(){
 
@@ -912,40 +1324,44 @@ function downloadXML(){
     }
 
 
-    const fixtureName =
+    const fixtureName=
         document.getElementById("fixtureName")
-            .value.trim()
-            || "Fixture";
+        .value.trim()
+        ||
+        "Fixture";
 
-    const modeName =
+
+    const modeName=
         document.getElementById("modeName")
-            .value.trim()
-            || "Mode";
+        .value.trim()
+        ||
+        "Mode";
 
 
-    const fileName =
+    const fileName=
         `${fixtureName}_${modeName}_${channels.length}CH.xml`;
 
 
-    const blob =
+    const blob=
         new Blob(
             [generatedXML],
             {
-                type:"application/xml;charset=utf-8"
+                type:
+                    "application/xml;charset=utf-8"
             }
         );
 
 
-    const url =
+    const url=
         URL.createObjectURL(blob);
 
 
-    const a =
+    const a=
         document.createElement("a");
 
-    a.href = url;
+    a.href=url;
 
-    a.download = fileName;
+    a.download=fileName;
 
     document.body.appendChild(a);
 
@@ -958,138 +1374,220 @@ function downloadXML(){
 }
 
 
-/* =========================
+/* =========================================
    CSV 导入
-========================= */
+========================================= */
 
 document
 .getElementById("csvFile")
-.addEventListener("change",function(e){
+.addEventListener(
+    "change",
+    function(e){
 
-    const file = e.target.files[0];
+        const file=e.target.files[0];
 
-    if(!file) return;
-
-
-    const reader = new FileReader();
-
-
-    reader.onload = function(event){
-
-        parseCSV(event.target.result);
-
-    };
+        if(!file)return;
 
 
-    reader.readAsText(file,"UTF-8");
+        const reader=
+            new FileReader();
 
-});
+
+        reader.onload=
+            function(event){
+
+                parseCSV(
+                    event.target.result
+                );
+
+            };
 
 
-/* =========================
+        reader.readAsText(
+            file,
+            "UTF-8"
+        );
+
+    }
+);
+
+
+/* =========================================
    CSV 解析
-========================= */
+========================================= */
 
 function parseCSV(text){
 
-    const lines =
+    const lines=
         text
         .split(/\r?\n/)
         .map(x=>x.trim())
-        .filter(x=>x);
+        .filter(Boolean);
 
 
-    if(lines.length < 2){
+    if(lines.length<2){
 
-        alert("CSV 内容太少");
+        alert("CSV 内容不足");
 
         return;
 
     }
 
 
-    const headers =
+    const headers=
         lines[0]
         .split(",")
         .map(x=>x.trim().toLowerCase());
 
 
-    const result = [];
+    const channelMap={};
 
 
-    for(let i=1;i<lines.length;i++){
+    lines.slice(1).forEach(line=>{
 
-        const values =
-            lines[i]
+        const values=
+            line
             .split(",")
             .map(x=>x.trim());
 
 
-        if(values.length === 0) continue;
+        const get=(name,def="")=>{
 
+            const i=
+                headers.indexOf(
+                    name.toLowerCase()
+                );
 
-        const get = (name, fallback="")=>{
-
-            const index =
-                headers.indexOf(name.toLowerCase());
-
-            return index >= 0
-                ? values[index] ?? fallback
-                : fallback;
+            return i>=0
+                ?values[i]??def
+                :def;
 
         };
 
 
-        result.push({
-
-            index:
-                Number(get("channel",i))
-                || i,
-
-            name:
-                get("name","Channel "+i),
-
-            attribute:
-                get("attribute",""),
-
-            feature:
-                get("feature",""),
-
-            preset:
-                get("preset",""),
-
-            fine:
-                get("fine",""),
-
-            default:
-                get("default","0"),
-
-            highlight:
-                get("highlight","0"),
-
-            functionName:
-                get("function name","Open"),
-
-            from:
-                get("from","0"),
-
-            to:
-                get("to","255")
-
-        });
-
-    }
+        const channelNumber=
+            Number(
+                get("channel","0")
+            );
 
 
-    channels = result;
+        if(!channelNumber)return;
+
+
+        if(!channelMap[channelNumber]){
+
+            channelMap[channelNumber]=
+                createChannel(
+                    channelNumber,
+                    get(
+                        "name",
+                        "Channel "+channelNumber
+                    ),
+                    get("attribute",""),
+                    get("feature",""),
+                    get("preset",""),
+                    get("fine","")
+                );
+
+
+            channelMap[channelNumber]
+                .default=
+                    get("default","0");
+
+
+            channelMap[channelNumber]
+                .highlight=
+                    get("highlight","0");
+
+
+            /*
+              如果 CSV 本身有 Function 数据
+              就把默认 Function 删除
+            */
+
+            channelMap[channelNumber]
+                .functions=[];
+
+        }
+
+
+        const functionName=
+            get(
+                "functionname",
+                get(
+                    "function name",
+                    get(
+                        "function",
+                        get(
+                            "name",
+                            "Open"
+                        )
+                    )
+                )
+            );
+
+
+        const from=
+            get("from","0");
+
+
+        const to=
+            get("to","255");
+
+
+        channelMap[channelNumber]
+            .functions
+            .push(
+                createFunction(
+                    functionName,
+                    from,
+                    to
+                )
+            );
+
+    });
+
+
+    channels=
+        Object
+        .values(channelMap)
+        .sort(
+            (a,b)=>
+                Number(a.index)
+                -
+                Number(b.index)
+        );
+
+
+    /*
+       如果某个通道没有 Function
+       给它补一个
+    */
+
+    channels.forEach(ch=>{
+
+        if(!ch.functions.length){
+
+            ch.functions.push(
+                createFunction(
+                    "Open",
+                    "0",
+                    "255"
+                )
+            );
+
+        }
+
+    });
+
 
     renderChannels();
 
 
     alert(
-        "CSV 导入成功，共 "
-        + channels.length
-        + " 个通道"
+        "CSV 导入成功："
+        +channels.length
+        +" 个通道"
     );
 
 }
@@ -1098,3 +1596,4 @@ function parseCSV(text){
 
 </body>
 </html>
+```
