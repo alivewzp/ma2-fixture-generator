@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MA2 Fixture Generator V2</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MA2 Fixture Generator V3</title>
 
 <style>
 *{
@@ -13,26 +12,9 @@
 
 body{
     margin:0;
+    background:#0b0f14;
+    color:#e8edf3;
     font-family:Arial,"Microsoft YaHei",sans-serif;
-    background:#0d1117;
-    color:#e6edf3;
-}
-
-header{
-    padding:22px 28px;
-    background:#161b22;
-    border-bottom:1px solid #30363d;
-}
-
-header h1{
-    margin:0 0 6px;
-    font-size:26px;
-}
-
-header p{
-    margin:0;
-    color:#8b949e;
-    font-size:14px;
 }
 
 .container{
@@ -41,16 +23,26 @@ header p{
     padding:24px;
 }
 
+h1{
+    margin:0 0 6px;
+    font-size:28px;
+}
+
+.subtitle{
+    color:#8e9aaa;
+    margin-bottom:24px;
+}
+
 .card{
-    background:#161b22;
-    border:1px solid #30363d;
+    background:#121821;
+    border:1px solid #26303d;
     border-radius:12px;
     padding:20px;
-    margin-bottom:20px;
+    margin-bottom:18px;
 }
 
 .card h2{
-    margin-top:0;
+    margin:0 0 16px;
     font-size:18px;
 }
 
@@ -60,161 +52,160 @@ header p{
     gap:14px;
 }
 
-.field{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-}
-
 .field label{
+    display:block;
     font-size:13px;
-    color:#8b949e;
+    color:#9ca8b7;
+    margin-bottom:6px;
 }
 
-input,select,textarea{
+input,select{
     width:100%;
-    border:1px solid #30363d;
-    background:#0d1117;
-    color:#e6edf3;
+    background:#0c1118;
+    border:1px solid #303b49;
     border-radius:7px;
-    padding:9px 10px;
+    color:#fff;
+    padding:10px;
     outline:none;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-    border-color:#58a6ff;
-}
-
-button{
-    border:0;
-    border-radius:7px;
-    padding:10px 16px;
-    cursor:pointer;
-    font-size:14px;
-    color:white;
-    background:#238636;
-}
-
-button:hover{
-    opacity:.9;
-}
-
-button.blue{
-    background:#1f6feb;
-}
-
-button.gray{
-    background:#30363d;
-}
-
-button.red{
-    background:#da3633;
-}
-
-button.orange{
-    background:#9e6a03;
+input:focus,select:focus{
+    border-color:#4d9cff;
 }
 
 .toolbar{
     display:flex;
     flex-wrap:wrap;
     gap:10px;
-    margin-bottom:16px;
+    margin-bottom:15px;
+}
+
+button{
+    border:0;
+    border-radius:7px;
+    padding:10px 15px;
+    cursor:pointer;
+    color:white;
+    background:#273342;
+}
+
+button:hover{
+    background:#344457;
+}
+
+button.primary{
+    background:#1677ff;
+}
+
+button.primary:hover{
+    background:#3290ff;
+}
+
+button.success{
+    background:#138a52;
+}
+
+button.danger{
+    background:#9e3030;
+}
+
+.status{
+    padding:10px 14px;
+    background:#0c1118;
+    border-radius:7px;
+    color:#65b7ff;
+    margin-bottom:15px;
 }
 
 .table-wrap{
-    overflow-x:auto;
+    overflow:auto;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:1250px;
+    min-width:1300px;
 }
 
 th{
-    background:#21262d;
-    color:#c9d1d9;
+    background:#1a222d;
+    color:#aeb9c7;
+    padding:10px 8px;
+    text-align:left;
     font-size:12px;
-    padding:10px 7px;
-    border:1px solid #30363d;
     white-space:nowrap;
 }
 
 td{
-    padding:6px;
-    border:1px solid #30363d;
-    vertical-align:middle;
+    border-top:1px solid #252f3a;
+    padding:7px;
 }
 
 td input,
 td select{
     padding:7px;
-    font-size:12px;
+    min-width:80px;
 }
 
-.index-cell{
-    width:50px;
+.channel-index{
+    width:55px;
     text-align:center;
-    color:#8b949e;
+    color:#6eb8ff;
+    font-weight:bold;
 }
 
 .delete-btn{
-    background:#da3633;
+    background:#742b2b;
     padding:7px 10px;
 }
 
-.small{
+pre{
+    margin:0;
+    background:#080c11;
+    border:1px solid #222c37;
+    border-radius:8px;
+    padding:16px;
+    max-height:600px;
+    overflow:auto;
+    white-space:pre-wrap;
+    word-break:break-all;
+    color:#c7d4e2;
     font-size:12px;
-    color:#8b949e;
+    line-height:1.5;
+}
+
+.drop-zone{
+    border:2px dashed #354354;
+    border-radius:10px;
+    padding:25px;
+    text-align:center;
+    color:#8f9bab;
+    margin-bottom:15px;
+}
+
+.drop-zone:hover{
+    border-color:#438fff;
 }
 
 .help{
-    background:#0d1117;
-    border:1px solid #30363d;
-    border-radius:8px;
-    padding:12px;
-    line-height:1.7;
+    color:#8793a3;
     font-size:13px;
-    color:#8b949e;
+    line-height:1.7;
 }
 
-.preview{
-    min-height:500px;
-    font-family:Consolas,"Courier New",monospace;
-    font-size:12px;
-    line-height:1.5;
-    resize:vertical;
-}
-
-.status{
-    margin-top:12px;
-    padding:10px;
-    border-radius:7px;
-    background:#0d1117;
-    color:#8b949e;
-}
-
-.download{
-    display:none;
-    background:#238636;
-}
-
-@media(max-width:1000px){
+@media(max-width:900px){
     .grid{
         grid-template-columns:repeat(2,1fr);
     }
 }
 
 @media(max-width:600px){
-    .grid{
-        grid-template-columns:1fr;
-    }
-
     .container{
         padding:12px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
     }
 }
 </style>
@@ -222,14 +213,14 @@ td select{
 
 <body>
 
-<header>
-    <h1>MA2 Fixture Generator V2</h1>
-    <p>grandMA2 Fixture XML 3.1.2 Generator</p>
-</header>
-
 <div class="container">
 
-    <!-- 基础信息 -->
+    <h1>MA2 Fixture Generator V3</h1>
+    <div class="subtitle">
+        grandMA2 3.1.2 Fixture XML Generator
+    </div>
+
+    <!-- 灯具基本信息 -->
     <div class="card">
 
         <h2>① 灯具基本信息</h2>
@@ -237,18 +228,18 @@ td select{
         <div class="grid">
 
             <div class="field">
-                <label>Manufacturer 厂商</label>
-                <input id="manufacturer" value="leite">
-            </div>
-
-            <div class="field">
-                <label>Short Manufacturer</label>
-                <input id="shortManufacturer" value="leite">
-            </div>
-
-            <div class="field">
-                <label>Fixture Name 灯具名称</label>
+                <label>Fixture Name</label>
                 <input id="fixtureName" value="480">
+            </div>
+
+            <div class="field">
+                <label>Mode</label>
+                <input id="modeName" value="20CH">
+            </div>
+
+            <div class="field">
+                <label>Manufacturer</label>
+                <input id="manufacturer" value="leite">
             </div>
 
             <div class="field">
@@ -256,48 +247,53 @@ td select{
                 <input id="shortName" value="480beam">
             </div>
 
-            <div class="field">
-                <label>Mode Name</label>
-                <input id="modeName" value="20CH">
-            </div>
-
-            <div class="field">
-                <label>Fixture Type Index</label>
-                <input id="fixtureIndex" type="number" value="21">
-            </div>
-
-            <div class="field">
-                <label>Beam Type</label>
-                <select id="beamType">
-                    <option value="Spot">Spot</option>
-                    <option value="Wash">Wash</option>
-                    <option value="Beam">Beam</option>
-                    <option value="None">None</option>
-                </select>
-            </div>
-
-            <div class="field">
-                <label>Beam Angle</label>
-                <input id="beamAngle" type="number" value="4">
-            </div>
-
         </div>
 
     </div>
 
 
-    <!-- 快捷操作 -->
+    <!-- CSV -->
     <div class="card">
 
-        <h2>② 通道配置</h2>
+        <h2>② 导入通道表</h2>
+
+        <div class="drop-zone">
+
+            <input
+                type="file"
+                id="csvFile"
+                accept=".csv,.txt"
+            >
+
+            <div style="margin-top:10px;">
+                支持 CSV / TXT
+            </div>
+
+        </div>
+
+        <div class="help">
+            推荐格式：<br>
+            Channel,Name,Attribute,Feature,Preset,Fine,Default,Highlight<br>
+            1,Dimmer,Dimmer,Dimmer,Dimmer,,0,255<br>
+            2,Pan,Pan,Pan,Position,,128,128<br>
+            3,Pan Fine,Pan,Pan,Position,2,128,128
+        </div>
+
+    </div>
+
+
+    <!-- 通道 -->
+    <div class="card">
+
+        <h2>③ 通道配置</h2>
 
         <div class="toolbar">
 
-            <button class="blue" onclick="load8CH()">
+            <button onclick="load8CH()">
                 加载 8CH 示例
             </button>
 
-            <button class="orange" onclick="load20CH()">
+            <button onclick="load20CH()">
                 加载 20CH 示例
             </button>
 
@@ -305,51 +301,37 @@ td select{
                 ＋ 添加通道
             </button>
 
-            <button class="gray" onclick="clearChannels()">
-                清空通道
+            <button onclick="clearChannels()" class="danger">
+                清空
             </button>
 
         </div>
 
-        <div class="help">
-
-            <b>功能范围写法：</b><br>
-
-            普通通道可以留空，程序自动生成 0-255。<br>
-
-            如果一个通道有多个功能，例如：
-            <br>
-            <code>OPEN:0-10;STROBE:11-100;OPEN:101-150;RANDOM:151-255</code>
-
-            <br><br>
-
-            16bit 通道：
-            <br>
-            在 Fine 通道填写对应的 Fine 通道号。
-            <br>
-            例如 Pan = 通道1，Pan Fine = 通道19，那么 Fine 填 <b>19</b>。
-
+        <div class="status" id="channelStatus">
+            当前通道数：0
         </div>
-
-        <br>
 
         <div class="table-wrap">
 
             <table>
 
                 <thead>
+
                     <tr>
-                        <th>编号</th>
-                        <th>通道名称</th>
+                        <th>#</th>
+                        <th>名称</th>
                         <th>Attribute</th>
                         <th>Feature</th>
                         <th>Preset</th>
-                        <th>Fine通道</th>
-                        <th>默认值</th>
+                        <th>Fine</th>
+                        <th>Default</th>
                         <th>Highlight</th>
-                        <th>功能范围</th>
-                        <th>删除</th>
+                        <th>Function Name</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>操作</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="channelBody"></tbody>
@@ -364,27 +346,21 @@ td select{
     <!-- XML -->
     <div class="card">
 
-        <h2>③ 生成 MA2 XML</h2>
+        <h2>④ 生成 MA2 XML</h2>
 
         <div class="toolbar">
 
-            <button class="blue" onclick="generateXML()">
+            <button class="primary" onclick="generateXML()">
                 ⚙ 生成 XML
             </button>
 
-            <button id="downloadBtn" class="download" onclick="downloadXML()">
+            <button class="success" onclick="downloadXML()">
                 ↓ 下载 XML
             </button>
 
         </div>
 
-        <div id="status" class="status">
-            等待生成 XML……
-        </div>
-
-        <br>
-
-        <textarea id="xmlPreview" class="preview" readonly></textarea>
+        <pre id="xmlPreview">等待生成 XML...</pre>
 
     </div>
 
@@ -394,170 +370,23 @@ td select{
 <script>
 
 let channels = [];
+
 let generatedXML = "";
 
 
 /* =========================
-   Attribute 映射
+   初始化
 ========================= */
 
-const attributeMap = {
+document.addEventListener("DOMContentLoaded", () => {
 
-    "DIM": {
-        feature:"DIMMER",
-        preset:"DIMMER",
-        user:"Dim"
-    },
+    load20CH();
 
-    "PAN": {
-        feature:"POSITION",
-        preset:"POSITION",
-        user:"Pan"
-    },
-
-    "TILT": {
-        feature:"POSITION",
-        preset:"POSITION",
-        user:"Tilt"
-    },
-
-    "COLOR1": {
-        feature:"COLOR1",
-        preset:"COLOR",
-        user:"Color1"
-    },
-
-    "COLOR2": {
-        feature:"COLOR2",
-        preset:"COLOR",
-        user:"Color2"
-    },
-
-    "COLOR3": {
-        feature:"COLOR3",
-        preset:"COLOR",
-        user:"Color3"
-    },
-
-    "COLOR4": {
-        feature:"COLOR4",
-        preset:"COLOR",
-        user:"Color4"
-    },
-
-    "RED": {
-        feature:"COLORRGB",
-        preset:"COLOR",
-        user:"Red"
-    },
-
-    "GREEN": {
-        feature:"COLORRGB",
-        preset:"COLOR",
-        user:"Green"
-    },
-
-    "BLUE": {
-        feature:"COLORRGB",
-        preset:"COLOR",
-        user:"Blue"
-    },
-
-    "WHITE": {
-        feature:"COLORRGB",
-        preset:"COLOR",
-        user:"White"
-    },
-
-    "ZOOM": {
-        feature:"ZOOM",
-        preset:"BEAM",
-        user:"Zoom"
-    },
-
-    "FOCUS": {
-        feature:"FOCUS",
-        preset:"FOCUS",
-        user:"Focus"
-    },
-
-    "GOBO1": {
-        feature:"GOBO1",
-        preset:"GOBO",
-        user:"Gobo1"
-    },
-
-    "GOBO1_POS": {
-        feature:"GOBO1",
-        preset:"GOBO",
-        user:"Gobo1"
-    },
-
-    "PRISMA1": {
-        feature:"BEAM1",
-        preset:"BEAM",
-        user:"Prism1"
-    },
-
-    "PRISMA1_POS": {
-        feature:"BEAM1",
-        preset:"BEAM",
-        user:"Pos1"
-    },
-
-    "FROST": {
-        feature:"BEAM1",
-        preset:"BEAM",
-        user:"Frost"
-    },
-
-    "SHUTTER": {
-        feature:"SHUTTER",
-        preset:"BEAM",
-        user:"Shutter"
-    },
-
-    "STROBE": {
-        feature:"SHUTTER",
-        preset:"BEAM",
-        user:"Shutter"
-    },
-
-    "CTC": {
-        feature:"COLOR1",
-        preset:"COLOR",
-        user:"CTC"
-    },
-
-    "IRIS": {
-        feature:"IRIS",
-        preset:"BEAM",
-        user:"Iris"
-    },
-
-    "EFFECT": {
-        feature:"BEAM1",
-        preset:"BEAM",
-        user:"Effect"
-    },
-
-    "CONTROL": {
-        feature:"CONTROL",
-        preset:"CONTROL",
-        user:"Control"
-    },
-
-    "DUMMY": {
-        feature:"CONTROL",
-        preset:"CONTROL",
-        user:"Dummy"
-    }
-
-};
+});
 
 
 /* =========================
-   HTML 转义
+   HTML 转 XML 安全字符
 ========================= */
 
 function escapeXML(value){
@@ -573,67 +402,153 @@ function escapeXML(value){
 
 
 /* =========================
-   Attribute 下拉
+   8CH 示例
 ========================= */
 
-function attributeOptionsHTML(selected){
+function load8CH(){
 
-    const list = Object.keys(attributeMap);
+    channels = [
 
-    return list.map(a => {
+        createChannel(1,"Dimmer","Dimmer","Dimmer","Dimmer"),
+        createChannel(2,"Red","Color","Color","Color"),
+        createChannel(3,"Green","Color","Color","Color"),
+        createChannel(4,"Blue","Color","Color","Color"),
+        createChannel(5,"White","Color","Color","Color"),
+        createChannel(6,"Pan","Pan","Pan","Position"),
+        createChannel(7,"Tilt","Tilt","Tilt","Position"),
+        createChannel(8,"Strobe","Shutter","Shutter","Shutter")
 
-        return `
-            <option value="${a}" ${a === selected ? "selected" : ""}>
-                ${a}
-            </option>
-        `;
+    ];
 
-    }).join("");
+    renderChannels();
 
 }
 
 
 /* =========================
-   通道
+   20CH 示例
 ========================= */
 
-function addChannel(data = {}){
+function load20CH(){
 
-    const channel = {
+    channels = [
 
-        name:data.name || "Dimmer",
+        createChannel(1,"Dimmer","Dimmer","Dimmer","Dimmer"),
 
-        attribute:data.attribute || "DIM",
+        createChannel(2,"Pan","Pan","Pan","Position"),
+        createChannel(3,"Pan Fine","Pan","Pan","Position",2),
 
-        feature:data.feature || "",
+        createChannel(4,"Tilt","Tilt","Tilt","Position"),
+        createChannel(5,"Tilt Fine","Tilt","Tilt","Position",4),
 
-        preset:data.preset || "",
+        createChannel(6,"Speed","Control","Speed","Control"),
 
-        fine:data.fine || "",
+        createChannel(7,"Red","Color","Color","Color"),
+        createChannel(8,"Green","Color","Color","Color"),
+        createChannel(9,"Blue","Color","Color","Color"),
+        createChannel(10,"White","Color","Color","Color"),
 
-        defaultValue:data.defaultValue ?? 0,
+        createChannel(11,"Color Macro","Color","Color","Color"),
+        createChannel(12,"CTO","Color","Color","Color"),
 
-        highlight:data.highlight ?? "",
+        createChannel(13,"Gobo","Gobo","Gobo","Gobo"),
+        createChannel(14,"Gobo Rotate","Gobo","Gobo","Gobo"),
+        createChannel(15,"Prism","Prism","Prism","Prism"),
+        createChannel(16,"Prism Rotate","Prism","Prism","Prism"),
 
-        functions:data.functions || ""
+        createChannel(17,"Focus","Focus","Focus","Focus"),
+        createChannel(18,"Zoom","Zoom","Zoom","Focus"),
 
-    };
+        createChannel(19,"Strobe","Shutter","Shutter","Shutter"),
+        createChannel(20,"Reset","Control","Control","Control")
 
-    channels.push(channel);
+    ];
 
     renderChannels();
 
 }
 
+
+/* =========================
+   创建通道
+========================= */
+
+function createChannel(
+    index,
+    name="",
+    attribute="",
+    feature="",
+    preset="",
+    fine=""
+){
+
+    return {
+
+        index:index,
+
+        name:name,
+
+        attribute:attribute,
+
+        feature:feature,
+
+        preset:preset,
+
+        fine:fine,
+
+        default:"0",
+
+        highlight:"0",
+
+        functionName:"Open",
+
+        from:"0",
+
+        to:"255"
+
+    };
+
+}
+
+
+/* =========================
+   添加通道
+========================= */
+
+function addChannel(){
+
+    channels.push(
+        createChannel(
+            channels.length + 1,
+            "Channel " + (channels.length + 1)
+        )
+    );
+
+    renderChannels();
+
+}
+
+
+/* =========================
+   删除
+========================= */
 
 function deleteChannel(index){
 
     channels.splice(index,1);
 
+    channels.forEach((ch,i)=>{
+        ch.index = i + 1;
+    });
+
     renderChannels();
 
 }
 
+
+/* =========================
+   清空
+========================= */
 
 function clearChannels(){
 
@@ -641,66 +556,55 @@ function clearChannels(){
 
     renderChannels();
 
-    document.getElementById("xmlPreview").value = "";
-
-    document.getElementById("downloadBtn").style.display = "none";
-
-    document.getElementById("status").textContent =
-        "通道已清空。";
-
 }
 
 
 /* =========================
-   通道表格
+   渲染表格
 ========================= */
 
 function renderChannels(){
 
-    const body = document.getElementById("channelBody");
+    const body =
+        document.getElementById("channelBody");
 
     body.innerHTML = "";
 
     channels.forEach((ch,index)=>{
 
-        const map = attributeMap[ch.attribute] || {};
-
-        const feature = ch.feature || map.feature || "";
-        const preset = ch.preset || map.preset || "";
-
-        const tr = document.createElement("tr");
+        const tr =
+            document.createElement("tr");
 
         tr.innerHTML = `
 
-            <td class="index-cell">
-                ${index + 1}
+            <td class="channel-index">
+                ${ch.index}
             </td>
 
             <td>
                 <input
-                    value="${escapeXML(ch.name)}"
+                    value="${escapeAttr(ch.name)}"
                     onchange="updateChannel(${index},'name',this.value)"
                 >
             </td>
 
             <td>
-                <select
+                <input
+                    value="${escapeAttr(ch.attribute)}"
                     onchange="updateChannel(${index},'attribute',this.value)"
                 >
-                    ${attributeOptionsHTML(ch.attribute)}
-                </select>
             </td>
 
             <td>
                 <input
-                    value="${escapeXML(feature)}"
+                    value="${escapeAttr(ch.feature)}"
                     onchange="updateChannel(${index},'feature',this.value)"
                 >
             </td>
 
             <td>
                 <input
-                    value="${escapeXML(preset)}"
+                    value="${escapeAttr(ch.preset)}"
                     onchange="updateChannel(${index},'preset',this.value)"
                 >
             </td>
@@ -708,10 +612,7 @@ function renderChannels(){
             <td>
                 <input
                     type="number"
-                    min="1"
-                    max="512"
-                    value="${escapeXML(ch.fine)}"
-                    placeholder="例如19"
+                    value="${escapeAttr(ch.fine)}"
                     onchange="updateChannel(${index},'fine',this.value)"
                 >
             </td>
@@ -721,8 +622,8 @@ function renderChannels(){
                     type="number"
                     min="0"
                     max="255"
-                    value="${escapeXML(ch.defaultValue)}"
-                    onchange="updateChannel(${index},'defaultValue',this.value)"
+                    value="${escapeAttr(ch.default)}"
+                    onchange="updateChannel(${index},'default',this.value)"
                 >
             </td>
 
@@ -730,18 +631,36 @@ function renderChannels(){
                 <input
                     type="number"
                     min="0"
-                    max="100"
-                    value="${escapeXML(ch.highlight)}"
-                    placeholder="可空"
+                    max="255"
+                    value="${escapeAttr(ch.highlight)}"
                     onchange="updateChannel(${index},'highlight',this.value)"
                 >
             </td>
 
             <td>
                 <input
-                    value="${escapeXML(ch.functions)}"
-                    placeholder="例如 OPEN:0-10;STROBE:11-100"
-                    onchange="updateChannel(${index},'functions',this.value)"
+                    value="${escapeAttr(ch.functionName)}"
+                    onchange="updateChannel(${index},'functionName',this.value)"
+                >
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    min="0"
+                    max="255"
+                    value="${escapeAttr(ch.from)}"
+                    onchange="updateChannel(${index},'from',this.value)"
+                >
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    min="0"
+                    max="255"
+                    value="${escapeAttr(ch.to)}"
+                    onchange="updateChannel(${index},'to',this.value)"
                 >
             </td>
 
@@ -760,8 +679,16 @@ function renderChannels(){
 
     });
 
+    document.getElementById("channelStatus")
+        .innerText =
+        "当前通道数：" + channels.length;
+
 }
 
+
+/* =========================
+   更新通道
+========================= */
 
 function updateChannel(index,key,value){
 
@@ -771,784 +698,203 @@ function updateChannel(index,key,value){
 
 
 /* =========================
-   8CH 示例
+   XML 属性安全
 ========================= */
 
-function load8CH(){
+function escapeAttr(value){
 
-    channels = [
-
-        {
-            name:"Dimmer",
-            attribute:"DIM",
-            feature:"DIMMER",
-            preset:"DIMMER",
-            fine:"",
-            defaultValue:0,
-            highlight:100,
-            functions:""
-        },
-
-        {
-            name:"Red",
-            attribute:"RED",
-            feature:"COLORRGB",
-            preset:"COLOR",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Green",
-            attribute:"GREEN",
-            feature:"COLORRGB",
-            preset:"COLOR",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Blue",
-            attribute:"BLUE",
-            feature:"COLORRGB",
-            preset:"COLOR",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"White",
-            attribute:"WHITE",
-            feature:"COLORRGB",
-            preset:"COLOR",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Strobe",
-            attribute:"SHUTTER",
-            feature:"SHUTTER",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:"OPEN:0-10;STROBE:11-200;OPEN:201-255"
-        },
-
-        {
-            name:"Zoom",
-            attribute:"ZOOM",
-            feature:"ZOOM",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Control",
-            attribute:"CONTROL",
-            feature:"CONTROL",
-            preset:"CONTROL",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        }
-
-    ];
-
-    renderChannels();
+    return escapeXML(value);
 
 }
 
 
 /* =========================
-   20CH 示例
+   生成 ChannelType
 ========================= */
 
-function load20CH(){
+function buildChannelXML(ch){
 
-    channels = [
+    let fineAttr = "";
 
-        {
-            name:"Pan",
-            attribute:"PAN",
-            feature:"POSITION",
-            preset:"POSITION",
-            fine:"19",
-            defaultValue:32767,
-            highlight:"",
-            functions:""
-        },
+    if(ch.fine !== "" && ch.fine !== null){
 
-        {
-            name:"Tilt",
-            attribute:"TILT",
-            feature:"POSITION",
-            preset:"POSITION",
-            fine:"20",
-            defaultValue:32767,
-            highlight:"",
-            functions:""
-        },
+        fineAttr =
+            ` fine="${escapeXML(ch.fine)}"`;
 
-        {
-            name:"Dimmer",
-            attribute:"DIM",
-            feature:"DIMMER",
-            preset:"DIMMER",
-            fine:"",
-            defaultValue:0,
-            highlight:100,
-            functions:""
-        },
+    }
 
-        {
-            name:"Shutter",
-            attribute:"SHUTTER",
-            feature:"SHUTTER",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:255,
-            highlight:100,
-            functions:"OPEN:0-3;STROBE:4-103;OPEN:104-107;RANDOM:108-207;OPEN:208-212;RANDOM:213-251;OPEN:252-255"
-        },
+    let highlightAttr = "";
 
-        {
-            name:"Color",
-            attribute:"COLOR1",
-            feature:"COLOR1",
-            preset:"COLOR",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:"WHITE:0-8;RED:9-17;YELLOW:18-26;BLUE:27-35;GREEN:36-44;ORANGE:45-53"
-        },
+    if(ch.highlight !== ""){
 
-        {
-            name:"Gobo",
-            attribute:"GOBO1",
-            feature:"GOBO1",
-            preset:"GOBO",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:"C1:0-9;C2:10-19;C3:20-29;C4:30-39"
-        },
+        highlightAttr =
+            ` highlight_value="${escapeXML(ch.highlight)}"`;
 
-        {
-            name:"Gobo Rotate",
-            attribute:"GOBO1_POS",
-            feature:"GOBO1",
-            preset:"GOBO",
-            fine:"",
-            defaultValue:128,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Frost",
-            attribute:"FROST",
-            feature:"BEAM1",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Effect",
-            attribute:"EFFECT",
-            feature:"BEAM1",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Prism",
-            attribute:"PRISMA1",
-            feature:"BEAM1",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:"OPEN:0-127;PRISM:128-255"
-        },
-
-        {
-            name:"Prism Rotate",
-            attribute:"PRISMA1_POS",
-            feature:"BEAM1",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Focus",
-            attribute:"FOCUS",
-            feature:"FOCUS",
-            preset:"FOCUS",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Zoom",
-            attribute:"ZOOM",
-            feature:"ZOOM",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Control",
-            attribute:"CONTROL",
-            feature:"CONTROL",
-            preset:"CONTROL",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:"NORMAL:0-249;RESET:250-255"
-        },
-
-        {
-            name:"Control 2",
-            attribute:"CONTROL",
-            feature:"CONTROL",
-            preset:"CONTROL",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Effect 2",
-            attribute:"EFFECT",
-            feature:"BEAM1",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"CTC",
-            attribute:"CTC",
-            feature:"COLOR1",
-            preset:"COLOR",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Iris",
-            attribute:"IRIS",
-            feature:"IRIS",
-            preset:"BEAM",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:""
-        },
-
-        {
-            name:"Lamp Control",
-            attribute:"CONTROL",
-            feature:"CONTROL",
-            preset:"CONTROL",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:"NORMAL:0-99;LAMP OFF:100-105;LAMP ON:200-205"
-        },
-
-        {
-            name:"Reset",
-            attribute:"CONTROL",
-            feature:"CONTROL",
-            preset:"CONTROL",
-            fine:"",
-            defaultValue:0,
-            highlight:"",
-            functions:"NORMAL:0-249;RESET:250-255"
-        }
-
-    ];
-
-    renderChannels();
-
-}
-
-
-/* =========================
-   DMX 8bit → 24bit
-========================= */
-
-function dmx24(value){
-
-    value = Number(value);
-
-    if(value < 0) value = 0;
-
-    if(value > 255) value = 255;
-
-    return Math.round(value * 65536);
-
-}
-
-
-/* =========================
-   百分比
-========================= */
-
-function percent(value){
-
-    value = Number(value);
-
-    return ((value / 255) * 100).toFixed(3)
-        .replace(/\.?0+$/,"");
-
-}
-
-
-/* =========================
-   XML ChannelSet
-========================= */
-
-function createChannelSet(name,from,to,index){
+    }
 
     return `
-<ChannelSet
-    index="${index}"
-    name="${escapeXML(name)}"
-    from_dmx="${from}"
-    to_dmx="${to}"/>`;
+
+        <ChannelType
+            index="${escapeXML(ch.index)}"
+            attribute="${escapeXML(ch.attribute)}"
+            feature="${escapeXML(ch.feature)}"
+            preset="${escapeXML(ch.preset)}"
+            coarse="${escapeXML(ch.index)}"${fineAttr}
+            default="${escapeXML(ch.default)}"${highlightAttr}>
+
+            <ChannelFunction
+                index="0"
+                name="${escapeXML(ch.functionName)}"
+                from="0"
+                to="100"
+                min_dmx_24="${escapeXML(ch.from)}"
+                max_dmx_24="${escapeXML(ch.to)}"
+                attribute="${escapeXML(ch.attribute)}"
+                feature="${escapeXML(ch.feature)}"
+                preset="${escapeXML(ch.preset)}">
+
+                <ChannelSet
+                    index="0"
+                    name="${escapeXML(ch.functionName)}"
+                    from_dmx="${escapeXML(ch.from)}"
+                    to_dmx="${escapeXML(ch.to)}"
+                />
+
+            </ChannelFunction>
+
+        </ChannelType>`;
 
 }
 
 
 /* =========================
-   XML ChannelFunction
-========================= */
-
-function createChannelFunction(
-    channel,
-    functionIndex,
-    name,
-    from,
-    to
-){
-
-    const attr = channel.attribute || "DUMMY";
-
-    const map = attributeMap[attr] || {};
-
-    const feature =
-        channel.feature ||
-        map.feature ||
-        "CONTROL";
-
-    const preset =
-        channel.preset ||
-        map.preset ||
-        "CONTROL";
-
-    const user =
-        map.user ||
-        channel.name ||
-        attr;
-
-    const min24 = dmx24(from);
-
-    const max24 = dmx24(to);
-
-    let result = "";
-
-    result += `
-<ChannelFunction
-    index="${functionIndex}"`;
-
-    if(name){
-
-        result += `
-    name="${escapeXML(name)}"`;
-
-    }
-
-    result += `
-    from="${percent(from)}"
-    to="${percent(to)}"
-    min_dmx_24="${min24}"
-    max_dmx_24="${max24}"
-    subattribute="${escapeXML(attr)}"
-    subattribute_user_name="${escapeXML(user)}"
-    attribute="${escapeXML(attr)}"
-    attribute_user_name="${escapeXML(user)}"
-    feature="${escapeXML(feature)}"
-    feature_user_name="${escapeXML(feature)}"
-    preset="${escapeXML(preset)}"
-    preset_user_name="${escapeXML(preset)}">`;
-
-    /*
-       如果有功能段
-       自动生成 ChannelSet
-    */
-
-    if(name){
-
-        result += createChannelSet(
-            name,
-            from,
-            to,
-            0
-        );
-
-    }
-
-    result += `
-</ChannelFunction>`;
-
-    return result;
-
-}
-
-
-/* =========================
-   解析功能范围
-========================= */
-
-function parseFunctions(channel){
-
-    const text =
-        String(channel.functions || "").trim();
-
-    if(!text){
-
-        return [
-            {
-                name:"",
-                from:0,
-                to:255
-            }
-        ];
-
-    }
-
-    const list = text
-        .split(";")
-        .map(x=>x.trim())
-        .filter(Boolean);
-
-    const result = [];
-
-    list.forEach(item=>{
-
-        const parts = item.split(":");
-
-        if(parts.length < 2){
-            return;
-        }
-
-        const name =
-            parts[0].trim();
-
-        const range =
-            parts[1].trim();
-
-        const nums =
-            range.split("-");
-
-        if(nums.length !== 2){
-            return;
-        }
-
-        let from =
-            Number(nums[0]);
-
-        let to =
-            Number(nums[1]);
-
-        if(isNaN(from) || isNaN(to)){
-            return;
-        }
-
-        from =
-            Math.max(0,Math.min(255,from));
-
-        to =
-            Math.max(0,Math.min(255,to));
-
-        result.push({
-            name,
-            from,
-            to
-        });
-
-    });
-
-    if(result.length === 0){
-
-        result.push({
-            name:"",
-            from:0,
-            to:255
-        });
-
-    }
-
-    return result;
-
-}
-
-
-/* =========================
-   ChannelType
-========================= */
-
-function createChannelType(channel,index){
-
-    const attr =
-        channel.attribute || "DUMMY";
-
-    const map =
-        attributeMap[attr] || {};
-
-    const feature =
-        channel.feature ||
-        map.feature ||
-        "CONTROL";
-
-    const preset =
-        channel.preset ||
-        map.preset ||
-        "CONTROL";
-
-    const defaultValue =
-        channel.defaultValue === ""
-        ? 0
-        : Number(channel.defaultValue);
-
-    let result = "";
-
-    result += `
-<ChannelType
-    index="${index}"
-    attribute="${escapeXML(attr)}"
-    feature="${escapeXML(feature)}"
-    preset="${escapeXML(preset)}"
-    coarse="${index + 1}"`;
-
-    if(channel.fine){
-
-        result += `
-    fine="${escapeXML(channel.fine)}"`;
-
-    }
-
-    if(channel.highlight !== ""){
-
-        result += `
-    highlight_value="${escapeXML(channel.highlight)}"`;
-
-    }
-
-    result += `
-    default="${defaultValue}">`;
-
-    const funcs =
-        parseFunctions(channel);
-
-    funcs.forEach((fn,i)=>{
-
-        result += createChannelFunction(
-            channel,
-            i,
-            fn.name,
-            fn.from,
-            fn.to
-        );
-
-    });
-
-    result += `
-</ChannelType>`;
-
-    return result;
-
-}
-
-
-/* =========================
-   生成 XML
+   生成完整 XML
 ========================= */
 
 function generateXML(){
 
-    if(channels.length === 0){
-
-        alert("请先添加通道。");
-
-        return;
-
-    }
-
-    const manufacturer =
-        document.getElementById("manufacturer").value.trim();
-
-    const shortManufacturer =
-        document.getElementById("shortManufacturer").value.trim();
-
     const fixtureName =
-        document.getElementById("fixtureName").value.trim();
-
-    const shortName =
-        document.getElementById("shortName").value.trim();
+        document.getElementById("fixtureName").value.trim()
+        || "Fixture";
 
     const modeName =
-        document.getElementById("modeName").value.trim();
+        document.getElementById("modeName").value.trim()
+        || "1CH";
 
-    const fixtureIndex =
-        document.getElementById("fixtureIndex").value;
+    const manufacturer =
+        document.getElementById("manufacturer").value.trim()
+        || "Unknown";
 
-    const beamType =
-        document.getElementById("beamType").value;
+    const shortName =
+        document.getElementById("shortName").value.trim()
+        || fixtureName;
 
-    const beamAngle =
-        document.getElementById("beamAngle").value;
-
-    const now =
-        new Date().toISOString();
 
     let channelXML = "";
 
-    channels.forEach((channel,index)=>{
+    channels.forEach(ch=>{
 
-        channelXML +=
-            createChannelType(channel,index);
+        channelXML += buildChannelXML(ch);
 
     });
 
 
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+    let instances = "";
+
+    channels.forEach((ch,i)=>{
+
+        instances += `
+            <Instance
+                index="${i}"
+                module_index="0"/>`;
+
+    });
+
+
+    generatedXML = `<?xml version="1.0" encoding="UTF-8"?>
 
 <MA
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://schemas.malighting.de/grandma2/xml/MA"
-    xsi:schemaLocation="http://schemas.malighting.de/grandma2/xml/MA http://schemas.malighting.de/grandma2/xml/3.1.2/MA.xsd"
-    major_vers="3"
-    minor_vers="1"
-    stream_vers="2">
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://schemas.malighting.de/grandma2/xml/MA"
+ xsi:schemaLocation="http://schemas.malighting.de/grandma2/xml/MA http://schemas.malighting.de/grandma2/xml/3.1.2/MA.xsd"
+ major_vers="3"
+ minor_vers="1"
+ stream_vers="2">
 
-<Info
-    datetime="${now}"
-    showfile="MA2 Fixture Generator"/>
+    <Info
+        datetime="${new Date().toISOString()}"
+        showfile="MA2 Fixture Generator V3"/>
 
-<FixtureType
-    index="${escapeXML(fixtureIndex)}"
-    name="${escapeXML(fixtureName)}"
-    mode="${escapeXML(modeName)}">
+    <FixtureType
+        index="21"
+        name="${escapeXML(fixtureName)}"
+        mode="${escapeXML(modeName)}">
 
-<short_name>${escapeXML(shortName)}</short_name>
+        <short_name>
+            ${escapeXML(shortName)}
+        </short_name>
 
-<manufacturer>${escapeXML(manufacturer)}</manufacturer>
+        <manufacturer>
+            ${escapeXML(manufacturer)}
+        </manufacturer>
 
-<short_manufacturer>${escapeXML(shortManufacturer)}</short_manufacturer>
+        <short_manufacturer>
+            ${escapeXML(manufacturer)}
+        </short_manufacturer>
 
+        <Modules index="0">
 
-<Modules index="0">
+            <Module
+                index="0"
+                class="Headmover"
+                beamtype="Spot"
+                beam_angle="4"
+                beam_intensity="10000">
 
-<Module
-    index="0"
-    class="Headmover"
-    beamtype="${escapeXML(beamType)}"
-    beam_angle="${escapeXML(beamAngle)}">
+                <Body>
 
-<Body>
+                    <Size
+                        x="0.3"
+                        y="0.3"
+                        z="0.5"/>
 
-<Size
-    x="0.3"
-    y="0.3"
-    z="0.5"/>
+                </Body>
 
-</Body>
+                ${channelXML}
 
-${channelXML}
+            </Module>
 
-</Module>
+        </Modules>
 
-</Modules>
+        <Instances index="1">
 
+            ${instances}
 
-<Instances index="1">
+        </Instances>
 
-<Instance
-    index="0"
-    module_index="0"/>
+        <Wheels index="2"/>
 
-</Instances>
+        <VirtualFunctionBlocks index="3"/>
 
+        <FixtureMacroCollect index="5"/>
 
-<Wheels index="2">
-</Wheels>
+        <Body/>
 
+        <AutoPresets index="4"/>
 
-<VirtualFunctionBlocks index="3"/>
-
-
-<FixtureMacroCollect index="5">
-</FixtureMacroCollect>
-
-
-<Body/>
-
-
-<AutoPresets index="4"/>
-
-
-</FixtureType>
+    </FixtureType>
 
 </MA>`;
 
-    generatedXML = xml;
 
-    document.getElementById("xmlPreview").value =
-        generatedXML;
+    document.getElementById("xmlPreview")
+        .textContent = generatedXML;
 
-    document.getElementById("downloadBtn").style.display =
-        "inline-block";
-
-    document.getElementById("status").textContent =
-        "XML 已生成，共 " +
-        channels.length +
-        " 个通道，可以下载。";
+    document.getElementById("channelStatus")
+        .innerText =
+        "XML 已生成："
+        + channels.length
+        + " 个通道";
 
 }
 
@@ -1561,25 +907,25 @@ function downloadXML(){
 
     if(!generatedXML){
 
-        alert("请先生成 XML。");
-
-        return;
+        generateXML();
 
     }
 
+
     const fixtureName =
-        document.getElementById("fixtureName").value.trim() ||
-        "MA2_Fixture";
+        document.getElementById("fixtureName")
+            .value.trim()
+            || "Fixture";
 
     const modeName =
-        document.getElementById("modeName").value.trim() ||
-        "Mode";
+        document.getElementById("modeName")
+            .value.trim()
+            || "Mode";
+
 
     const fileName =
-        fixtureName +
-        "_" +
-        modeName +
-        ".xml";
+        `${fixtureName}_${modeName}_${channels.length}CH.xml`;
+
 
     const blob =
         new Blob(
@@ -1589,8 +935,10 @@ function downloadXML(){
             }
         );
 
+
     const url =
         URL.createObjectURL(blob);
+
 
     const a =
         document.createElement("a");
@@ -1605,21 +953,148 @@ function downloadXML(){
 
     document.body.removeChild(a);
 
-    setTimeout(()=>{
-        URL.revokeObjectURL(url);
-    },1000);
+    URL.revokeObjectURL(url);
 
 }
 
 
 /* =========================
-   初始化
+   CSV 导入
 ========================= */
 
-load8CH();
+document
+.getElementById("csvFile")
+.addEventListener("change",function(e){
+
+    const file = e.target.files[0];
+
+    if(!file) return;
+
+
+    const reader = new FileReader();
+
+
+    reader.onload = function(event){
+
+        parseCSV(event.target.result);
+
+    };
+
+
+    reader.readAsText(file,"UTF-8");
+
+});
+
+
+/* =========================
+   CSV 解析
+========================= */
+
+function parseCSV(text){
+
+    const lines =
+        text
+        .split(/\r?\n/)
+        .map(x=>x.trim())
+        .filter(x=>x);
+
+
+    if(lines.length < 2){
+
+        alert("CSV 内容太少");
+
+        return;
+
+    }
+
+
+    const headers =
+        lines[0]
+        .split(",")
+        .map(x=>x.trim().toLowerCase());
+
+
+    const result = [];
+
+
+    for(let i=1;i<lines.length;i++){
+
+        const values =
+            lines[i]
+            .split(",")
+            .map(x=>x.trim());
+
+
+        if(values.length === 0) continue;
+
+
+        const get = (name, fallback="")=>{
+
+            const index =
+                headers.indexOf(name.toLowerCase());
+
+            return index >= 0
+                ? values[index] ?? fallback
+                : fallback;
+
+        };
+
+
+        result.push({
+
+            index:
+                Number(get("channel",i))
+                || i,
+
+            name:
+                get("name","Channel "+i),
+
+            attribute:
+                get("attribute",""),
+
+            feature:
+                get("feature",""),
+
+            preset:
+                get("preset",""),
+
+            fine:
+                get("fine",""),
+
+            default:
+                get("default","0"),
+
+            highlight:
+                get("highlight","0"),
+
+            functionName:
+                get("function name","Open"),
+
+            from:
+                get("from","0"),
+
+            to:
+                get("to","255")
+
+        });
+
+    }
+
+
+    channels = result;
+
+    renderChannels();
+
+
+    alert(
+        "CSV 导入成功，共 "
+        + channels.length
+        + " 个通道"
+    );
+
+}
 
 </script>
 
 </body>
 </html>
-```
