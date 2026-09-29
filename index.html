@@ -1,414 +1,1087 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MA2 灯库生成器</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
 
-        body {
-            margin: 0;
-            font-family: Arial, "Microsoft YaHei", sans-serif;
-            background: #0f1117;
-            color: #ffffff;
-        }
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-        .header {
-            height: 64px;
-            display: flex;
-            align-items: center;
-            padding: 0 28px;
-            background: #171a22;
-            border-bottom: 1px solid #292e3a;
-        }
+<title>MA2 灯库生成器 V1</title>
 
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-        }
+<style>
 
-        .logo span {
-            color: #4da3ff;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 24px;
-        }
+body {
+    margin: 0;
+    background: #0f1117;
+    color: #ffffff;
+    font-family:
+        Arial,
+        "Microsoft YaHei",
+        sans-serif;
+}
 
-        .title {
-            margin-bottom: 24px;
-        }
+/* 顶部 */
 
-        .title h1 {
-            margin: 0 0 8px;
-            font-size: 28px;
-        }
+.header {
 
-        .title p {
-            margin: 0;
-            color: #8e96a8;
-        }
+    height: 64px;
 
-        .grid {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 20px;
-        }
+    display: flex;
 
-        .card {
-            background: #171a22;
-            border: 1px solid #292e3a;
-            border-radius: 12px;
-            padding: 20px;
-        }
+    align-items: center;
 
-        .card h2 {
-            margin-top: 0;
-            font-size: 17px;
-        }
+    padding: 0 28px;
 
-        .form-group {
-            margin-bottom: 16px;
-        }
+    background: #171a22;
 
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-size: 13px;
-            color: #aeb6c7;
-        }
+    border-bottom:
+        1px solid #292e3a;
+}
 
-        input,
-        select {
-            width: 100%;
-            padding: 11px 12px;
-            border-radius: 7px;
-            border: 1px solid #343b4a;
-            background: #0f1117;
-            color: white;
-            outline: none;
-        }
+.logo {
 
-        input:focus,
-        select:focus {
-            border-color: #4da3ff;
-        }
+    font-size: 20px;
 
-        .upload {
-            border: 2px dashed #343b4a;
-            border-radius: 8px;
-            padding: 28px 15px;
-            text-align: center;
-            color: #8e96a8;
-            cursor: pointer;
-            margin-bottom: 18px;
-        }
+    font-weight: bold;
+}
 
-        .upload:hover {
-            border-color: #4da3ff;
-        }
+.logo span {
 
-        .button {
-            width: 100%;
-            border: none;
-            border-radius: 7px;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    color: #4da3ff;
+}
 
-        .primary {
-            background: #1677ff;
-            color: white;
-        }
+/* 页面 */
 
-        .primary:hover {
-            background: #0d65df;
-        }
+.container {
 
-        .secondary {
-            background: #292e3a;
-            color: white;
-        }
+    max-width: 1500px;
 
-        .secondary:hover {
-            background: #343b4a;
-        }
+    margin: 30px auto;
 
-        .table-wrap {
-            overflow-x: auto;
-        }
+    padding: 0 24px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 720px;
-        }
+.title {
 
-        th,
-        td {
-            padding: 11px 10px;
-            border-bottom: 1px solid #292e3a;
-            text-align: left;
-            font-size: 13px;
-        }
+    margin-bottom: 24px;
+}
 
-        th {
-            color: #8e96a8;
-            font-weight: normal;
-        }
+.title h1 {
 
-        td input,
-        td select {
-            padding: 7px 8px;
-        }
+    margin: 0 0 8px;
 
-        .empty {
-            padding: 70px 20px;
-            text-align: center;
-            color: #6f7788;
-        }
+    font-size: 28px;
+}
 
-        .status {
-            margin-top: 15px;
-            padding: 12px;
-            background: #10141c;
-            border-radius: 7px;
-            color: #8e96a8;
-            font-size: 13px;
-        }
+.title p {
 
-        @media (max-width: 900px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    margin: 0;
+
+    color: #8e96a8;
+}
+
+/* 布局 */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        320px
+        1fr;
+
+    gap: 20px;
+}
+
+.card {
+
+    background: #171a22;
+
+    border:
+        1px solid #292e3a;
+
+    border-radius: 12px;
+
+    padding: 20px;
+}
+
+.card h2 {
+
+    margin-top: 0;
+
+    font-size: 17px;
+}
+
+/* 输入框 */
+
+.form-group {
+
+    margin-bottom: 16px;
+}
+
+label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+
+    color: #aeb6c7;
+}
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border-radius: 7px;
+
+    border:
+        1px solid #343b4a;
+
+    background: #0f1117;
+
+    color: white;
+
+    outline: none;
+}
+
+input:focus,
+select:focus {
+
+    border-color:
+        #4da3ff;
+}
+
+/* 按钮 */
+
+.button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 12px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+}
+
+.primary {
+
+    background:
+        #1677ff;
+
+    color: white;
+}
+
+.secondary {
+
+    background:
+        #292e3a;
+
+    color: white;
+}
+
+.danger {
+
+    background:
+        #51252a;
+
+    color: #ff8c8c;
+}
+
+/* 表格 */
+
+.table-wrap {
+
+    overflow-x: auto;
+}
+
+table {
+
+    width: 100%;
+
+    border-collapse:
+        collapse;
+
+    min-width: 850px;
+}
+
+th,
+td {
+
+    padding:
+        9px 8px;
+
+    border-bottom:
+        1px solid #292e3a;
+
+    text-align:
+        left;
+
+    font-size: 13px;
+}
+
+th {
+
+    color:
+        #8e96a8;
+
+    font-weight:
+        normal;
+}
+
+td input,
+td select {
+
+    padding:
+        7px 8px;
+}
+
+/* 通道编号 */
+
+.channel-number {
+
+    color:
+        #4da3ff;
+
+    font-weight:
+        bold;
+
+    width: 50px;
+}
+
+/* 状态 */
+
+.status {
+
+    margin-top:
+        15px;
+
+    padding:
+        12px;
+
+    background:
+        #10141c;
+
+    border-radius:
+        7px;
+
+    color:
+        #8e96a8;
+
+    font-size:
+        13px;
+}
+
+/* 删除 */
+
+.delete-btn {
+
+    border: none;
+
+    background:
+        transparent;
+
+    color:
+        #ff6b6b;
+
+    cursor:
+        pointer;
+
+    font-size:
+        16px;
+}
+
+.delete-btn:hover {
+
+    color:
+        #ffaaaa;
+}
+
+/* 手机 */
+
+@media (max-width: 900px) {
+
+    .grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <header class="header">
+
     <div class="logo">
-        <span>MA2</span> Fixture Generator
+
+        <span>MA2</span>
+        Fixture Generator
+
     </div>
+
 </header>
+
 
 <main class="container">
 
-    <div class="title">
-        <h1>MA2 灯库生成器</h1>
-        <p>上传或填写灯具通道表，自动生成 MA2 XML 灯库</p>
-    </div>
 
-    <div class="grid">
+<div class="title">
 
-        <!-- 左侧设置 -->
-        <div class="card">
+    <h1>
+        MA2 灯库生成器 V1
+    </h1>
 
-            <h2>灯具信息</h2>
+    <p>
+        通道表 → 属性识别 → MA2 XML
+    </p>
 
-            <div class="form-group">
-                <label>Manufacturer</label>
-                <input id="manufacturer" value="leite">
-            </div>
+</div>
 
-            <div class="form-group">
-                <label>Fixture Name</label>
-                <input id="fixtureName" placeholder="例如 X1060">
-            </div>
 
-            <div class="form-group">
-                <label>Short Manufacturer</label>
-                <input id="shortManufacturer" value="leite">
-            </div>
+<div class="grid">
 
-            <div class="form-group">
-                <label>Mode Name</label>
-                <input id="modeName" placeholder="例如 124CH">
-            </div>
 
-            <div class="form-group">
-                <label>通道数量</label>
-                <input id="channelCount" type="number" value="8">
-            </div>
+<!-- ======================
+     左侧
+====================== -->
 
-            <h2>导入通道表</h2>
+<div class="card">
 
-            <div class="upload">
-                点击选择 CSV / TXT 文件
-                <input
-                    type="file"
-                    id="fileInput"
-                    accept=".csv,.txt"
-                    style="display:none;"
-                >
-            </div>
+<h2>
+    灯具信息
+</h2>
 
-            <button class="button secondary" onclick="addChannel()">
-                ＋ 添加通道
-            </button>
 
-            <button class="button primary" onclick="generateXML()">
-                生成 MA2 XML
-            </button>
+<div class="form-group">
 
-            <div class="status" id="status">
-                等待输入通道信息
-            </div>
+<label>
+    Manufacturer
+</label>
 
-        </div>
+<input
+    id="manufacturer"
+    value="leite"
+>
 
-        <!-- 右侧通道表 -->
-        <div class="card">
+</div>
 
-            <h2>通道配置</h2>
 
-            <div class="table-wrap">
+<div class="form-group">
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>CH</th>
-                            <th>功能名称</th>
-                            <th>属性类型</th>
-                            <th>DMX 起始</th>
-                            <th>DMX 结束</th>
-                            <th>默认值</th>
-                        </tr>
-                    </thead>
+<label>
+    Fixture Name
+</label>
 
-                    <tbody id="channelTable">
+<input
+    id="fixtureName"
+    placeholder="例如 X1060"
+>
 
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <input value="Dimmer">
-                            </td>
-                            <td>
-                                <select>
-                                    <option>Dimmer</option>
-                                    <option>Color</option>
-                                    <option>Position</option>
-                                    <option>Gobo</option>
-                                    <option>Beam</option>
-                                    <option>Control</option>
-                                </select>
-                            </td>
-                            <td><input value="0"></td>
-                            <td><input value="255"></td>
-                            <td><input value="0"></td>
-                        </tr>
+</div>
 
-                    </tbody>
-                </table>
 
-            </div>
+<div class="form-group">
 
-            <div class="empty">
-                后续这里会自动识别你上传的灯具通道表
-            </div>
+<label>
+    Short Manufacturer
+</label>
 
-        </div>
+<input
+    id="shortManufacturer"
+    value="leite"
+>
 
-    </div>
+</div>
+
+
+<div class="form-group">
+
+<label>
+    Mode Name
+</label>
+
+<input
+    id="modeName"
+    placeholder="例如 124CH"
+>
+
+</div>
+
+
+<hr>
+
+
+<h2>
+    快速测试
+</h2>
+
+
+<button
+    class="button secondary"
+    onclick="loadExample()"
+>
+
+加载 8CH 示例
+
+</button>
+
+
+<button
+    class="button secondary"
+    onclick="addChannel()"
+>
+
+＋ 添加通道
+
+</button>
+
+
+<button
+    class="button danger"
+    onclick="clearChannels()"
+>
+
+清空全部通道
+
+</button>
+
+
+<button
+    class="button primary"
+    onclick="generateXML()"
+>
+
+生成 MA2 XML
+
+</button>
+
+
+<div
+    class="status"
+    id="status"
+>
+
+当前通道：
+0 CH
+
+</div>
+
+
+</div>
+
+
+<!-- ======================
+     右侧
+====================== -->
+
+<div class="card">
+
+<h2>
+    通道配置
+</h2>
+
+
+<div class="table-wrap">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+CH
+</th>
+
+<th>
+功能名称
+</th>
+
+<th>
+MA2 属性
+</th>
+
+<th>
+DMX 起始
+</th>
+
+<th>
+DMX 结束
+</th>
+
+<th>
+默认值
+</th>
+
+<th>
+操作
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+    id="channelTable"
+>
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
 
 </main>
 
+
 <script>
 
-function addChannel() {
 
-    const table = document.getElementById("channelTable");
+/*
+================================
+通道数据
+================================
+*/
 
-    const channelNumber = table.children.length + 1;
+let channels = [];
 
-    const row = document.createElement("tr");
 
-    row.innerHTML = `
-        <td>${channelNumber}</td>
+/*
+================================
+属性类型
+================================
+*/
 
-        <td>
-            <input placeholder="例如 Red">
-        </td>
+const attributeOptions = [
 
-        <td>
-            <select>
-                <option>Dimmer</option>
-                <option>Color</option>
-                <option>Position</option>
-                <option>Gobo</option>
-                <option>Beam</option>
-                <option>Control</option>
-            </select>
-        </td>
+    "Dimmer",
 
-        <td>
-            <input value="0">
-        </td>
+    "ColorRGB_R",
 
-        <td>
-            <input value="255">
-        </td>
+    "ColorRGB_G",
 
-        <td>
-            <input value="0">
-        </td>
-    `;
+    "ColorRGB_B",
 
-    table.appendChild(row);
+    "ColorRGB_W",
 
-    updateStatus();
+    "Pan",
+
+    "Tilt",
+
+    "Zoom",
+
+    "Focus",
+
+    "Gobo",
+
+    "Prism",
+
+    "Iris",
+
+    "Strobe",
+
+    "Shutter",
+
+    "Control",
+
+    "Effect",
+
+    "Unknown"
+
+];
+
+
+/*
+================================
+添加通道
+================================
+*/
+
+function addChannel(data = {}) {
+
+    const channel = {
+
+        name:
+            data.name || "",
+
+        attribute:
+            data.attribute || "Dimmer",
+
+        start:
+            data.start ?? 0,
+
+        end:
+            data.end ?? 255,
+
+        defaultValue:
+            data.defaultValue ?? 0
+
+    };
+
+
+    channels.push(channel);
+
+
+    renderChannels();
+
 }
 
+
+/*
+================================
+删除通道
+================================
+*/
+
+function deleteChannel(index) {
+
+    channels.splice(index, 1);
+
+    renderChannels();
+
+}
+
+
+/*
+================================
+清空
+================================
+*/
+
+function clearChannels() {
+
+    channels = [];
+
+    renderChannels();
+
+}
+
+
+/*
+================================
+渲染表格
+================================
+*/
+
+function renderChannels() {
+
+    const table =
+        document.getElementById(
+            "channelTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    channels.forEach(
+        (channel, index) => {
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+<td class="channel-number">
+    ${index + 1}
+</td>
+
+
+<td>
+
+<input
+    value="${channel.name}"
+    oninput="
+        channels[${index}].name =
+        this.value
+    "
+    placeholder="例如 Dimmer"
+>
+
+</td>
+
+
+<td>
+
+<select
+    onchange="
+        channels[${index}].attribute =
+        this.value
+    "
+>
+
+${attributeOptions.map(
+
+    option => `
+
+<option
+    value="${option}"
+    ${
+        option === channel.attribute
+        ? "selected"
+        : ""
+    }
+>
+
+${option}
+
+</option>
+
+`).join("")}
+
+</select>
+
+</td>
+
+
+<td>
+
+<input
+    type="number"
+    min="0"
+    max="255"
+    value="${channel.start}"
+    onchange="
+        channels[${index}].start =
+        Number(this.value)
+    "
+>
+
+</td>
+
+
+<td>
+
+<input
+    type="number"
+    min="0"
+    max="255"
+    value="${channel.end}"
+    onchange="
+        channels[${index}].end =
+        Number(this.value)
+    "
+>
+
+</td>
+
+
+<td>
+
+<input
+    type="number"
+    min="0"
+    max="255"
+    value="${channel.defaultValue}"
+    onchange="
+        channels[${index}].defaultValue =
+        Number(this.value)
+    "
+>
+
+</td>
+
+
+<td>
+
+<button
+    class="delete-btn"
+    onclick="
+        deleteChannel(${index})
+    "
+>
+    删除
+</button>
+
+</td>
+
+`;
+
+
+        table.appendChild(row);
+
+    });
+
+
+    updateStatus();
+
+}
+
+
+/*
+================================
+状态
+================================
+*/
 
 function updateStatus() {
 
-    const count =
-        document.getElementById("channelTable").children.length;
+    document.getElementById(
+        "status"
+    ).innerText =
 
-    document.getElementById("status").innerText =
-        "当前通道数量：" + count;
+        "当前通道：" +
+        channels.length +
+        " CH";
+
 }
 
+
+/*
+================================
+加载测试灯具
+================================
+*/
+
+function loadExample() {
+
+    channels = [];
+
+
+    addChannel({
+
+        name: "Dimmer",
+
+        attribute: "Dimmer",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    addChannel({
+
+        name: "Red",
+
+        attribute: "ColorRGB_R",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    addChannel({
+
+        name: "Green",
+
+        attribute: "ColorRGB_G",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    addChannel({
+
+        name: "Blue",
+
+        attribute: "ColorRGB_B",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    addChannel({
+
+        name: "White",
+
+        attribute: "ColorRGB_W",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    addChannel({
+
+        name: "Strobe",
+
+        attribute: "Strobe",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    addChannel({
+
+        name: "Zoom",
+
+        attribute: "Zoom",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    addChannel({
+
+        name: "Focus",
+
+        attribute: "Focus",
+
+        start: 0,
+
+        end: 255,
+
+        defaultValue: 0
+
+    });
+
+
+    document.getElementById(
+        "fixtureName"
+    ).value =
+        "TEST LIGHT";
+
+
+    document.getElementById(
+        "modeName"
+    ).value =
+        "8CH";
+
+}
+
+
+/*
+================================
+生成 XML
+================================
+*/
 
 function generateXML() {
 
     const manufacturer =
-        document.getElementById("manufacturer").value;
+        document.getElementById(
+            "manufacturer"
+        ).value;
+
 
     const fixtureName =
-        document.getElementById("fixtureName").value;
+        document.getElementById(
+            "fixtureName"
+        ).value;
+
 
     const modeName =
-        document.getElementById("modeName").value;
+        document.getElementById(
+            "modeName"
+        ).value;
 
-    const count =
-        document.getElementById("channelTable").children.length;
 
-    document.getElementById("status").innerText =
-        "准备生成：" +
-        manufacturer +
-        " / " +
-        fixtureName +
-        " / " +
-        modeName +
-        " / " +
-        count +
-        "CH";
+    if (!fixtureName) {
 
-    alert("XML 生成功能下一步加入");
+        alert(
+            "请先填写 Fixture Name"
+        );
+
+        return;
+
+    }
+
+
+    if (channels.length === 0) {
+
+        alert(
+            "请先添加通道"
+        );
+
+        return;
+
+    }
+
+
+    console.log({
+
+        manufacturer,
+
+        fixtureName,
+
+        modeName,
+
+        channels
+
+    });
+
+
+    alert(
+        "通道数据已经准备完成，下一步开始生成真正的 MA2 XML。"
+    );
+
 }
+
 
 </script>
 
+
 </body>
+
 </html>
