@@ -3,322 +3,333 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MA2 Fixture Generator V4</title>
+<title>Universal Fixture Converter V5</title>
 
 <style>
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-body{
-    margin:0;
-    background:#0b0f14;
-    color:#e7edf5;
-    font-family:Arial,"Microsoft YaHei",sans-serif;
+body {
+    margin: 0;
+    background: #0b0f14;
+    color: #e8edf3;
+    font-family: Arial, "Microsoft YaHei", sans-serif;
 }
 
-header{
-    padding:22px 30px;
-    background:#111821;
-    border-bottom:1px solid #26313d;
+header {
+    padding: 22px 28px;
+    border-bottom: 1px solid #202832;
+    background: #10151c;
 }
 
-header h1{
-    margin:0;
-    font-size:24px;
+header h1 {
+    margin: 0;
+    font-size: 24px;
 }
 
-header p{
-    margin:7px 0 0;
-    color:#8996a5;
-    font-size:13px;
+header p {
+    margin: 7px 0 0;
+    color: #8995a3;
+    font-size: 13px;
 }
 
-.container{
-    max-width:1500px;
-    margin:auto;
-    padding:22px;
+.container {
+    max-width: 1500px;
+    margin: auto;
+    padding: 22px;
 }
 
-.card{
-    background:#111821;
-    border:1px solid #26313d;
-    border-radius:12px;
-    padding:18px;
-    margin-bottom:18px;
+.card {
+    background: #111820;
+    border: 1px solid #222c36;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 18px;
 }
 
-.card h2{
-    margin:0 0 15px;
-    font-size:17px;
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 14px;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
+textarea {
+    width: 100%;
+    min-height: 230px;
+    resize: vertical;
+    background: #080c11;
+    color: #dce5ee;
+    border: 1px solid #293541;
+    border-radius: 8px;
+    padding: 13px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    outline: none;
 }
 
-.field{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.field label{
-    color:#8f9baa;
-    font-size:12px;
+textarea:focus,
+input:focus,
+select:focus {
+    border-color: #4e9cff;
 }
 
 input,
-textarea,
-select{
-    width:100%;
-    background:#0b1016;
-    color:#edf3fa;
-    border:1px solid #34414f;
-    border-radius:7px;
-    padding:9px 10px;
-    outline:none;
+select {
+    background: #0a0f15;
+    color: #e8edf3;
+    border: 1px solid #293541;
+    border-radius: 6px;
+    padding: 8px 10px;
+    outline: none;
 }
 
-input:focus,
-textarea:focus,
-select:focus{
-    border-color:#4d8dff;
+button {
+    border: 0;
+    border-radius: 7px;
+    padding: 9px 15px;
+    background: #247cff;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
 }
 
-textarea{
-    min-height:170px;
-    resize:vertical;
-    font-family:Consolas,monospace;
+button:hover {
+    filter: brightness(1.12);
 }
 
-button{
-    border:0;
-    border-radius:7px;
-    padding:9px 13px;
-    cursor:pointer;
-    background:#263444;
-    color:#fff;
-    font-weight:600;
+button.secondary {
+    background: #26313d;
 }
 
-button:hover{
-    background:#34465b;
+button.success {
+    background: #168653;
 }
 
-button.primary{
-    background:#2674e8;
+button.warning {
+    background: #9a6713;
 }
 
-button.primary:hover{
-    background:#3985f5;
+button.danger {
+    background: #a63c3c;
 }
 
-button.green{
-    background:#198754;
+.actions {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-top: 13px;
 }
 
-button.red{
-    background:#9f3030;
+.hidden {
+    display: none !important;
 }
 
-button.small{
-    padding:6px 9px;
-    font-size:12px;
+.status {
+    padding: 11px 13px;
+    border-radius: 7px;
+    margin-top: 12px;
+    background: #16202a;
+    color: #aebbc8;
 }
 
-.toolbar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:12px;
+.status.ok {
+    background: #10291e;
+    color: #7ce0a6;
 }
 
-.status{
-    margin-top:10px;
-    color:#65c9ff;
-    font-size:13px;
+.status.error {
+    background: #321616;
+    color: #ff9999;
 }
 
-.preview{
-    margin-top:12px;
-    padding:12px;
-    background:#090d12;
-    border:1px solid #293542;
-    border-radius:7px;
-    white-space:pre-wrap;
-    font-family:Consolas,monospace;
-    font-size:12px;
-    color:#b9c7d5;
-    max-height:260px;
-    overflow:auto;
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
 }
 
-.channel{
-    border:1px solid #2b3744;
-    border-radius:10px;
-    margin-bottom:12px;
-    background:#0d131a;
-    overflow:hidden;
+.summary-item {
+    background: #0b1117;
+    border: 1px solid #222d38;
+    border-radius: 8px;
+    padding: 13px;
 }
 
-.channel-head{
-    padding:10px;
-    background:#151e28;
-    display:flex;
-    align-items:center;
-    gap:8px;
+.summary-item span {
+    display: block;
+    color: #7f8b99;
+    font-size: 12px;
+    margin-bottom: 6px;
 }
 
-.channel-head strong{
-    color:#66b3ff;
-    min-width:80px;
+.summary-item strong {
+    font-size: 16px;
 }
 
-.channel-main{
-    padding:12px;
+.layout {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    gap: 18px;
 }
 
-.channel-grid{
-    display:grid;
-    grid-template-columns:90px 1.2fr 1fr 1fr 1fr 90px 90px 90px;
-    gap:8px;
+.tree {
+    background: #0a0f14;
+    border: 1px solid #222d38;
+    border-radius: 9px;
+    padding: 12px;
+    min-height: 400px;
 }
 
-.function{
-    margin-top:10px;
-    padding:10px;
-    border:1px solid #303c49;
-    background:#111922;
-    border-radius:8px;
+.tree-item {
+    padding: 9px 10px;
+    border-radius: 6px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    color: #c8d1da;
 }
 
-.function-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:8px;
-    color:#b7c7d7;
-    font-size:13px;
+.tree-item:hover {
+    background: #18212b;
 }
 
-.function-grid{
-    display:grid;
-    grid-template-columns:1.2fr 100px 100px 150px 1fr;
-    gap:8px;
+.tree-item.active {
+    background: #1b5ca8;
+    color: white;
 }
 
-.section-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:12px;
+.tree-root {
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.wheel{
-    border:1px solid #2d3945;
-    border-radius:10px;
-    margin-bottom:14px;
-    background:#0d131a;
-    overflow:hidden;
+.tree-mode {
+    padding-left: 18px;
 }
 
-.wheel-head{
-    padding:10px;
-    background:#151e28;
-    display:flex;
-    align-items:center;
-    gap:10px;
+.tree-cell {
+    padding-left: 36px;
+    font-size: 12px;
+    color: #8e9baa;
 }
 
-.wheel-head strong{
-    color:#ffc857;
+.mode-panel {
+    background: #0a0f14;
+    border: 1px solid #222d38;
+    border-radius: 9px;
+    padding: 15px;
 }
 
-.wheel-body{
-    padding:12px;
+.mode-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.slot{
-    border:1px solid #303c49;
-    border-radius:8px;
-    padding:10px;
-    margin-bottom:8px;
-    background:#111922;
+.mode-header h2 {
+    margin: 0;
+    font-size: 19px;
 }
 
-.slot-grid{
-    display:grid;
-    grid-template-columns:1.4fr 100px 100px 1.4fr 50px;
-    gap:8px;
-    align-items:end;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.xml-preview{
-    min-height:500px;
-    max-height:700px;
-    overflow:auto;
-    background:#080c11;
-    border:1px solid #293542;
-    border-radius:8px;
-    padding:15px;
-    color:#b9d2e8;
-    font-family:Consolas,monospace;
-    font-size:12px;
-    white-space:pre;
+th,
+td {
+    border-bottom: 1px solid #202a34;
+    padding: 8px;
+    text-align: left;
+    font-size: 12px;
+    vertical-align: middle;
 }
 
-.notice{
-    padding:10px 12px;
-    border-left:3px solid #4d8dff;
-    background:#101923;
-    color:#aebdcc;
-    font-size:13px;
-    line-height:1.7;
-    margin-bottom:12px;
+th {
+    background: #111921;
+    color: #8e9baa;
+    position: sticky;
+    top: 0;
 }
 
-.empty{
-    padding:18px;
-    text-align:center;
-    color:#697887;
-    border:1px dashed #33404d;
-    border-radius:8px;
+td input,
+td select {
+    width: 100%;
+    min-width: 70px;
 }
 
-@media(max-width:1100px){
-    .grid{
-        grid-template-columns:repeat(2,1fr);
+.badge {
+    display: inline-block;
+    padding: 3px 7px;
+    border-radius: 20px;
+    font-size: 11px;
+    background: #202b36;
+    color: #b9c6d3;
+}
+
+.badge.blue {
+    background: #143e69;
+    color: #9bcaff;
+}
+
+.badge.green {
+    background: #123e2b;
+    color: #81e0ad;
+}
+
+.badge.orange {
+    background: #4a3515;
+    color: #f0bd70;
+}
+
+.xml-preview {
+    min-height: 450px;
+    white-space: pre;
+    overflow: auto;
+    background: #06090d;
+    border: 1px solid #202a34;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #cbd6e1;
+}
+
+.info-box {
+    background: #101b25;
+    border-left: 3px solid #368cff;
+    padding: 11px 13px;
+    color: #aebbc8;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media(max-width: 1000px) {
+    .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    .channel-grid{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-    .function-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .slot-grid{
-        grid-template-columns:repeat(2,1fr);
+    .layout {
+        grid-template-columns: 1fr;
     }
 }
 
-@media(max-width:650px){
-    .container{
-        padding:10px;
+@media(max-width: 600px) {
+    .container {
+        padding: 12px;
     }
 
-    .grid{
-        grid-template-columns:1fr;
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .channel-grid,
-    .function-grid,
-    .slot-grid{
-        grid-template-columns:1fr;
+    th,
+    td {
+        padding: 6px;
     }
 }
 </style>
@@ -327,128 +338,198 @@ button.small{
 <body>
 
 <header>
-    <h1>MA2 Fixture Generator V4</h1>
-    <p>grandMA2 Fixture XML Generator · Smart Parser · Multi Function · Wheel System</p>
+    <h1>Universal Fixture Converter V5</h1>
+    <p>D4 / Avolites → Universal Fixture Model → grandMA2 XML</p>
 </header>
 
 <div class="container">
 
-    <!-- 基础信息 -->
-    <div class="card">
-        <h2>① 灯具基本信息</h2>
-
-        <div class="grid">
-
-            <div class="field">
-                <label>Fixture Name</label>
-                <input id="fixtureName" value="480">
-            </div>
-
-            <div class="field">
-                <label>Mode</label>
-                <input id="fixtureMode" value="20CH">
-            </div>
-
-            <div class="field">
-                <label>Manufacturer</label>
-                <input id="manufacturer" value="leite">
-            </div>
-
-            <div class="field">
-                <label>Short Name</label>
-                <input id="shortName" value="480beam">
-            </div>
-
-        </div>
-    </div>
-
-
-    <!-- 智能解析 -->
+    <!-- INPUT -->
     <div class="card">
 
-        <h2>② 智能解析厂家通道表</h2>
+        <div class="card-title">① 输入 D4 灯库</div>
 
-        <div class="notice">
-            支持类似：<br>
-            <b>10 Color 0-10 Open</b><br>
-            <b>10 Color 11-40 Red</b><br>
-            <b>10 Color 41-70 Green</b><br>
-            <b>10 Color 71-100 Blue</b><br><br>
+        <div class="actions">
+            <input
+                type="file"
+                id="fileInput"
+                accept=".xml,.d4"
+            >
 
-            也支持：<br>
-            <b>1 Dimmer</b><br>
-            <b>2 Pan</b><br>
-            <b>3 Pan Fine</b><br>
-            <b>4 Tilt</b>
+            <button class="secondary" onclick="loadExample()">
+                加载 FS380mini 示例
+            </button>
+
+            <button class="secondary" onclick="clearInput()">
+                清空
+            </button>
         </div>
 
-        <textarea id="parserInput" placeholder="把厂家通道表直接粘贴到这里..."></textarea>
-
-        <div class="toolbar">
-            <button class="primary" onclick="parseChannels()">⚡ 智能解析</button>
-            <button onclick="loadParserExample()">加载解析示例</button>
-            <button onclick="clearParser()">清空</button>
+        <div style="margin-top:14px;">
+            <textarea
+                id="inputXml"
+                placeholder="把 D4 / Avolites XML 粘贴到这里..."
+            ></textarea>
         </div>
 
-        <div id="parseStatus" class="status"></div>
-        <div id="parsePreview" class="preview" style="display:none;"></div>
+        <div class="actions">
+            <button onclick="parseD4()">
+                🔍 自动解析 D4
+            </button>
+        </div>
+
+        <div id="status" class="status">
+            等待输入灯库……
+        </div>
 
     </div>
 
 
-    <!-- 通道 -->
-    <div class="card">
+    <!-- SUMMARY -->
+    <div id="summaryCard" class="card hidden">
 
-        <h2>③ Channel / Function</h2>
+        <div class="card-title">② 灯具识别结果</div>
 
-        <div class="section-buttons">
-            <button onclick="load8CH()">加载 8CH 示例</button>
-            <button onclick="load20CH()">加载 20CH 示例</button>
-            <button onclick="addChannel()">＋ 添加通道</button>
-            <button class="red" onclick="clearChannels()">清空通道</button>
+        <div class="summary-grid">
+
+            <div class="summary-item">
+                <span>格式</span>
+                <strong id="summaryFormat">-</strong>
+            </div>
+
+            <div class="summary-item">
+                <span>Manufacturer</span>
+                <strong id="summaryManufacturer">-</strong>
+            </div>
+
+            <div class="summary-item">
+                <span>Fixture</span>
+                <strong id="summaryFixture">-</strong>
+            </div>
+
+            <div class="summary-item">
+                <span>Modes</span>
+                <strong id="summaryModes">-</strong>
+            </div>
+
+            <div class="summary-item">
+                <span>Attributes</span>
+                <strong id="summaryAttributes">-</strong>
+            </div>
+
+            <div class="summary-item">
+                <span>Multi Cell</span>
+                <strong id="summaryCells">-</strong>
+            </div>
+
         </div>
-
-        <div id="channels"></div>
 
     </div>
 
 
-    <!-- Wheel -->
-    <div class="card">
+    <!-- EDITOR -->
+    <div id="editorCard" class="card hidden">
 
-        <h2>④ Wheel System</h2>
+        <div class="card-title">③ 通用灯具模型</div>
 
-        <div class="notice">
-            V4 开始正式支持 MA2 Wheel。<br>
-            可以建立 Color / Gobo / Prism / Rotation Wheel，并添加多个 Slot。
-            Channel Function 可以通过 Wheel ID 关联对应 Wheel。
+        <div class="layout">
+
+            <div class="tree" id="fixtureTree"></div>
+
+            <div class="mode-panel">
+
+                <div class="mode-header">
+
+                    <h2 id="modeTitle">选择 Mode</h2>
+
+                    <div class="actions" style="margin:0;">
+                        <button
+                            class="secondary"
+                            onclick="addChannel()"
+                        >
+                            ＋ 添加通道
+                        </button>
+
+                        <button
+                            class="secondary"
+                            onclick="addMode()"
+                        >
+                            ＋ 添加 Mode
+                        </button>
+                    </div>
+
+                </div>
+
+                <div id="modeInfo"></div>
+
+                <div style="overflow:auto; margin-top:12px;">
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>DMX</th>
+                                <th>Attribute</th>
+                                <th>Feature</th>
+                                <th>Preset</th>
+                                <th>Fine</th>
+                                <th>Wheel</th>
+                                <th>Functions</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="channelTable"></tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
         </div>
-
-        <div class="section-buttons">
-            <button onclick="addWheel('Color')">＋ Color Wheel</button>
-            <button onclick="addWheel('Gobo')">＋ Gobo Wheel</button>
-            <button onclick="addWheel('Prism')">＋ Prism Wheel</button>
-            <button onclick="addWheel('Rotation')">＋ Rotation Wheel</button>
-            <button class="red" onclick="clearWheels()">清空 Wheels</button>
-        </div>
-
-        <div id="wheels"></div>
 
     </div>
 
 
-    <!-- XML -->
-    <div class="card">
+    <!-- OUTPUT -->
+    <div id="outputCard" class="card hidden">
 
-        <h2>⑤ MA2 XML</h2>
+        <div class="card-title">④ 输出</div>
 
-        <div class="toolbar">
-            <button class="primary" onclick="generateXML()">⚙ 生成 XML</button>
-            <button class="green" onclick="downloadXML()">↓ 下载 XML</button>
+        <div class="info-box">
+            当前输出目标：grandMA2 XML 3.1.2
+            <br>
+            D4 的 Attribute / Mode / ChannelOffset / 16bit / Cell
+            会转换为 MA2 FixtureType 结构。
         </div>
 
-        <div style="margin-top:12px;">
-            <textarea id="xmlPreview" class="xml-preview" readonly></textarea>
+        <div class="actions">
+
+            <select id="outputFormat">
+                <option value="ma2">grandMA2 XML</option>
+            </select>
+
+            <button
+                class="success"
+                onclick="generateMA2()"
+            >
+                ⚙ 生成 MA2 XML
+            </button>
+
+            <button
+                class="warning"
+                onclick="downloadXML()"
+            >
+                ↓ 下载 XML
+            </button>
+
+        </div>
+
+        <div style="margin-top:15px;">
+            <div class="card-title">XML Preview</div>
+            <div
+                id="xmlPreview"
+                class="xml-preview"
+            >等待生成……</div>
         </div>
 
     </div>
@@ -458,1596 +539,2130 @@ button.small{
 
 <script>
 
-let channels = [];
-let wheels = [];
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let universalFixture = null;
+let selectedModeIndex = 0;
 let generatedXML = "";
 
 
 /* =========================================================
-   工具
+   UTIL
 ========================================================= */
 
-function esc(value){
+function esc(value) {
+
     return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&apos;");
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 }
 
-function num(value, fallback=0){
+
+function xmlAttr(value) {
+
+    return esc(value);
+
+}
+
+
+function numberOr(value, fallback) {
+
     const n = Number(value);
+
     return Number.isFinite(n) ? n : fallback;
-}
 
-function uid(){
-    return Math.random().toString(36).substring(2,8);
 }
 
 
-/* =========================================================
-   属性智能判断
-========================================================= */
+function normalizeDmxRange(range) {
 
-function detectAttribute(name){
-
-    const s = String(name).toLowerCase();
-
-    if(s.includes("dimmer") || s.includes("intensity") || s.includes("master")){
-        return "Dimmer";
+    if (!range) {
+        return {
+            from: 0,
+            to: 255
+        };
     }
 
-    if(s.includes("pan")){
-        return "Pan";
+    const match = String(range).match(
+        /(-?\d+(?:\.\d+)?)\s*~\s*(-?\d+(?:\.\d+)?)/
+    );
+
+    if (!match) {
+        return {
+            from: 0,
+            to: 255
+        };
     }
 
-    if(s.includes("tilt")){
-        return "Tilt";
+    return {
+        from: Number(match[1]),
+        to: Number(match[2])
+    };
+
+}
+
+
+function detectPreset(attribute) {
+
+    const id = String(attribute.id || "").toLowerCase();
+    const name = String(attribute.name || "").toLowerCase();
+
+    if (
+        id.includes("pan") ||
+        name.includes("pan") ||
+        id.includes("tilt") ||
+        name.includes("tilt")
+    ) {
+        return "Position";
     }
 
-    if(
-        s.includes("red") ||
-        s.includes("green") ||
-        s.includes("blue") ||
-        s.includes("white") ||
-        s.includes("amber") ||
-        s.includes("cyan") ||
-        s.includes("magenta") ||
-        s.includes("color") ||
-        s.includes("colour")
-    ){
+    if (
+        id.includes("colour") ||
+        id.includes("color") ||
+        name.includes("colour") ||
+        name.includes("color") ||
+        id === "red" ||
+        id === "green" ||
+        id === "blue" ||
+        id === "white"
+    ) {
         return "Color";
     }
 
-    if(s.includes("gobo")){
+    if (
+        id.includes("gobo") ||
+        name.includes("gobo")
+    ) {
         return "Gobo";
     }
 
-    if(s.includes("prism")){
-        return "Prism";
+    if (
+        id.includes("prism") ||
+        name.includes("prism")
+    ) {
+        return "Beam";
     }
 
-    if(
-        s.includes("strobe") ||
-        s.includes("shutter")
-    ){
-        return "Shutter";
+    if (
+        id.includes("focus") ||
+        name.includes("focus") ||
+        id.includes("zoom") ||
+        name.includes("zoom")
+    ) {
+        return "Beam";
     }
 
-    if(s.includes("focus")){
-        return "Focus";
+    if (
+        id.includes("dimmer") ||
+        name.includes("dimmer")
+    ) {
+        return "Dimmer";
     }
 
-    if(s.includes("zoom")){
-        return "Zoom";
-    }
-
-    if(
-        s.includes("reset") ||
-        s.includes("control") ||
-        s.includes("lamp") ||
-        s.includes("motor")
-    ){
-        return "Control";
-    }
-
-    if(s.includes("frost")){
-        return "Frost";
+    if (
+        id.includes("shutter") ||
+        name.includes("shutter")
+    ) {
+        return "Beam";
     }
 
     return "Control";
 }
 
 
-function detectPreset(attribute){
+function detectFeature(attribute) {
 
-    if(attribute === "Pan" || attribute === "Tilt"){
-        return "Position";
-    }
+    const id = String(attribute.id || "").toLowerCase();
+    const name = String(attribute.name || "").toLowerCase();
 
-    return attribute;
-}
+    if (id.includes("pan")) return "Pan";
+    if (id.includes("tilt")) return "Tilt";
 
+    if (id.includes("dimmer")) return "Dimmer";
 
-function detectFine(name){
+    if (
+        id.includes("red") ||
+        name === "red"
+    ) return "Red";
 
-    const s = String(name).toLowerCase();
+    if (
+        id.includes("green") ||
+        name === "green"
+    ) return "Green";
 
-    return (
-        s.includes("fine") ||
-        s.includes("16bit") ||
-        s.includes("16 bit")
-    );
-}
+    if (
+        id.includes("blue") ||
+        name === "blue"
+    ) return "Blue";
 
+    if (
+        id.includes("white") ||
+        name === "white"
+    ) return "White";
 
-/* =========================================================
-   默认 Function
-========================================================= */
+    if (
+        id.includes("colour") ||
+        id.includes("color")
+    ) return "Color";
 
-function defaultFunction(name=""){
-    return {
-        id:uid(),
-        name:name || "",
-        from:0,
-        to:255,
-        wheel:""
-    };
-}
+    if (id.includes("gobo")) return "Gobo";
 
+    if (id.includes("prism")) return "Prism";
 
-/* =========================================================
-   Channel
-========================================================= */
+    if (id.includes("focus")) return "Focus";
 
-function addChannel(data=null){
+    if (id.includes("zoom")) return "Zoom";
 
-    const index = channels.length + 1;
+    if (id.includes("frost")) return "Frost";
 
-    channels.push(
-        data || {
-            index:index,
-            name:"Channel " + index,
-            attribute:"Control",
-            feature:"",
-            preset:"Control",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[
-                defaultFunction("")
-            ]
-        }
-    );
+    if (id.includes("shutter")) return "Shutter";
 
-    renderChannels();
-}
+    if (id.includes("control")) return "Control";
 
-
-function removeChannel(index){
-
-    channels.splice(index,1);
-
-    channels.forEach((ch,i)=>{
-        ch.index = i + 1;
-    });
-
-    renderChannels();
-}
-
-
-function addFunction(channelIndex){
-
-    channels[channelIndex].functions.push(
-        defaultFunction("")
-    );
-
-    renderChannels();
-}
-
-
-function removeFunction(channelIndex,functionIndex){
-
-    channels[channelIndex].functions.splice(functionIndex,1);
-
-    if(channels[channelIndex].functions.length === 0){
-        channels[channelIndex].functions.push(defaultFunction(""));
-    }
-
-    renderChannels();
-}
-
-
-function updateChannel(index,key,value){
-
-    channels[index][key] = value;
-
-    if(key === "attribute"){
-        channels[index].preset = detectPreset(value);
-    }
-
-    if(key === "name"){
-        if(
-            detectFine(value) &&
-            !channels[index].fine
-        ){
-            channels[index].fine = true;
-        }
-    }
-}
-
-
-function updateFunction(ci,fi,key,value){
-    channels[ci].functions[fi][key] = value;
+    return attribute.name || attribute.id || "Control";
 }
 
 
 /* =========================================================
-   Render Channels
+   FILE INPUT
 ========================================================= */
 
-function renderChannels(){
+document
+    .getElementById("fileInput")
+    .addEventListener("change", function(e) {
 
-    const container = document.getElementById("channels");
+        const file = e.target.files[0];
 
-    if(channels.length === 0){
-        container.innerHTML = `
-            <div class="empty">
-                暂无通道，请添加通道或使用智能解析。
-            </div>
-        `;
-        return;
-    }
+        if (!file) return;
 
-    container.innerHTML = channels.map((ch,ci)=>{
+        const reader = new FileReader();
 
-        return `
-        <div class="channel">
+        reader.onload = function(event) {
 
-            <div class="channel-head">
+            document.getElementById("inputXml").value =
+                event.target.result;
 
-                <strong>CH ${ch.index}</strong>
+            parseD4();
 
-                <span style="color:#8493a3;font-size:12px;">
-                    ${esc(ch.name)}
-                </span>
+        };
 
-                <div style="margin-left:auto;">
-                    <button class="small red"
-                        onclick="removeChannel(${ci})">
-                        删除通道
-                    </button>
-                </div>
+        reader.readAsText(file);
 
-            </div>
-
-            <div class="channel-main">
-
-                <div class="channel-grid">
-
-                    <div class="field">
-                        <label>CH</label>
-                        <input
-                            value="${ch.index}"
-                            onchange="updateChannel(${ci},'index',num(this.value,1))">
-                    </div>
-
-                    <div class="field">
-                        <label>Name</label>
-                        <input
-                            value="${esc(ch.name)}"
-                            onchange="updateChannel(${ci},'name',this.value)">
-                    </div>
-
-                    <div class="field">
-                        <label>Attribute</label>
-                        <input
-                            value="${esc(ch.attribute)}"
-                            onchange="updateChannel(${ci},'attribute',this.value)">
-                    </div>
-
-                    <div class="field">
-                        <label>Feature</label>
-                        <input
-                            value="${esc(ch.feature)}"
-                            onchange="updateChannel(${ci},'feature',this.value)">
-                    </div>
-
-                    <div class="field">
-                        <label>Preset</label>
-                        <input
-                            value="${esc(ch.preset)}"
-                            onchange="updateChannel(${ci},'preset',this.value)">
-                    </div>
-
-                    <div class="field">
-                        <label>Default</label>
-                        <input
-                            type="number"
-                            min="0"
-                            max="255"
-                            value="${ch.default}"
-                            onchange="updateChannel(${ci},'default',num(this.value))">
-                    </div>
-
-                    <div class="field">
-                        <label>Highlight</label>
-                        <input
-                            type="number"
-                            min="0"
-                            max="255"
-                            value="${ch.highlight}"
-                            onchange="updateChannel(${ci},'highlight',num(this.value))">
-                    </div>
-
-                    <div class="field">
-                        <label>Fine</label>
-                        <select
-                            onchange="updateChannel(${ci},'fine',this.value==='true')">
-                            <option value="false" ${!ch.fine?"selected":""}>No</option>
-                            <option value="true" ${ch.fine?"selected":""}>Yes</option>
-                        </select>
-                    </div>
-
-                </div>
+    });
 
 
-                <div style="margin-top:15px;">
+/* =========================================================
+   CLEAR
+========================================================= */
 
-                    <div class="function-title">
-                        <span>Functions</span>
+function clearInput() {
 
-                        <button
-                            class="small"
-                            onclick="addFunction(${ci})">
-                            ＋ Function
-                        </button>
-                    </div>
+    document.getElementById("inputXml").value = "";
 
+    document.getElementById("fileInput").value = "";
 
-                    ${ch.functions.map((fn,fi)=>`
+    document.getElementById("status").className = "status";
 
-                        <div class="function">
+    document.getElementById("status").textContent =
+        "等待输入灯库……";
 
-                            <div class="function-title">
+    document.getElementById("summaryCard")
+        .classList.add("hidden");
 
-                                <span>
-                                    Function ${fi+1}
-                                </span>
+    document.getElementById("editorCard")
+        .classList.add("hidden");
 
-                                <button
-                                    class="small red"
-                                    onclick="removeFunction(${ci},${fi})">
-                                    删除
-                                </button>
+    document.getElementById("outputCard")
+        .classList.add("hidden");
 
-                            </div>
+    universalFixture = null;
 
-
-                            <div class="function-grid">
-
-                                <div class="field">
-                                    <label>Function Name</label>
-                                    <input
-                                        value="${esc(fn.name)}"
-                                        onchange="updateFunction(${ci},${fi},'name',this.value)">
-                                </div>
-
-                                <div class="field">
-                                    <label>From</label>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        max="255"
-                                        value="${fn.from}"
-                                        onchange="updateFunction(${ci},${fi},'from',num(this.value))">
-                                </div>
-
-                                <div class="field">
-                                    <label>To</label>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        max="255"
-                                        value="${fn.to}"
-                                        onchange="updateFunction(${ci},${fi},'to',num(this.value))">
-                                </div>
-
-                                <div class="field">
-                                    <label>Wheel</label>
-
-                                    <select
-                                        onchange="updateFunction(${ci},${fi},'wheel',this.value)">
-
-                                        <option value="">无 Wheel</option>
-
-                                        ${wheels.map(w=>`
-                                            <option
-                                                value="${w.id}"
-                                                ${fn.wheel===w.id?"selected":""}>
-                                                ${esc(w.name)} [${esc(w.type)}]
-                                            </option>
-                                        `).join("")}
-
-                                    </select>
-                                </div>
-
-                                <div class="field">
-                                    <label>Wheel ID</label>
-                                    <input
-                                        value="${esc(fn.wheel || "")}"
-                                        onchange="updateFunction(${ci},${fi},'wheel',this.value)">
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    `).join("")}
-
-                </div>
-
-            </div>
-
-        </div>
-        `;
-
-    }).join("");
 }
 
 
 /* =========================================================
-   Wheel
+   PARSE D4
 ========================================================= */
 
-function addWheel(type="Color"){
+function parseD4() {
 
-    const count = wheels.filter(w=>w.type===type).length + 1;
+    const xmlText =
+        document.getElementById("inputXml").value.trim();
 
-    wheels.push({
-        id:"wheel_" + uid(),
-        name:type + " Wheel " + count,
-        type:type,
-        slots:[
-            {
-                index:0,
-                name:"Open",
-                from:0,
-                to:10,
-                image:""
-            }
-        ]
-    });
+    if (!xmlText) {
 
-    renderWheels();
-    renderChannels();
-}
-
-
-function removeWheel(index){
-
-    const id = wheels[index].id;
-
-    channels.forEach(ch=>{
-        ch.functions.forEach(fn=>{
-            if(fn.wheel === id){
-                fn.wheel = "";
-            }
-        });
-    });
-
-    wheels.splice(index,1);
-
-    renderWheels();
-    renderChannels();
-}
-
-
-function addSlot(wheelIndex){
-
-    const wheel = wheels[wheelIndex];
-
-    wheel.slots.push({
-        index:wheel.slots.length,
-        name:"Slot " + (wheel.slots.length + 1),
-        from:0,
-        to:255,
-        image:""
-    });
-
-    renderWheels();
-}
-
-
-function removeSlot(wheelIndex,slotIndex){
-
-    wheels[wheelIndex].slots.splice(slotIndex,1);
-
-    wheels[wheelIndex].slots.forEach((s,i)=>{
-        s.index=i;
-    });
-
-    renderWheels();
-}
-
-
-function updateWheel(index,key,value){
-
-    wheels[index][key]=value;
-}
-
-
-function updateSlot(wi,si,key,value){
-
-    wheels[wi].slots[si][key]=value;
-}
-
-
-function renderWheels(){
-
-    const container=document.getElementById("wheels");
-
-    if(wheels.length===0){
-        container.innerHTML=`
-            <div class="empty">
-                暂无 Wheel。点击上方按钮添加 Color / Gobo / Prism / Rotation Wheel。
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML=wheels.map((wheel,wi)=>{
-
-        return `
-        <div class="wheel">
-
-            <div class="wheel-head">
-
-                <strong>${esc(wheel.type)}</strong>
-
-                <input
-                    style="max-width:220px;"
-                    value="${esc(wheel.name)}"
-                    onchange="updateWheel(${wi},'name',this.value)">
-
-                <span style="font-size:11px;color:#758493;">
-                    ID: ${esc(wheel.id)}
-                </span>
-
-                <div style="margin-left:auto;">
-                    <button
-                        class="small red"
-                        onclick="removeWheel(${wi})">
-                        删除 Wheel
-                    </button>
-                </div>
-
-            </div>
-
-
-            <div class="wheel-body">
-
-                <div style="margin-bottom:10px;">
-                    <button
-                        class="small"
-                        onclick="addSlot(${wi})">
-                        ＋ 添加 Slot
-                    </button>
-                </div>
-
-
-                ${wheel.slots.map((slot,si)=>`
-
-                    <div class="slot">
-
-                        <div class="slot-grid">
-
-                            <div class="field">
-                                <label>Slot Name</label>
-                                <input
-                                    value="${esc(slot.name)}"
-                                    onchange="updateSlot(${wi},${si},'name',this.value)">
-                            </div>
-
-                            <div class="field">
-                                <label>From</label>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    max="255"
-                                    value="${slot.from}"
-                                    onchange="updateSlot(${wi},${si},'from',num(this.value))">
-                            </div>
-
-                            <div class="field">
-                                <label>To</label>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    max="255"
-                                    value="${slot.to}"
-                                    onchange="updateSlot(${wi},${si},'to',num(this.value))">
-                            </div>
-
-                            <div class="field">
-                                <label>Image Filename</label>
-                                <input
-                                    placeholder="例如 red.png"
-                                    value="${esc(slot.image)}"
-                                    onchange="updateSlot(${wi},${si},'image',this.value)">
-                            </div>
-
-                            <div>
-                                <button
-                                    class="small red"
-                                    onclick="removeSlot(${wi},${si})">
-                                    ×
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                `).join("")}
-
-            </div>
-
-        </div>
-        `;
-
-    }).join("");
-}
-
-
-/* =========================================================
-   智能解析
-========================================================= */
-
-function parseChannels(){
-
-    const text=document.getElementById("parserInput").value.trim();
-
-    if(!text){
-        document.getElementById("parseStatus").textContent="请输入通道表。";
-        return;
-    }
-
-    const lines=text.split(/\r?\n/);
-
-    const parsed=[];
-
-    lines.forEach(line=>{
-
-        line=line.trim();
-
-        if(!line){
-            return;
-        }
-
-        /*
-         支持：
-         10 Color 0-10 Open
-         10 Color 11-100 Strobe
-         1 Dimmer
-        */
-
-        let m=line.match(
-            /^(\d+)\s+(.+?)\s+(\d+)\s*[-~]\s*(\d+)(?:\s+(.+))?$/i
+        setStatus(
+            "请先上传或者粘贴 D4 XML。",
+            "error"
         );
 
-        if(m){
-
-            const ch=num(m[1]);
-            const name=m[2].trim();
-            const from=num(m[3]);
-            const to=num(m[4]);
-            const fnName=(m[5] || "").trim();
-
-            parsed.push({
-                channel:ch,
-                name:name,
-                from:from,
-                to:to,
-                functionName:fnName
-            });
-
-            return;
-        }
-
-
-        m=line.match(/^(\d+)\s+(.+)$/);
-
-        if(m){
-
-            const ch=num(m[1]);
-            let name=m[2].trim();
-
-            parsed.push({
-                channel:ch,
-                name:name,
-                from:0,
-                to:255,
-                functionName:""
-            });
-        }
-
-    });
-
-
-    if(parsed.length===0){
-
-        document.getElementById("parseStatus").textContent=
-            "没有识别到有效通道。";
-
         return;
     }
 
+    try {
 
-    const groups={};
+        const parser = new DOMParser();
 
-    parsed.forEach(item=>{
+        const doc =
+            parser.parseFromString(
+                xmlText,
+                "application/xml"
+            );
 
-        if(!groups[item.channel]){
-            groups[item.channel]=[];
+        const parseError =
+            doc.querySelector("parsererror");
+
+        if (parseError) {
+
+            throw new Error(
+                "XML 格式错误，无法解析。"
+            );
+
         }
 
-        groups[item.channel].push(item);
+        const fixture =
+            doc.querySelector("Fixture");
 
-    });
+        if (!fixture) {
+
+            throw new Error(
+                "没有找到 <Fixture>，这不是标准 D4 Fixture XML。"
+            );
+
+        }
+
+        universalFixture =
+            parseD4Fixture(fixture);
+
+        selectedModeIndex = 0;
+
+        renderSummary();
+
+        renderTree();
+
+        renderSelectedMode();
+
+        document.getElementById("summaryCard")
+            .classList.remove("hidden");
+
+        document.getElementById("editorCard")
+            .classList.remove("hidden");
+
+        document.getElementById("outputCard")
+            .classList.remove("hidden");
+
+        setStatus(
+            "D4 灯库解析成功。",
+            "ok"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "解析失败：" + error.message,
+            "error"
+        );
+
+    }
+
+}
 
 
-    channels=[];
+/* =========================================================
+   D4 → UNIVERSAL MODEL
+========================================================= */
+
+function parseD4Fixture(fixture) {
+
+    const result = {
+
+        sourceFormat: "D4 / Avolites",
+
+        manufacturer:
+            fixture.getAttribute("Company") || "",
+
+        name:
+            fixture.getAttribute("Name") || "Unnamed",
+
+        shortName:
+            fixture.getAttribute("ShortName") || "",
+
+        attributes: [],
+
+        modes: [],
+
+        cells: [],
+
+        wheels: []
+
+    };
 
 
-    Object.keys(groups)
-        .sort((a,b)=>num(a)-num(b))
-        .forEach(channelNumber=>{
+    /* -----------------------------------------------------
+       CONTROL / ATTRIBUTE
+    ----------------------------------------------------- */
 
-            const items=groups[channelNumber];
+    const control =
+        fixture.querySelector(":scope > Control");
 
-            const first=items[0];
+    if (control) {
 
-            let attribute=detectAttribute(first.name);
+        const attributes =
+            control.querySelectorAll(":scope > Attribute");
 
-            const ch={
-                index:num(channelNumber),
-                name:first.name,
-                attribute:attribute,
-                feature:"",
-                preset:detectPreset(attribute),
-                fine:detectFine(first.name),
-                default:0,
-                highlight:0,
-                functions:[]
+        attributes.forEach(attributeNode => {
+
+            const attribute = {
+
+                id:
+                    attributeNode.getAttribute("ID") || "",
+
+                name:
+                    attributeNode.getAttribute("Name") || "",
+
+                description:
+                    attributeNode.getAttribute("Description") || "",
+
+                group:
+                    attributeNode.getAttribute("Group") || "",
+
+                size:
+                    numberOr(
+                        attributeNode.getAttribute("Size"),
+                        1
+                    ),
+
+                locate:
+                    attributeNode
+                        .querySelector(":scope > Locate")
+                        ?.getAttribute("Locate") || "",
+
+                powerOn:
+                    attributeNode
+                        .querySelector(":scope > Locate")
+                        ?.getAttribute("PowerOn") || "",
+
+                preset: "",
+
+                feature: "",
+
+                functions: []
+
             };
 
 
-            items.forEach(item=>{
+            attribute.preset =
+                detectPreset(attribute);
 
-                ch.functions.push({
+            attribute.feature =
+                detectFeature(attribute);
 
-                    id:uid(),
 
-                    name:item.functionName ||
-                         (
-                            items.length===1
-                            ? ""
-                            : item.name
-                         ),
+            const functions =
+                attributeNode.querySelectorAll(
+                    ":scope > Function"
+                );
 
-                    from:item.from,
 
-                    to:item.to,
+            functions.forEach(functionNode => {
 
-                    wheel:""
+                const dmx =
+                    normalizeDmxRange(
+                        functionNode.getAttribute("Dmx")
+                    );
+
+                attribute.functions.push({
+
+                    id:
+                        functionNode.getAttribute("ID") || "",
+
+                    name:
+                        functionNode.getAttribute("Name") || "",
+
+                    display:
+                        functionNode.getAttribute("Display") || "",
+
+                    dmxFrom: dmx.from,
+
+                    dmxTo: dmx.to
 
                 });
 
             });
 
 
-            channels.push(ch);
+            result.attributes.push(attribute);
 
         });
 
-
-    document.getElementById("parseStatus").textContent=
-        `解析完成：${channels.length} 个通道，${parsed.length} 个 Function。`;
-
-
-    document.getElementById("parsePreview").style.display="block";
-
-    document.getElementById("parsePreview").textContent=
-        channels.map(ch=>{
-
-            return `CH ${ch.index} | ${ch.name} | ${ch.attribute} | ${ch.functions.length} Function`;
-
-        }).join("\n");
-
-
-    renderChannels();
-
-}
-
-
-function loadParserExample(){
-
-    document.getElementById("parserInput").value=
-`1 Dimmer
-2 Pan
-3 Pan Fine
-4 Tilt
-5 Tilt Fine
-6 Red
-7 Green
-8 Blue
-9 White
-10 Strobe 0-10 Open
-10 Strobe 11-100 Strobe
-10 Strobe 101-255 Fast
-11 Gobo 0-20 Open
-11 Gobo 21-40 Gobo 1
-11 Gobo 41-60 Gobo 2
-12 Prism 0-10 Open
-12 Prism 11-255 Prism
-13 Focus
-14 Zoom
-15 Reset 0-20 Normal
-15 Reset 21-100 Reset`;
-
-}
-
-
-function clearParser(){
-
-    document.getElementById("parserInput").value="";
-    document.getElementById("parseStatus").textContent="";
-    document.getElementById("parsePreview").style.display="none";
-
-}
-
-
-/* =========================================================
-   8CH 示例
-========================================================= */
-
-function load8CH(){
-
-    channels=[
-
-        {
-            index:1,
-            name:"Dimmer",
-            attribute:"Dimmer",
-            feature:"Dimmer",
-            preset:"Dimmer",
-            fine:false,
-            default:255,
-            highlight:255,
-            functions:[
-                {
-                    id:uid(),
-                    name:"",
-                    from:0,
-                    to:255,
-                    wheel:""
-                }
-            ]
-        },
-
-        {
-            index:2,
-            name:"Red",
-            attribute:"Red",
-            feature:"Red",
-            preset:"Color",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[
-                {
-                    id:uid(),
-                    name:"",
-                    from:0,
-                    to:255,
-                    wheel:""
-                }
-            ]
-        },
-
-        {
-            index:3,
-            name:"Green",
-            attribute:"Green",
-            feature:"Green",
-            preset:"Color",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[
-                {
-                    id:uid(),
-                    name:"",
-                    from:0,
-                    to:255,
-                    wheel:""
-                }
-            ]
-        },
-
-        {
-            index:4,
-            name:"Blue",
-            attribute:"Blue",
-            feature:"Blue",
-            preset:"Color",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[
-                {
-                    id:uid(),
-                    name:"",
-                    from:0,
-                    to:255,
-                    wheel:""
-                }
-            ]
-        },
-
-        {
-            index:5,
-            name:"White",
-            attribute:"White",
-            feature:"White",
-            preset:"Color",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[
-                {
-                    id:uid(),
-                    name:"",
-                    from:0,
-                    to:255,
-                    wheel:""
-                }
-            ]
-        },
-
-        {
-            index:6,
-            name:"Strobe",
-            attribute:"Shutter",
-            feature:"Strobe",
-            preset:"Shutter",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[
-                {
-                    id:uid(),
-                    name:"Open",
-                    from:0,
-                    to:10,
-                    wheel:""
-                },
-                {
-                    id:uid(),
-                    name:"Strobe",
-                    from:11,
-                    to:100,
-                    wheel:""
-                },
-                {
-                    id:uid(),
-                    name:"Fast",
-                    from:101,
-                    to:255,
-                    wheel:""
-                }
-            ]
-        },
-
-        {
-            index:7,
-            name:"Gobo",
-            attribute:"Gobo",
-            feature:"Gobo",
-            preset:"Gobo",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[]
-        },
-
-        {
-            index:8,
-            name:"Prism",
-            attribute:"Prism",
-            feature:"Prism",
-            preset:"Prism",
-            fine:false,
-            default:0,
-            highlight:0,
-            functions:[]
-        }
-
-    ];
-
-
-    if(wheels.length===0){
-
-        addDemoWheels();
-
     }
 
-    renderChannels();
-    renderWheels();
 
-}
+    /* -----------------------------------------------------
+       MODES
+    ----------------------------------------------------- */
 
+    const modes =
+        fixture.querySelectorAll(":scope > Mode");
 
-/* =========================================================
-   20CH 示例
-========================================================= */
 
-function load20CH(){
+    modes.forEach(modeNode => {
 
-    channels=[];
+        const mode = {
 
-    const names=[
-        ["Pan","Pan","Position"],
-        ["Tilt","Tilt","Position"],
-        ["Dimmer","Dimmer","Dimmer"],
-        ["Red","Red","Color"],
-        ["Green","Green","Color"],
-        ["Blue","Blue","Color"],
-        ["White","White","Color"],
-        ["Strobe","Shutter","Shutter"],
-        ["Gobo","Gobo","Gobo"],
-        ["Gobo Rotation","Gobo","Gobo"],
-        ["Prism","Prism","Prism"],
-        ["Focus","Focus","Focus"],
-        ["Zoom","Zoom","Zoom"],
-        ["Frost","Frost","Frost"],
-        ["Reset","Control","Control"],
-        ["Lamp","Control","Control"],
-        ["Pan Fine","Pan","Position"],
-        ["Tilt Fine","Tilt","Position"],
-        ["Color Macro","Color","Color"],
-        ["Speed","Control","Control"]
-    ];
+            name:
+                modeNode.getAttribute("Name") || "",
 
+            channels:
+                numberOr(
+                    modeNode.getAttribute("Channels"),
+                    0
+                ),
 
-    names.forEach((item,i)=>{
+            includes: [],
 
-        const name=item[0];
-        const attr=item[1];
-        const preset=item[2];
+            cells: []
 
-        channels.push({
-
-            index:i+1,
+        };
 
-            name:name,
 
-            attribute:attr,
+        const include =
+            modeNode.querySelector(":scope > Include");
 
-            feature:name,
 
-            preset:preset,
+        if (include) {
 
-            fine:name.toLowerCase().includes("fine"),
+            const attributeNodes =
+                include.querySelectorAll(
+                    ":scope > Attribute"
+                );
 
-            default:0,
 
-            highlight:0,
+            attributeNodes.forEach(attributeNode => {
 
-            functions:[
+                const offsetText =
+                    attributeNode.getAttribute(
+                        "ChannelOffset"
+                    ) || "";
 
-                {
-                    id:uid(),
-                    name:"",
-                    from:0,
-                    to:255,
-                    wheel:""
-                }
 
-            ]
+                const offsets =
+                    offsetText
+                        .split(",")
+                        .map(v => Number(v.trim()))
+                        .filter(v => Number.isFinite(v));
 
-        });
 
-    });
+                const attrId =
+                    attributeNode.getAttribute("ID") || "";
 
 
-    /*
-      20CH 示例加入多 Function
-    */
+                const wheel =
+                    attributeNode.getAttribute("Wheel") || "";
 
-    channels[7].functions=[
 
-        {
-            id:uid(),
-            name:"Open",
-            from:0,
-            to:10,
-            wheel:""
-        },
-
-        {
-            id:uid(),
-            name:"Strobe",
-            from:11,
-            to:100,
-            wheel:""
-        },
-
-        {
-            id:uid(),
-            name:"Fast",
-            from:101,
-            to:255,
-            wheel:""
-        }
-
-    ];
-
-
-    channels[8].functions=[
-
-        {
-            id:uid(),
-            name:"Open",
-            from:0,
-            to:20,
-            wheel:""
-        },
-
-        {
-            id:uid(),
-            name:"Gobo 1",
-            from:21,
-            to:60,
-            wheel:""
-        },
-
-        {
-            id:uid(),
-            name:"Gobo 2",
-            from:61,
-            to:100,
-            wheel:""
-        },
-
-        {
-            id:uid(),
-            name:"Gobo 3",
-            from:101,
-            to:140,
-            wheel:""
-        }
-
-    ];
-
-
-    channels[10].functions=[
-
-        {
-            id:uid(),
-            name:"Open",
-            from:0,
-            to:10,
-            wheel:"",
-        },
-
-        {
-            id:uid(),
-            name:"Prism",
-            from:11,
-            to:255,
-            wheel:""
-        }
-
-    ];
-
-
-    if(wheels.length===0){
-        addDemoWheels();
-    }
-
-    renderChannels();
-    renderWheels();
-
-}
-
-
-/* =========================================================
-   Demo Wheels
-========================================================= */
-
-function addDemoWheels(){
-
-    wheels=[
-
-        {
-            id:"color_1",
-            name:"Color Wheel 1",
-            type:"Color",
-            slots:[
-                {
-                    index:0,
-                    name:"Open",
-                    from:0,
-                    to:10,
-                    image:""
-                },
-                {
-                    index:1,
-                    name:"Red",
-                    from:11,
-                    to:40,
-                    image:"red.png"
-                },
-                {
-                    index:2,
-                    name:"Green",
-                    from:41,
-                    to:70,
-                    image:"green.png"
-                },
-                {
-                    index:3,
-                    name:"Blue",
-                    from:71,
-                    to:100,
-                    image:"blue.png"
-                }
-            ]
-        },
-
-        {
-            id:"gobo_1",
-            name:"Gobo Wheel 1",
-            type:"Gobo",
-            slots:[
-                {
-                    index:0,
-                    name:"Open",
-                    from:0,
-                    to:20,
-                    image:""
-                },
-                {
-                    index:1,
-                    name:"Gobo 1",
-                    from:21,
-                    to:60,
-                    image:"gobo1.png"
-                },
-                {
-                    index:2,
-                    name:"Gobo 2",
-                    from:61,
-                    to:100,
-                    image:"gobo2.png"
-                }
-            ]
-        },
-
-        {
-            id:"prism_1",
-            name:"Prism Wheel 1",
-            type:"Prism",
-            slots:[
-                {
-                    index:0,
-                    name:"Open",
-                    from:0,
-                    to:10,
-                    image:""
-                },
-                {
-                    index:1,
-                    name:"Prism",
-                    from:11,
-                    to:255,
-                    image:"prism.png"
-                }
-            ]
-        },
-
-        {
-            id:"rotation_1",
-            name:"Rotation Wheel 1",
-            type:"Rotation",
-            slots:[
-                {
-                    index:0,
-                    name:"Stop",
-                    from:0,
-                    to:20,
-                    image:""
-                },
-                {
-                    index:1,
-                    name:"Slow CW",
-                    from:21,
-                    to:120,
-                    image:""
-                },
-                {
-                    index:2,
-                    name:"Fast CW",
-                    from:121,
-                    to:200,
-                    image:""
-                },
-                {
-                    index:3,
-                    name:"Fast CCW",
-                    from:201,
-                    to:255,
-                    image:""
-                }
-            ]
-        }
-
-    ];
-
-}
-
-
-/* =========================================================
-   XML Channel Function
-========================================================= */
-
-function buildChannelType(ch){
-
-    let xml="";
-
-    const fineAttr =
-        ch.fine
-        ? ` fine="1"`
-        : "";
-
-    xml+=`            <ChannelType index="${esc(ch.index)}" attribute="${esc(ch.attribute)}" feature="${esc(ch.feature)}" preset="${esc(ch.preset)}" coarse="${esc(ch.index)}" default="${esc(ch.default)}" highlight_value="${esc(ch.highlight)}"${fineAttr}>\n`;
-
-    ch.functions.forEach((fn,fi)=>{
-
-        let attrs=
-            `index="${fi}"`;
-
-        if(fn.name){
-            attrs+=` name="${esc(fn.name)}"`;
-        }
-
-        attrs+=` from="${num(fn.from)}"`;
-        attrs+=` to="${num(fn.to)}"`;
-
-        attrs+=` min_dmx_24="${num(fn.from)*65793}"`;
-        attrs+=` max_dmx_24="${num(fn.to)*65793}"`;
-
-        if(fn.wheel){
-            attrs+=` wheel="${esc(fn.wheel)}"`;
-        }
-
-        xml+=`                <ChannelFunction ${attrs}>\n`;
-
-        /*
-          ChannelSet
-        */
-
-        const setName=
-            fn.name ||
-            ch.name ||
-            ("Function " + (fi+1));
-
-        xml+=`                    <ChannelSet index="0" name="${esc(setName)}" from_dmx="${num(fn.from)}" to_dmx="${num(fn.to)}"`;
-
-        if(fn.wheel){
-            const wheel=wheels.find(w=>w.id===fn.wheel);
-
-            if(wheel){
-                const slot=
-                    wheel.slots.find(s=>
-                        num(s.from)<=num(fn.from) &&
-                        num(s.to)>=num(fn.to)
+                const universalAttribute =
+                    result.attributes.find(
+                        a => a.id === attrId
                     );
 
-                if(slot){
-                    xml+=` slot_index="${slot.index}"`;
-                }
-            }
+
+                mode.includes.push({
+
+                    attributeId: attrId,
+
+                    name:
+                        universalAttribute?.name ||
+                        attrId,
+
+                    offsets,
+
+                    wheel:
+
+                        wheel === ""
+                            ? null
+                            : Number(wheel),
+
+                    size:
+                        universalAttribute?.size || 1,
+
+                    preset:
+                        universalAttribute?.preset ||
+                        detectPreset({
+                            id: attrId,
+                            name: attrId
+                        }),
+
+                    feature:
+                        universalAttribute?.feature ||
+                        detectFeature({
+                            id: attrId,
+                            name: attrId
+                        }),
+
+                    functions:
+                        universalAttribute?.functions || []
+
+                });
+
+            });
+
         }
 
-        xml+=`/>\n`;
 
-        xml+=`                </ChannelFunction>\n`;
+        /* -------------------------------------------------
+           CELLS
+        ------------------------------------------------- */
 
-    });
-
-    xml+=`            </ChannelType>\n`;
-
-    return xml;
-}
+        const cells =
+            modeNode.querySelector(":scope > Cells");
 
 
-/* =========================================================
-   XML Wheels
-========================================================= */
+        if (cells) {
 
-function buildWheelsXML(){
+            const master =
+                cells.querySelector(":scope > Master");
 
-    if(wheels.length===0){
-        return `<Wheels index="2"/>`;
-    }
+            const cellNodes =
+                cells.querySelectorAll(":scope > Cell");
 
-    let xml=`<Wheels index="2">\n`;
 
-    wheels.forEach((wheel,wi)=>{
+            if (master) {
 
-        xml+=`        <Wheel index="${wi}" name="${esc(wheel.name)}" type="${esc(wheel.type)}" id="${esc(wheel.id)}">\n`;
+                mode.master = {
 
-        wheel.slots.forEach((slot,si)=>{
+                    attributes:
+                        Array.from(
+                            master.querySelectorAll(
+                                ":scope > Attribute"
+                            )
+                        ).map(node => ({
 
-            xml+=`            <Slot index="${si}" name="${esc(slot.name)}" from_dmx="${num(slot.from)}" to_dmx="${num(slot.to)}"`;
+                            id:
+                                node.getAttribute("ID") || "",
 
-            if(slot.image){
-                xml+=` media_name="${esc(slot.image)}" filename="${esc(slot.image)}"`;
+                            wheel:
+                                node.getAttribute("Wheel") || ""
+
+                        }))
+
+                };
+
             }
 
-            xml+=`/>\n`;
 
-        });
+            cellNodes.forEach(cellNode => {
 
-        xml+=`        </Wheel>\n`;
+                const cell = {
+
+                    id:
+                        cellNode.getAttribute("ID") || "",
+
+                    name:
+                        cellNode.getAttribute("Name") || "",
+
+                    channelOffset:
+                        numberOr(
+                            cellNode.getAttribute(
+                                "ChannelOffset"
+                            ),
+                            0
+                        ),
+
+                    modeLink:
+                        cellNode.getAttribute(
+                            "ModeLink"
+                        ) || "",
+
+                    x:
+                        numberOr(
+                            cellNode.getAttribute("X"),
+                            0
+                        ),
+
+                    y:
+                        numberOr(
+                            cellNode.getAttribute("Y"),
+                            0
+                        ),
+
+                    attributeLinks: []
+
+                };
+
+
+                const links =
+                    cellNode.querySelectorAll(
+                        ":scope > AttributeLink"
+                    );
+
+
+                links.forEach(linkNode => {
+
+                    cell.attributeLinks.push({
+
+                        sourceId:
+                            linkNode.getAttribute(
+                                "SourceId"
+                            ) || "",
+
+                        targetId:
+                            linkNode.getAttribute(
+                                "TargetId"
+                            ) || ""
+
+                    });
+
+                });
+
+
+                mode.cells.push(cell);
+
+                result.cells.push({
+
+                    mode: mode.name,
+
+                    ...cell
+
+                });
+
+            });
+
+        }
+
+
+        result.modes.push(mode);
 
     });
 
-    xml+=`    </Wheels>`;
 
-    return xml;
-}
-
-
-/* =========================================================
-   XML Generator
-========================================================= */
-
-function generateXML(){
-
-    const fixtureName=
-        document.getElementById("fixtureName").value.trim() || "Fixture";
-
-    const mode=
-        document.getElementById("fixtureMode").value.trim() || "Mode";
-
-    const manufacturer=
-        document.getElementById("manufacturer").value.trim() || "Manufacturer";
-
-    const shortName=
-        document.getElementById("shortName").value.trim() || fixtureName;
-
-
-    let xml=`<?xml version="1.0" encoding="utf-8"?>\n`;
-
-    xml+=`<MA\n`;
-    xml+=` xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n`;
-    xml+=` xmlns="http://schemas.malighting.de/grandma2/xml/MA"\n`;
-    xml+=` xsi:schemaLocation="http://schemas.malighting.de/grandma2/xml/MA http://schemas.malighting.de/grandma2/xml/3.1.2/MA.xsd"\n`;
-    xml+=` major_vers="3"\n`;
-    xml+=` minor_vers="1"\n`;
-    xml+=` stream_vers="2">\n`;
-
-
-    xml+=`    <Info datetime="${new Date().toISOString()}" showfile="MA2 Fixture Generator V4"/>\n`;
-
-
-    xml+=`    <FixtureType index="21" name="${esc(fixtureName)}" mode="${esc(mode)}">\n`;
-
-    xml+=`        <short_name>${esc(shortName)}</short_name>\n`;
-
-    xml+=`        <manufacturer>${esc(manufacturer)}</manufacturer>\n`;
-
-    xml+=`        <short_manufacturer>${esc(manufacturer)}</short_manufacturer>\n`;
-
-
-    xml+=`        <Modules index="0">\n`;
-
-    xml+=`            <Module index="0" class="Headmover" beamtype="Spot" beam_angle="4" beam_intensity="10000">\n`;
-
-    xml+=`                <Body>\n`;
-
-    xml+=`                    <Size x="0.3" y="0.3" z="0.5"/>\n`;
-
-    xml+=`                </Body>\n`;
-
-
-    channels.forEach(ch=>{
-
-        xml+=buildChannelType(ch);
-
-    });
-
-
-    xml+=`            </Module>\n`;
-
-    xml+=`        </Modules>\n`;
-
-
-    xml+=`        <Instances index="1">\n`;
-
-    xml+=`            <Instance index="0" module_index="0"/>\n`;
-
-    xml+=`        </Instances>\n`;
-
-
-    xml+=`        ${buildWheelsXML()}\n`;
-
-
-    xml+=`        <VirtualFunctionBlocks index="3"/>\n`;
-
-    xml+=`        <FixtureMacroCollect index="5"/>\n`;
-
-    xml+=`        <Body/>\n`;
-
-    xml+=`        <AutoPresets index="4"/>\n`;
-
-    xml+=`    </FixtureType>\n`;
-
-    xml+=`</MA>`;
-
-
-    generatedXML=xml;
-
-    document.getElementById("xmlPreview").value=xml;
+    return result;
 
 }
 
 
 /* =========================================================
-   下载 XML
+   SUMMARY
 ========================================================= */
 
-function downloadXML(){
+function renderSummary() {
 
-    if(!generatedXML){
+    document.getElementById("summaryFormat")
+        .textContent =
+        universalFixture.sourceFormat;
 
-        generateXML();
+    document.getElementById("summaryManufacturer")
+        .textContent =
+        universalFixture.manufacturer || "-";
+
+    document.getElementById("summaryFixture")
+        .textContent =
+        universalFixture.name || "-";
+
+    document.getElementById("summaryModes")
+        .textContent =
+        universalFixture.modes.length;
+
+    document.getElementById("summaryAttributes")
+        .textContent =
+        universalFixture.attributes.length;
+
+    document.getElementById("summaryCells")
+        .textContent =
+        universalFixture.cells.length > 0
+            ? "Yes"
+            : "No";
+
+}
+
+
+/* =========================================================
+   TREE
+========================================================= */
+
+function renderTree() {
+
+    const tree =
+        document.getElementById("fixtureTree");
+
+    tree.innerHTML = "";
+
+
+    const root =
+        document.createElement("div");
+
+    root.className = "tree-root";
+
+    root.textContent =
+        "📦 " + universalFixture.name;
+
+    tree.appendChild(root);
+
+
+    universalFixture.modes.forEach(
+        (mode, index) => {
+
+            const modeItem =
+                document.createElement("div");
+
+            modeItem.className =
+                "tree-item tree-mode" +
+                (
+                    index === selectedModeIndex
+                        ? " active"
+                        : ""
+                );
+
+            modeItem.innerHTML =
+                "▸ " +
+                mode.name +
+                ' <span class="badge blue">' +
+                mode.channels +
+                ' CH</span>';
+
+
+            modeItem.onclick = function() {
+
+                selectedModeIndex = index;
+
+                renderTree();
+
+                renderSelectedMode();
+
+            };
+
+
+            tree.appendChild(modeItem);
+
+
+            mode.cells.forEach(cell => {
+
+                const cellItem =
+                    document.createElement("div");
+
+                cellItem.className =
+                    "tree-item tree-cell";
+
+                cellItem.innerHTML =
+                    "└ " +
+                    cell.name +
+                    ' <span class="badge green">' +
+                    (
+                        cell.modeLink || "-"
+                    ) +
+                    "</span>";
+
+
+                tree.appendChild(cellItem);
+
+            });
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MODE RENDER
+========================================================= */
+
+function renderSelectedMode() {
+
+    if (!universalFixture) return;
+
+    const mode =
+        universalFixture.modes[
+            selectedModeIndex
+        ];
+
+    if (!mode) return;
+
+
+    document.getElementById("modeTitle")
+        .textContent =
+        mode.name +
+        " — " +
+        mode.channels +
+        " CH";
+
+
+    document.getElementById("modeInfo")
+        .innerHTML =
+
+        '<span class="badge blue">' +
+        mode.includes.length +
+        ' Attributes</span> ' +
+
+        '<span class="badge green">' +
+        mode.cells.length +
+        ' Cells</span>';
+
+
+    renderChannelTable(mode);
+
+}
+
+
+/* =========================================================
+   CHANNEL TABLE
+========================================================= */
+
+function renderChannelTable(mode) {
+
+    const tbody =
+        document.getElementById("channelTable");
+
+    tbody.innerHTML = "";
+
+
+    mode.includes.forEach(
+        (channel, index) => {
+
+            const tr =
+                document.createElement("tr");
+
+
+            const dmxText =
+                channel.offsets.join(",");
+
+
+            const fine =
+                channel.offsets.length >= 2
+                    ? channel.offsets[1]
+                    : "";
+
+
+            const functionText =
+                channel.functions
+                    .map(
+                        f =>
+                            `${f.name || "Function"} ${f.dmxFrom}-${f.dmxTo}`
+                    )
+                    .join(" | ");
+
+
+            tr.innerHTML = `
+
+                <td>
+                    <input
+                        value="${esc(dmxText)}"
+                        onchange="editOffset(${index}, this.value)"
+                    >
+                </td>
+
+                <td>
+                    <input
+                        value="${esc(channel.attributeId)}"
+                        onchange="editAttribute(${index}, this.value)"
+                    >
+                </td>
+
+                <td>
+                    <input
+                        value="${esc(channel.feature)}"
+                        onchange="editFeature(${index}, this.value)"
+                    >
+                </td>
+
+                <td>
+                    <select
+                        onchange="editPreset(${index}, this.value)"
+                    >
+                        ${presetOptions(channel.preset)}
+                    </select>
+                </td>
+
+                <td>
+                    ${
+                        fine
+                            ? '<span class="badge orange">16bit</span>'
+                            : '<span class="badge">8bit</span>'
+                    }
+                </td>
+
+                <td>
+                    <input
+                        value="${channel.wheel ?? ""}"
+                        onchange="editWheel(${index}, this.value)"
+                    >
+                </td>
+
+                <td>
+                    <span class="badge">
+                        ${channel.functions.length}
+                    </span>
+                    ${esc(functionText)}
+                </td>
+
+                <td>
+                    <button
+                        class="danger"
+                        onclick="deleteChannel(${index})"
+                    >
+                        删除
+                    </button>
+                </td>
+
+            `;
+
+
+            tbody.appendChild(tr);
+
+        }
+    );
+
+}
+
+
+function presetOptions(selected) {
+
+    const values = [
+        "Dimmer",
+        "Position",
+        "Color",
+        "Gobo",
+        "Beam",
+        "Control"
+    ];
+
+
+    return values.map(
+        value =>
+            `<option
+                value="${value}"
+                ${
+                    value === selected
+                        ? "selected"
+                        : ""
+                }
+            >${value}</option>`
+    ).join("");
+
+}
+
+
+/* =========================================================
+   EDIT CHANNEL
+========================================================= */
+
+function editOffset(index, value) {
+
+    const mode =
+        universalFixture.modes[
+            selectedModeIndex
+        ];
+
+    mode.includes[index].offsets =
+        value
+            .split(",")
+            .map(v => Number(v.trim()))
+            .filter(v => Number.isFinite(v));
+
+}
+
+
+function editAttribute(index, value) {
+
+    const mode =
+        universalFixture.modes[
+            selectedModeIndex
+        ];
+
+    mode.includes[index].attributeId =
+        value;
+
+
+    const attr =
+        universalFixture.attributes.find(
+            a => a.id === value
+        );
+
+
+    if (attr) {
+
+        mode.includes[index].name =
+            attr.name;
+
+        mode.includes[index].functions =
+            attr.functions;
+
+        mode.includes[index].size =
+            attr.size;
 
     }
 
-    const fixtureName=
-        document.getElementById("fixtureName").value.trim() ||
-        "fixture";
-
-    const mode=
-        document.getElementById("fixtureMode").value.trim() ||
-        "mode";
+}
 
 
-    const filename=
-        `${fixtureName}@${mode}.xml`;
+function editFeature(index, value) {
+
+    universalFixture
+        .modes[selectedModeIndex]
+        .includes[index]
+        .feature = value;
+
+}
 
 
-    const blob=new Blob(
-        [generatedXML],
-        {
-            type:"application/xml;charset=utf-8"
+function editPreset(index, value) {
+
+    universalFixture
+        .modes[selectedModeIndex]
+        .includes[index]
+        .preset = value;
+
+}
+
+
+function editWheel(index, value) {
+
+    universalFixture
+        .modes[selectedModeIndex]
+        .includes[index]
+        .wheel =
+        value === ""
+            ? null
+            : Number(value);
+
+}
+
+
+function deleteChannel(index) {
+
+    const mode =
+        universalFixture.modes[
+            selectedModeIndex
+        ];
+
+    mode.includes.splice(index, 1);
+
+    renderSelectedMode();
+
+}
+
+
+/* =========================================================
+   ADD CHANNEL
+========================================================= */
+
+function addChannel() {
+
+    const mode =
+        universalFixture.modes[
+            selectedModeIndex
+        ];
+
+
+    const nextDMX =
+        mode.includes.length > 0
+            ? Math.max(
+                ...mode.includes.flatMap(
+                    x => x.offsets
+                )
+            ) + 1
+            : 1;
+
+
+    mode.includes.push({
+
+        attributeId:
+            "Control",
+
+        name:
+            "Control",
+
+        offsets:
+            [nextDMX],
+
+        wheel:
+            null,
+
+        size:
+            1,
+
+        preset:
+            "Control",
+
+        feature:
+            "Control",
+
+        functions: [
+
+            {
+                id: "1",
+                name: "Raw DMX",
+                display: "",
+                dmxFrom: 0,
+                dmxTo: 255
+            }
+
+        ]
+
+    });
+
+
+    if (mode.channels < nextDMX) {
+        mode.channels = nextDMX;
+    }
+
+
+    renderSelectedMode();
+
+}
+
+
+/* =========================================================
+   ADD MODE
+========================================================= */
+
+function addMode() {
+
+    universalFixture.modes.push({
+
+        name:
+            "New Mode",
+
+        channels:
+            1,
+
+        includes: [
+
+            {
+                attributeId: "Dimmer",
+
+                name: "Dimmer",
+
+                offsets: [1],
+
+                wheel: null,
+
+                size: 1,
+
+                preset: "Dimmer",
+
+                feature: "Dimmer",
+
+                functions: [
+
+                    {
+                        id: "1",
+                        name: "Raw DMX",
+                        display: "",
+                        dmxFrom: 0,
+                        dmxTo: 255
+                    }
+
+                ]
+
+            }
+
+        ],
+
+        cells: []
+
+    });
+
+
+    selectedModeIndex =
+        universalFixture.modes.length - 1;
+
+
+    renderTree();
+
+    renderSelectedMode();
+
+}
+
+
+/* =========================================================
+   D4 EXAMPLE
+========================================================= */
+
+function loadExample() {
+
+    const xml = `<?xml version="1.0" encoding="utf-8"?>
+<Fixture Name="FS380mini" ShortName="leiteFS380" Company="leite">
+
+    <Copyright Notice="© Avolites Ltd. 2026" />
+
+    <History
+        Date="12-06-26"
+        Author=""
+        Comment="Created"
+    />
+
+    <Control>
+
+        <Attribute
+            ID="Colour1"
+            Name="Colour 1"
+            Description=""
+            Group="C"
+        >
+            <Locate
+                Locate="1:0"
+                PowerOn="1:0"
+            />
+
+            <Function
+                ID="1"
+                Name="Raw DMX"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+                Colour="0,0,0"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Dimmer"
+            Name="Dimmer"
+            Description=""
+            Group="I"
+        >
+            <Locate
+                Locate="1:255"
+                PowerOn="1:0"
+            />
+
+            <Function
+                ID="1"
+                Name="Raw DMX"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+                Intensity="0~0"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Pan"
+            Name="Pan"
+            Description=""
+            Group="P"
+            Size="2"
+        >
+            <Locate
+                Locate="1:50"
+                PowerOn="1:50"
+            />
+
+            <Function
+                ID="1"
+                Name="Pan"
+                Display="'%.2f%%',0.00~100.00"
+                Dmx="0~65535"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Tilt"
+            Name="Tilt"
+            Description=""
+            Group="P"
+            Size="2"
+        >
+            <Locate
+                Locate="1:50"
+                PowerOn="1:50"
+            />
+
+            <Function
+                ID="1"
+                Name="Tilt"
+                Display="'%.2f%%',0.00~100.00"
+                Dmx="0~65535"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Red"
+            Name="Red"
+            Group="C"
+        >
+            <Function
+                ID="1"
+                Name="Raw DMX"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Green"
+            Name="Green"
+            Group="C"
+        >
+            <Function
+                ID="1"
+                Name="Raw DMX"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Blue"
+            Name="Blue"
+            Group="C"
+        >
+            <Function
+                ID="1"
+                Name="Raw DMX"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Shutter"
+            Name="Shutter"
+            Group="I"
+        >
+            <Function
+                ID="1"
+                Name="Shutter"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Focus"
+            Name="Focus"
+            Group="B"
+        >
+            <Function
+                ID="1"
+                Name="Focus"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+            />
+        </Attribute>
+
+
+        <Attribute
+            ID="Zoom"
+            Name="Zoom"
+            Group="B"
+        >
+            <Function
+                ID="1"
+                Name="Zoom"
+                Display="'Raw DMX %.f',0~255"
+                Dmx="0~255"
+            />
+        </Attribute>
+
+    </Control>
+
+
+    <Mode Name="BEAM" Channels="16">
+
+        <Include>
+
+            <Attribute
+                ID="Colour1"
+                ChannelOffset="1"
+                Wheel="8"
+            />
+
+            <Attribute
+                ID="Dimmer"
+                ChannelOffset="2"
+                Wheel="1"
+            />
+
+            <Attribute
+                ID="Shutter"
+                ChannelOffset="3"
+                Wheel="4"
+            />
+
+            <Attribute
+                ID="Focus"
+                ChannelOffset="10"
+                Wheel="20"
+            />
+
+            <Attribute
+                ID="Pan"
+                ChannelOffset="11,12"
+                Wheel="2"
+            />
+
+            <Attribute
+                ID="Tilt"
+                ChannelOffset="13,14"
+                Wheel="3"
+            />
+
+        </Include>
+
+    </Mode>
+
+
+    <Mode Name="Line" Channels="8">
+
+        <Include>
+
+            <Attribute
+                ID="Dimmer"
+                ChannelOffset="1"
+                Wheel="1"
+            />
+
+            <Attribute
+                ID="Shutter"
+                ChannelOffset="2"
+                Wheel="4"
+            />
+
+            <Attribute
+                ID="Red"
+                ChannelOffset="3"
+                Wheel="10"
+            />
+
+            <Attribute
+                ID="Green"
+                ChannelOffset="4"
+                Wheel="11"
+            />
+
+            <Attribute
+                ID="Blue"
+                ChannelOffset="5"
+                Wheel="12"
+            />
+
+        </Include>
+
+    </Mode>
+
+
+    <Mode Name="24ch" Channels="24">
+
+        <Include>
+
+            <Attribute
+                ID="Dimmer"
+                ChannelOffset="1"
+                Wheel="1"
+            />
+
+            <Attribute
+                ID="Shutter"
+                ChannelOffset="2"
+                Wheel="4"
+            />
+
+            <Attribute
+                ID="Pan"
+                ChannelOffset="11,12"
+                Wheel="2"
+            />
+
+            <Attribute
+                ID="Tilt"
+                ChannelOffset="13,14"
+                Wheel="3"
+            />
+
+        </Include>
+
+
+        <Cells>
+
+            <Master>
+
+                <Attribute
+                    ID="Dimmer"
+                    Wheel="1"
+                />
+
+                <Attribute
+                    ID="Shutter"
+                    Wheel="4"
+                />
+
+                <Attribute
+                    ID="Pan"
+                    Wheel="2"
+                />
+
+                <Attribute
+                    ID="Tilt"
+                    Wheel="3"
+                />
+
+            </Master>
+
+
+            <Cell
+                ID="Cell1"
+                Name="Cell 1"
+                ChannelOffset="1"
+                ModeLink="BEAM"
+                X="0"
+                Y="0"
+            >
+
+                <AttributeLink
+                    SourceId="Colour1"
+                    TargetId="Colour1"
+                />
+
+                <AttributeLink
+                    SourceId="Dimmer"
+                    TargetId="Dimmer"
+                />
+
+            </Cell>
+
+
+            <Cell
+                ID="Cell2"
+                Name="Cell 2"
+                ChannelOffset="17"
+                ModeLink="Line"
+                X="1"
+                Y="0"
+            >
+
+                <AttributeLink
+                    SourceId="Dimmer"
+                    TargetId="Dimmer"
+                />
+
+                <AttributeLink
+                    SourceId="Red"
+                    TargetId="Red"
+                />
+
+                <AttributeLink
+                    SourceId="Green"
+                    TargetId="Green"
+                />
+
+                <AttributeLink
+                    SourceId="Blue"
+                    TargetId="Blue"
+                />
+
+            </Cell>
+
+        </Cells>
+
+    </Mode>
+
+</Fixture>`;
+
+
+    document.getElementById("inputXml").value =
+        xml;
+
+    parseD4();
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function setStatus(message, type) {
+
+    const el =
+        document.getElementById("status");
+
+    el.textContent = message;
+
+    el.className =
+        "status " +
+        (type || "");
+
+}
+
+
+/* =========================================================
+   MA2 ATTRIBUTE MAPPING
+========================================================= */
+
+function ma2Attribute(channel) {
+
+    const id =
+        String(channel.attributeId || "")
+            .toLowerCase();
+
+    const name =
+        String(channel.name || "")
+            .toLowerCase();
+
+
+    if (id === "pan" || name === "pan")
+        return "Pan";
+
+    if (id === "tilt" || name === "tilt")
+        return "Tilt";
+
+    if (
+        id === "dimmer" ||
+        name === "dimmer"
+    )
+        return "Dimmer";
+
+    if (
+        id === "red" ||
+        name === "red"
+    )
+        return "ColorRGB_R";
+
+    if (
+        id === "green" ||
+        name === "green"
+    )
+        return "ColorRGB_G";
+
+    if (
+        id === "blue" ||
+        name === "blue"
+    )
+        return "ColorRGB_B";
+
+    if (
+        id.includes("gobo") ||
+        name.includes("gobo")
+    )
+        return "Gobo";
+
+    if (
+        id.includes("prism") ||
+        name.includes("prism")
+    )
+        return "Prism";
+
+    if (
+        id.includes("focus") ||
+        name.includes("focus")
+    )
+        return "Focus";
+
+    if (
+        id.includes("zoom") ||
+        name.includes("zoom")
+    )
+        return "Zoom";
+
+    if (
+        id.includes("shutter") ||
+        name.includes("shutter")
+    )
+        return "Shutter";
+
+    if (
+        id.includes("frost") ||
+        name.includes("frost")
+    )
+        return "Frost";
+
+    if (
+        id.includes("colour") ||
+        id.includes("color") ||
+        name.includes("colour") ||
+        name.includes("color")
+    )
+        return "Color";
+
+    return channel.attributeId || "Control";
+
+}
+
+
+/* =========================================================
+   MA2 PRESET
+========================================================= */
+
+function ma2Preset(channel) {
+
+    if (
+        channel.preset === "Position"
+    )
+        return "Position";
+
+    if (
+        channel.preset === "Color"
+    )
+        return "Color";
+
+    if (
+        channel.preset === "Gobo"
+    )
+        return "Gobo";
+
+    if (
+        channel.preset === "Dimmer"
+    )
+        return "Dimmer";
+
+    if (
+        channel.preset === "Beam"
+    )
+        return "Beam";
+
+    return "Control";
+
+}
+
+
+/* =========================================================
+   GENERATE MA2
+========================================================= */
+
+function generateMA2() {
+
+    if (!universalFixture) {
+
+        alert("请先解析 D4 灯库。");
+
+        return;
+
+    }
+
+
+    const fixture =
+        universalFixture;
+
+
+    const mode =
+        fixture.modes[
+            selectedModeIndex
+        ];
+
+
+    if (!mode) {
+
+        alert("没有可输出的 Mode。");
+
+        return;
+
+    }
+
+
+    const now =
+        new Date()
+            .toISOString()
+            .replace("T", " ")
+            .substring(0, 19);
+
+
+    let xml = "";
+
+
+    xml +=
+`<?xml version="1.0" encoding="utf-8"?>
+<MA
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://schemas.malighting.de/grandma2/xml/MA"
+ xsi:schemaLocation="http://schemas.malighting.de/grandma2/xml/MA http://schemas.malighting.de/grandma2/xml/3.1.2/MA.xsd"
+ major_vers="3"
+ minor_vers="1"
+ stream_vers="2">
+
+    <Info
+        datetime="${esc(now)}"
+        showfile="Universal Fixture Converter"
+    />
+
+    <FixtureType
+        index="1"
+        name="${xmlAttr(fixture.name)}"
+        mode="${xmlAttr(mode.name)}">
+
+        <short_name>${xmlAttr(
+            fixture.shortName || fixture.name
+        )}</short_name>
+
+        <manufacturer>${xmlAttr(
+            fixture.manufacturer
+        )}</manufacturer>
+
+        <short_manufacturer>${xmlAttr(
+            fixture.manufacturer
+        )}</short_manufacturer>
+
+        <Modules index="0">
+
+            <Module
+                index="0"
+                class="Headmover"
+                beamtype="Spot"
+                beam_angle="20"
+                beam_intensity="10000">
+
+                <Body>
+                    <Size
+                        x="0.3"
+                        y="0.3"
+                        z="0.5"
+                    />
+                </Body>
+`;
+
+
+    /* -----------------------------------------------------
+       CHANNEL TYPES
+    ----------------------------------------------------- */
+
+    mode.includes.forEach(
+        (channel, index) => {
+
+            const coarse =
+                channel.offsets[0];
+
+
+            const fine =
+                channel.offsets.length >= 2
+                    ? channel.offsets[1]
+                    : null;
+
+
+            const attribute =
+                ma2Attribute(channel);
+
+
+            const feature =
+                channel.feature ||
+                attribute;
+
+
+            const preset =
+                ma2Preset(channel);
+
+
+            let defaultValue = 0;
+
+
+            const attr =
+                fixture.attributes.find(
+                    a =>
+                        a.id === channel.attributeId
+                );
+
+
+            if (attr?.locate) {
+
+                const match =
+                    attr.locate.match(
+                        /:(\d+)/
+                    );
+
+                if (match) {
+                    defaultValue =
+                        Number(match[1]);
+                }
+
+            }
+
+
+            xml += `
+
+                <ChannelType
+                    index="${index + 1}"
+                    attribute="${xmlAttr(attribute)}"
+                    feature="${xmlAttr(feature)}"
+                    preset="${xmlAttr(preset)}"
+                    coarse="${coarse}"
+                    ${fine ? `fine="${fine}"` : ""}
+                    default="${defaultValue}"
+                    highlight_value="${defaultValue}"
+                >
+`;
+
+
+            const functions =
+                channel.functions?.length
+                    ? channel.functions
+                    : [{
+                        id: "1",
+                        name: "Raw DMX",
+                        dmxFrom: 0,
+                        dmxTo: 255
+                    }];
+
+
+            functions.forEach(
+                (func, functionIndex) => {
+
+                    const from =
+                        numberOr(
+                            func.dmxFrom,
+                            0
+                        );
+
+                    const to =
+                        numberOr(
+                            func.dmxTo,
+                            255
+                        );
+
+
+                    const max24 =
+                        channel.offsets.length >= 2
+                            ? 65535
+                            : 255;
+
+
+                    xml += `
+
+                    <ChannelFunction
+                        index="${functionIndex}"
+                        name="${xmlAttr(
+                            func.name || "Function"
+                        )}"
+                        from="${from}"
+                        to="${to}"
+                        min_dmx_24="${Math.round(
+                            from / (
+                                max24 === 65535
+                                    ? 65535
+                                    : 255
+                            ) * 16777215
+                        )}"
+                        max_dmx_24="${Math.round(
+                            to / (
+                                max24 === 65535
+                                    ? 65535
+                                    : 255
+                            ) * 16777215
+                        )}"
+                    >
+                    </ChannelFunction>
+`;
+
+                }
+            );
+
+
+            xml += `
+                </ChannelType>
+`;
+
         }
     );
 
 
-    const url=URL.createObjectURL(blob);
+    xml += `
+            </Module>
 
-    const a=document.createElement("a");
+        </Modules>
 
-    a.href=url;
+        <Instances index="1">
 
-    a.download=filename;
+            <Instance
+                index="0"
+                module_index="0"
+            />
+
+        </Instances>
+
+        <Wheels index="2">
+        </Wheels>
+
+        <VirtualFunctionBlocks index="3" />
+
+        <FixtureMacroCollect index="5">
+        </FixtureMacroCollect>
+
+        <Body />
+
+        <AutoPresets index="4" />
+
+    </FixtureType>
+
+</MA>`;
+
+
+    generatedXML = xml;
+
+    document.getElementById("xmlPreview")
+        .textContent = xml;
+
+    setStatus(
+        "MA2 XML 生成成功。",
+        "ok"
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+function downloadXML() {
+
+    if (!generatedXML) {
+
+        generateMA2();
+
+    }
+
+
+    if (!generatedXML) return;
+
+
+    const safeName =
+        (
+            universalFixture?.name ||
+            "fixture"
+        )
+        .replace(/[\\/:*?"<>|]/g, "_");
+
+
+    const mode =
+        universalFixture?.modes[
+            selectedModeIndex
+        ]?.name ||
+        "Mode";
+
+
+    const fileName =
+        `${safeName}@${mode}.xml`;
+
+
+    const blob =
+        new Blob(
+            [generatedXML],
+            {
+                type: "application/xml;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download = fileName;
 
     document.body.appendChild(a);
 
@@ -2061,10 +2676,13 @@ function downloadXML(){
 
 
 /* =========================================================
-   初始化
+   INIT
 ========================================================= */
 
-load20CH();
+setStatus(
+    "等待输入灯库……",
+    ""
+);
 
 </script>
 
