@@ -144,6 +144,15 @@ select:focus {
     background: #673036;
 }
 
+.download {
+    background: #18a058;
+    color: white;
+}
+
+.download:hover {
+    background: #128047;
+}
+
 .table-wrap {
     overflow-x: auto;
 }
@@ -204,6 +213,28 @@ td select {
     color: #646d7d;
 }
 
+.preview {
+    margin-top: 20px;
+}
+
+.preview textarea {
+    width: 100%;
+    height: 320px;
+    resize: vertical;
+    background: #0b0d12;
+    color: #b9c7d9;
+    border: 1px solid #343b4a;
+    border-radius: 8px;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.hidden {
+    display: none;
+}
+
 hr {
     border: 0;
     border-top: 1px solid #292e3a;
@@ -248,7 +279,7 @@ hr {
     </h1>
 
     <p>
-        通道表 → 属性识别 → MA2 XML
+        通道表 → 属性配置 → XML
     </p>
 
 </div>
@@ -257,9 +288,9 @@ hr {
 <div class="grid">
 
 
-<!-- ==============================
-     左侧：灯具信息
-================================ -->
+<!-- ==========================
+     左侧
+========================== -->
 
 <div class="card">
 
@@ -318,7 +349,7 @@ hr {
 
         <input
             id="modeName"
-            placeholder="例如 8CH"
+            placeholder="例如 124CH"
         >
 
     </div>
@@ -328,7 +359,7 @@ hr {
 
 
     <h2>
-        快速操作
+        操作
     </h2>
 
 
@@ -364,20 +395,28 @@ hr {
     </button>
 
 
+    <button
+        id="downloadButton"
+        class="button download hidden"
+        onclick="downloadXML()"
+    >
+        ↓ 下载 XML
+    </button>
+
+
     <div
-        class="status"
         id="status"
+        class="status"
     >
         当前通道：0 CH
     </div>
 
-
 </div>
 
 
-<!-- ==============================
-     右侧：通道表
-================================ -->
+<!-- ==========================
+     右侧
+========================== -->
 
 <div class="card">
 
@@ -388,9 +427,7 @@ hr {
 
     <div class="table-wrap">
 
-
         <table>
-
 
             <thead>
 
@@ -433,24 +470,40 @@ hr {
 
             </tbody>
 
-
         </table>
-
 
     </div>
 
 
     <div
-        class="empty"
         id="emptyMessage"
+        class="empty"
     >
 
         暂无通道
 
-        <br>
+        <br><br>
 
         点击左侧「加载 8CH 示例」
-        或「添加通道」
+
+    </div>
+
+
+    <!-- XML预览 -->
+
+    <div
+        id="previewBox"
+        class="preview hidden"
+    >
+
+        <h2>
+            XML 预览
+        </h2>
+
+        <textarea
+            id="xmlPreview"
+            readonly
+        ></textarea>
 
     </div>
 
@@ -468,14 +521,16 @@ hr {
 
 
 /* =================================
-   全局通道数据
+   全局变量
 ================================= */
 
 let channels = [];
 
+let generatedXML = "";
+
 
 /* =================================
-   MA2 属性列表
+   MA2 属性
 ================================= */
 
 const attributeOptions = [
@@ -534,7 +589,7 @@ const attributeOptions = [
 
 
 /* =================================
-   XML 特殊字符处理
+   XML字符处理
 ================================= */
 
 function escapeXML(value) {
@@ -599,7 +654,7 @@ function deleteChannel(index) {
 
 
 /* =================================
-   清空通道
+   清空
 ================================= */
 
 function clearChannels() {
@@ -612,7 +667,7 @@ function clearChannels() {
 
 
     if (
-        !confirm("确定要清空全部通道吗？")
+        !confirm("确定清空全部通道吗？")
     ) {
 
         return;
@@ -622,13 +677,24 @@ function clearChannels() {
 
     channels = [];
 
+    generatedXML = "";
+
+    document
+        .getElementById("downloadButton")
+        .classList.add("hidden");
+
+    document
+        .getElementById("previewBox")
+        .classList.add("hidden");
+
+
     renderChannels();
 
 }
 
 
 /* =================================
-   渲染通道表
+   渲染
 ================================= */
 
 function renderChannels() {
@@ -656,13 +722,13 @@ function renderChannels() {
     } else {
 
         emptyMessage.style.display =
-            "block";
+            "none";
 
     }
 
 
     channels.forEach(
-        (channel, index) => {
+        function(channel, index) {
 
 
         const row =
@@ -702,23 +768,27 @@ function renderChannels() {
 
                     ${attributeOptions.map(
 
-                        option => `
+                        function(option) {
 
-                            <option
-                                value="${option}"
-                                ${
-                                    option ===
-                                    channel.attribute
-                                    ? "selected"
-                                    : ""
-                                }
-                            >
+                            return `
 
-                                ${option}
+                                <option
+                                    value="${option}"
+                                    ${
+                                        option ===
+                                        channel.attribute
+                                        ? "selected"
+                                        : ""
+                                    }
+                                >
 
-                            </option>
+                                    ${option}
 
-                        `
+                                </option>
+
+                            `;
+
+                        }
 
                     ).join("")}
 
@@ -802,7 +872,7 @@ function renderChannels() {
 
 
 /* =================================
-   更新状态
+   状态
 ================================= */
 
 function updateStatus() {
@@ -819,7 +889,7 @@ function updateStatus() {
 
 
 /* =================================
-   加载 8CH 测试灯具
+   示例
 ================================= */
 
 function loadExample() {
@@ -851,7 +921,7 @@ function loadExample() {
         "8CH";
 
 
-    const exampleChannels = [
+    channels = [
 
         {
             name: "Dimmer",
@@ -920,8 +990,17 @@ function loadExample() {
     ];
 
 
-    channels =
-        exampleChannels;
+    generatedXML = "";
+
+
+    document
+        .getElementById("downloadButton")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("previewBox")
+        .classList.add("hidden");
 
 
     renderChannels();
@@ -959,10 +1038,6 @@ function generateXML() {
         ).value.trim();
 
 
-    /* -------------------------
-       基础检查
-    ------------------------- */
-
     if (!fixtureName) {
 
         alert(
@@ -996,36 +1071,30 @@ function generateXML() {
     }
 
 
-    /* -------------------------
-       生成 Channel XML
-    ------------------------- */
-
     let channelXML = "";
 
 
     channels.forEach(
-        (channel, index) => {
+        function(channel, index) {
 
-            channelXML += `
-
-        <Channel
-            index="${index + 1}"
-            name="${escapeXML(channel.name)}"
-            attribute="${escapeXML(channel.attribute)}"
-            dmx_start="${channel.start}"
-            dmx_end="${channel.end}"
-            default="${channel.defaultValue}"
-        />`;
+            channelXML +=
+`
+        <Channel>
+            <Index>${index + 1}</Index>
+            <Name>${escapeXML(channel.name)}</Name>
+            <Attribute>${escapeXML(channel.attribute)}</Attribute>
+            <DMXStart>${channel.start}</DMXStart>
+            <DMXEnd>${channel.end}</DMXEnd>
+            <Default>${channel.defaultValue}</Default>
+        </Channel>
+`;
 
         }
     );
 
 
-    /* -------------------------
-       XML
-    ------------------------- */
-
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    generatedXML =
+`<?xml version="1.0" encoding="UTF-8"?>
 
 <MA2Fixture>
 
@@ -1050,56 +1119,26 @@ function generateXML() {
     </ChannelCount>
 
     <Channels>
-        ${channelXML}
+${channelXML}
     </Channels>
 
-</MA2Fixture>
-`;
+</MA2Fixture>`;
 
 
-    /* -------------------------
-       下载文件
-    ------------------------- */
-
-    const blob =
-        new Blob(
-            [xml],
-            {
-                type:
-                    "application/xml;charset=utf-8"
-            }
-        );
+    document.getElementById(
+        "xmlPreview"
+    ).value =
+        generatedXML;
 
 
-    const url =
-        URL.createObjectURL(blob);
+    document
+        .getElementById("previewBox")
+        .classList.remove("hidden");
 
 
-    const link =
-        document.createElement("a");
-
-
-    link.href = url;
-
-
-    link.download =
-        `${fixtureName}_${modeName}.xml`;
-
-
-    document.body.appendChild(
-        link
-    );
-
-
-    link.click();
-
-
-    document.body.removeChild(
-        link
-    );
-
-
-    URL.revokeObjectURL(url);
+    document
+        .getElementById("downloadButton")
+        .classList.remove("hidden");
 
 
     document.getElementById(
@@ -1114,11 +1153,115 @@ function generateXML() {
         channels.length +
         " CH";
 
+
 }
 
 
 /* =================================
-   页面启动
+   下载 XML
+================================= */
+
+function downloadXML() {
+
+    if (!generatedXML) {
+
+        alert(
+            "请先点击「生成 XML」"
+        );
+
+        return;
+
+    }
+
+
+    const fixtureName =
+        document.getElementById(
+            "fixtureName"
+        ).value.trim();
+
+
+    const modeName =
+        document.getElementById(
+            "modeName"
+        ).value.trim();
+
+
+    const fileName =
+        fixtureName +
+        "_" +
+        modeName +
+        ".xml";
+
+
+    const blob =
+        new Blob(
+            [generatedXML],
+            {
+                type:
+                    "application/xml"
+            }
+        );
+
+
+    const url =
+        window.URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href = url;
+
+    link.download = fileName;
+
+
+    link.setAttribute(
+        "download",
+        fileName
+    );
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    setTimeout(
+        function() {
+
+            document.body.removeChild(
+                link
+            );
+
+            window.URL.revokeObjectURL(
+                url
+            );
+
+        },
+        1000
+    );
+
+
+    document.getElementById(
+        "status"
+    ).innerText =
+
+        "已下载：" +
+        fileName;
+
+}
+
+
+/* =================================
+   页面初始化
 ================================= */
 
 renderChannels();
