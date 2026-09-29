@@ -1,1190 +1,1579 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>MA2 灯库生成器 V1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA2 Fixture Generator V2</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    background: #0f1117;
-    color: #ffffff;
-    font-family: Arial, "Microsoft YaHei", sans-serif;
+body{
+    margin:0;
+    font-family:Arial,"Microsoft YaHei",sans-serif;
+    background:#0d1117;
+    color:#e6edf3;
 }
 
-.header {
-    height: 64px;
-    display: flex;
-    align-items: center;
-    padding: 0 28px;
-    background: #171a22;
-    border-bottom: 1px solid #292e3a;
+header{
+    padding:22px 28px;
+    background:#161b22;
+    border-bottom:1px solid #30363d;
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: bold;
+header h1{
+    margin:0 0 6px;
+    font-size:26px;
 }
 
-.logo span {
-    color: #4da3ff;
+header p{
+    margin:0;
+    color:#8b949e;
+    font-size:14px;
 }
 
-.container {
-    max-width: 1500px;
-    margin: 30px auto;
-    padding: 0 24px;
+.container{
+    max-width:1500px;
+    margin:auto;
+    padding:24px;
 }
 
-.title {
-    margin-bottom: 24px;
+.card{
+    background:#161b22;
+    border:1px solid #30363d;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
 }
 
-.title h1 {
-    margin: 0 0 8px;
-    font-size: 28px;
+.card h2{
+    margin-top:0;
+    font-size:18px;
 }
 
-.title p {
-    margin: 0;
-    color: #8e96a8;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 20px;
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
 }
 
-.card {
-    background: #171a22;
-    border: 1px solid #292e3a;
-    border-radius: 12px;
-    padding: 20px;
+.field label{
+    font-size:13px;
+    color:#8b949e;
 }
 
-.card h2 {
-    margin-top: 0;
-    font-size: 17px;
-}
-
-.form-group {
-    margin-bottom: 16px;
-}
-
-label {
-    display: block;
-    margin-bottom: 7px;
-    font-size: 13px;
-    color: #aeb6c7;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 7px;
-    border: 1px solid #343b4a;
-    background: #0f1117;
-    color: white;
-    outline: none;
+input,select,textarea{
+    width:100%;
+    border:1px solid #30363d;
+    background:#0d1117;
+    color:#e6edf3;
+    border-radius:7px;
+    padding:9px 10px;
+    outline:none;
 }
 
 input:focus,
-select:focus {
-    border-color: #4da3ff;
+select:focus,
+textarea:focus{
+    border-color:#58a6ff;
 }
 
-.button {
-    width: 100%;
-    border: none;
-    border-radius: 7px;
-    padding: 12px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
+button{
+    border:0;
+    border-radius:7px;
+    padding:10px 16px;
+    cursor:pointer;
+    font-size:14px;
+    color:white;
+    background:#238636;
 }
 
-.primary {
-    background: #1677ff;
-    color: white;
+button:hover{
+    opacity:.9;
 }
 
-.primary:hover {
-    background: #0d65df;
+button.blue{
+    background:#1f6feb;
 }
 
-.secondary {
-    background: #292e3a;
-    color: white;
+button.gray{
+    background:#30363d;
 }
 
-.secondary:hover {
-    background: #343b4a;
+button.red{
+    background:#da3633;
 }
 
-.danger {
-    background: #51252a;
-    color: #ff8c8c;
+button.orange{
+    background:#9e6a03;
 }
 
-.danger:hover {
-    background: #673036;
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:16px;
 }
 
-.download {
-    background: #18a058;
-    color: white;
+.table-wrap{
+    overflow-x:auto;
 }
 
-.download:hover {
-    background: #128047;
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1250px;
 }
 
-.table-wrap {
-    overflow-x: auto;
+th{
+    background:#21262d;
+    color:#c9d1d9;
+    font-size:12px;
+    padding:10px 7px;
+    border:1px solid #30363d;
+    white-space:nowrap;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 900px;
-}
-
-th,
-td {
-    padding: 9px 8px;
-    border-bottom: 1px solid #292e3a;
-    text-align: left;
-    font-size: 13px;
-}
-
-th {
-    color: #8e96a8;
-    font-weight: normal;
+td{
+    padding:6px;
+    border:1px solid #30363d;
+    vertical-align:middle;
 }
 
 td input,
-td select {
-    padding: 7px 8px;
+td select{
+    padding:7px;
+    font-size:12px;
 }
 
-.channel-number {
-    color: #4da3ff;
-    font-weight: bold;
-    width: 50px;
+.index-cell{
+    width:50px;
+    text-align:center;
+    color:#8b949e;
 }
 
-.delete-btn {
-    border: none;
-    background: transparent;
-    color: #ff6b6b;
-    cursor: pointer;
+.delete-btn{
+    background:#da3633;
+    padding:7px 10px;
 }
 
-.delete-btn:hover {
-    color: #ffaaaa;
+.small{
+    font-size:12px;
+    color:#8b949e;
 }
 
-.status {
-    margin-top: 15px;
-    padding: 12px;
-    background: #10141c;
-    border-radius: 7px;
-    color: #8e96a8;
-    font-size: 13px;
+.help{
+    background:#0d1117;
+    border:1px solid #30363d;
+    border-radius:8px;
+    padding:12px;
+    line-height:1.7;
+    font-size:13px;
+    color:#8b949e;
 }
 
-.empty {
-    padding: 60px 20px;
-    text-align: center;
-    color: #646d7d;
+.preview{
+    min-height:500px;
+    font-family:Consolas,"Courier New",monospace;
+    font-size:12px;
+    line-height:1.5;
+    resize:vertical;
 }
 
-.preview {
-    margin-top: 20px;
+.status{
+    margin-top:12px;
+    padding:10px;
+    border-radius:7px;
+    background:#0d1117;
+    color:#8b949e;
 }
 
-.preview textarea {
-    width: 100%;
-    height: 320px;
-    resize: vertical;
-    background: #0b0d12;
-    color: #b9c7d9;
-    border: 1px solid #343b4a;
-    border-radius: 8px;
-    padding: 14px;
-    font-family: Consolas, monospace;
-    font-size: 12px;
-    line-height: 1.5;
+.download{
+    display:none;
+    background:#238636;
 }
 
-.hidden {
-    display: none;
+@media(max-width:1000px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
-hr {
-    border: 0;
-    border-top: 1px solid #292e3a;
-    margin: 22px 0;
-}
-
-@media (max-width: 900px) {
-
-    .grid {
-        grid-template-columns: 1fr;
+@media(max-width:600px){
+    .grid{
+        grid-template-columns:1fr;
     }
 
+    .container{
+        padding:12px;
+    }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<header class="header">
-
-    <div class="logo">
-
-        <span>MA2</span>
-        Fixture Generator
-
-    </div>
-
+<header>
+    <h1>MA2 Fixture Generator V2</h1>
+    <p>grandMA2 Fixture XML 3.1.2 Generator</p>
 </header>
 
+<div class="container">
 
-<main class="container">
+    <!-- 基础信息 -->
+    <div class="card">
+
+        <h2>① 灯具基本信息</h2>
+
+        <div class="grid">
+
+            <div class="field">
+                <label>Manufacturer 厂商</label>
+                <input id="manufacturer" value="leite">
+            </div>
+
+            <div class="field">
+                <label>Short Manufacturer</label>
+                <input id="shortManufacturer" value="leite">
+            </div>
+
+            <div class="field">
+                <label>Fixture Name 灯具名称</label>
+                <input id="fixtureName" value="480">
+            </div>
+
+            <div class="field">
+                <label>Short Name</label>
+                <input id="shortName" value="480beam">
+            </div>
+
+            <div class="field">
+                <label>Mode Name</label>
+                <input id="modeName" value="20CH">
+            </div>
+
+            <div class="field">
+                <label>Fixture Type Index</label>
+                <input id="fixtureIndex" type="number" value="21">
+            </div>
+
+            <div class="field">
+                <label>Beam Type</label>
+                <select id="beamType">
+                    <option value="Spot">Spot</option>
+                    <option value="Wash">Wash</option>
+                    <option value="Beam">Beam</option>
+                    <option value="None">None</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Beam Angle</label>
+                <input id="beamAngle" type="number" value="4">
+            </div>
+
+        </div>
+
+    </div>
 
 
-<div class="title">
+    <!-- 快捷操作 -->
+    <div class="card">
 
-    <h1>
-        MA2 灯库生成器 V1
-    </h1>
+        <h2>② 通道配置</h2>
 
-    <p>
-        通道表 → 属性配置 → XML
-    </p>
+        <div class="toolbar">
+
+            <button class="blue" onclick="load8CH()">
+                加载 8CH 示例
+            </button>
+
+            <button class="orange" onclick="load20CH()">
+                加载 20CH 示例
+            </button>
+
+            <button onclick="addChannel()">
+                ＋ 添加通道
+            </button>
+
+            <button class="gray" onclick="clearChannels()">
+                清空通道
+            </button>
+
+        </div>
+
+        <div class="help">
+
+            <b>功能范围写法：</b><br>
+
+            普通通道可以留空，程序自动生成 0-255。<br>
+
+            如果一个通道有多个功能，例如：
+            <br>
+            <code>OPEN:0-10;STROBE:11-100;OPEN:101-150;RANDOM:151-255</code>
+
+            <br><br>
+
+            16bit 通道：
+            <br>
+            在 Fine 通道填写对应的 Fine 通道号。
+            <br>
+            例如 Pan = 通道1，Pan Fine = 通道19，那么 Fine 填 <b>19</b>。
+
+        </div>
+
+        <br>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>通道名称</th>
+                        <th>Attribute</th>
+                        <th>Feature</th>
+                        <th>Preset</th>
+                        <th>Fine通道</th>
+                        <th>默认值</th>
+                        <th>Highlight</th>
+                        <th>功能范围</th>
+                        <th>删除</th>
+                    </tr>
+                </thead>
+
+                <tbody id="channelBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- XML -->
+    <div class="card">
+
+        <h2>③ 生成 MA2 XML</h2>
+
+        <div class="toolbar">
+
+            <button class="blue" onclick="generateXML()">
+                ⚙ 生成 XML
+            </button>
+
+            <button id="downloadBtn" class="download" onclick="downloadXML()">
+                ↓ 下载 XML
+            </button>
+
+        </div>
+
+        <div id="status" class="status">
+            等待生成 XML……
+        </div>
+
+        <br>
+
+        <textarea id="xmlPreview" class="preview" readonly></textarea>
+
+    </div>
 
 </div>
-
-
-<div class="grid">
-
-
-<!-- ==========================
-     左侧
-========================== -->
-
-<div class="card">
-
-    <h2>
-        灯具信息
-    </h2>
-
-
-    <div class="form-group">
-
-        <label>
-            Manufacturer
-        </label>
-
-        <input
-            id="manufacturer"
-            value="leite"
-        >
-
-    </div>
-
-
-    <div class="form-group">
-
-        <label>
-            Fixture Name
-        </label>
-
-        <input
-            id="fixtureName"
-            placeholder="例如 X1060"
-        >
-
-    </div>
-
-
-    <div class="form-group">
-
-        <label>
-            Short Manufacturer
-        </label>
-
-        <input
-            id="shortManufacturer"
-            value="leite"
-        >
-
-    </div>
-
-
-    <div class="form-group">
-
-        <label>
-            Mode Name
-        </label>
-
-        <input
-            id="modeName"
-            placeholder="例如 124CH"
-        >
-
-    </div>
-
-
-    <hr>
-
-
-    <h2>
-        操作
-    </h2>
-
-
-    <button
-        class="button secondary"
-        onclick="loadExample()"
-    >
-        加载 8CH 示例
-    </button>
-
-
-    <button
-        class="button secondary"
-        onclick="addChannel()"
-    >
-        ＋ 添加通道
-    </button>
-
-
-    <button
-        class="button danger"
-        onclick="clearChannels()"
-    >
-        清空全部通道
-    </button>
-
-
-    <button
-        class="button primary"
-        onclick="generateXML()"
-    >
-        生成 XML
-    </button>
-
-
-    <button
-        id="downloadButton"
-        class="button download hidden"
-        onclick="downloadXML()"
-    >
-        ↓ 下载 XML
-    </button>
-
-
-    <div
-        id="status"
-        class="status"
-    >
-        当前通道：0 CH
-    </div>
-
-</div>
-
-
-<!-- ==========================
-     右侧
-========================== -->
-
-<div class="card">
-
-    <h2>
-        通道配置
-    </h2>
-
-
-    <div class="table-wrap">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        CH
-                    </th>
-
-                    <th>
-                        功能名称
-                    </th>
-
-                    <th>
-                        MA2 属性
-                    </th>
-
-                    <th>
-                        DMX 起始
-                    </th>
-
-                    <th>
-                        DMX 结束
-                    </th>
-
-                    <th>
-                        默认值
-                    </th>
-
-                    <th>
-                        操作
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody id="channelTable">
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-    <div
-        id="emptyMessage"
-        class="empty"
-    >
-
-        暂无通道
-
-        <br><br>
-
-        点击左侧「加载 8CH 示例」
-
-    </div>
-
-
-    <!-- XML预览 -->
-
-    <div
-        id="previewBox"
-        class="preview hidden"
-    >
-
-        <h2>
-            XML 预览
-        </h2>
-
-        <textarea
-            id="xmlPreview"
-            readonly
-        ></textarea>
-
-    </div>
-
-
-</div>
-
-
-</div>
-
-
-</main>
 
 
 <script>
 
-
-/* =================================
-   全局变量
-================================= */
-
 let channels = [];
-
 let generatedXML = "";
 
 
-/* =================================
-   MA2 属性
-================================= */
+/* =========================
+   Attribute 映射
+========================= */
 
-const attributeOptions = [
+const attributeMap = {
 
-    "Dimmer",
+    "DIM": {
+        feature:"DIMMER",
+        preset:"DIMMER",
+        user:"Dim"
+    },
 
-    "ColorRGB_R",
+    "PAN": {
+        feature:"POSITION",
+        preset:"POSITION",
+        user:"Pan"
+    },
 
-    "ColorRGB_G",
+    "TILT": {
+        feature:"POSITION",
+        preset:"POSITION",
+        user:"Tilt"
+    },
 
-    "ColorRGB_B",
+    "COLOR1": {
+        feature:"COLOR1",
+        preset:"COLOR",
+        user:"Color1"
+    },
 
-    "ColorRGB_W",
+    "COLOR2": {
+        feature:"COLOR2",
+        preset:"COLOR",
+        user:"Color2"
+    },
 
-    "ColorRGB_A",
+    "COLOR3": {
+        feature:"COLOR3",
+        preset:"COLOR",
+        user:"Color3"
+    },
 
-    "ColorRGB_UV",
+    "COLOR4": {
+        feature:"COLOR4",
+        preset:"COLOR",
+        user:"Color4"
+    },
 
-    "Pan",
+    "RED": {
+        feature:"COLORRGB",
+        preset:"COLOR",
+        user:"Red"
+    },
 
-    "PanFine",
+    "GREEN": {
+        feature:"COLORRGB",
+        preset:"COLOR",
+        user:"Green"
+    },
 
-    "Tilt",
+    "BLUE": {
+        feature:"COLORRGB",
+        preset:"COLOR",
+        user:"Blue"
+    },
 
-    "TiltFine",
+    "WHITE": {
+        feature:"COLORRGB",
+        preset:"COLOR",
+        user:"White"
+    },
 
-    "Zoom",
+    "ZOOM": {
+        feature:"ZOOM",
+        preset:"BEAM",
+        user:"Zoom"
+    },
 
-    "Focus",
+    "FOCUS": {
+        feature:"FOCUS",
+        preset:"FOCUS",
+        user:"Focus"
+    },
 
-    "Iris",
+    "GOBO1": {
+        feature:"GOBO1",
+        preset:"GOBO",
+        user:"Gobo1"
+    },
 
-    "Gobo",
+    "GOBO1_POS": {
+        feature:"GOBO1",
+        preset:"GOBO",
+        user:"Gobo1"
+    },
 
-    "GoboRotation",
+    "PRISMA1": {
+        feature:"BEAM1",
+        preset:"BEAM",
+        user:"Prism1"
+    },
 
-    "Prism",
+    "PRISMA1_POS": {
+        feature:"BEAM1",
+        preset:"BEAM",
+        user:"Pos1"
+    },
 
-    "PrismRotation",
+    "FROST": {
+        feature:"BEAM1",
+        preset:"BEAM",
+        user:"Frost"
+    },
 
-    "Strobe",
+    "SHUTTER": {
+        feature:"SHUTTER",
+        preset:"BEAM",
+        user:"Shutter"
+    },
 
-    "Shutter",
+    "STROBE": {
+        feature:"SHUTTER",
+        preset:"BEAM",
+        user:"Shutter"
+    },
 
-    "Frost",
+    "CTC": {
+        feature:"COLOR1",
+        preset:"COLOR",
+        user:"CTC"
+    },
 
-    "CTC",
+    "IRIS": {
+        feature:"IRIS",
+        preset:"BEAM",
+        user:"Iris"
+    },
 
-    "Control",
+    "EFFECT": {
+        feature:"BEAM1",
+        preset:"BEAM",
+        user:"Effect"
+    },
 
-    "Effect",
+    "CONTROL": {
+        feature:"CONTROL",
+        preset:"CONTROL",
+        user:"Control"
+    },
 
-    "Unknown"
+    "DUMMY": {
+        feature:"CONTROL",
+        preset:"CONTROL",
+        user:"Dummy"
+    }
 
-];
+};
 
 
-/* =================================
-   XML字符处理
-================================= */
+/* =========================
+   HTML 转义
+========================= */
 
-function escapeXML(value) {
+function escapeXML(value){
 
-    return String(value)
-
-        .replace(/&/g, "&amp;")
-
-        .replace(/</g, "&lt;")
-
-        .replace(/>/g, "&gt;")
-
-        .replace(/"/g, "&quot;")
-
-        .replace(/'/g, "&apos;");
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&apos;");
 
 }
 
 
-/* =================================
-   添加通道
-================================= */
+/* =========================
+   Attribute 下拉
+========================= */
 
-function addChannel(data = {}) {
+function attributeOptionsHTML(selected){
 
-    channels.push({
+    const list = Object.keys(attributeMap);
 
-        name:
-            data.name || "",
+    return list.map(a => {
 
-        attribute:
-            data.attribute || "Dimmer",
+        return `
+            <option value="${a}" ${a === selected ? "selected" : ""}>
+                ${a}
+            </option>
+        `;
 
-        start:
-            data.start ?? 0,
+    }).join("");
 
-        end:
-            data.end ?? 255,
+}
 
-        defaultValue:
-            data.defaultValue ?? 0
 
-    });
+/* =========================
+   通道
+========================= */
 
+function addChannel(data = {}){
+
+    const channel = {
+
+        name:data.name || "Dimmer",
+
+        attribute:data.attribute || "DIM",
+
+        feature:data.feature || "",
+
+        preset:data.preset || "",
+
+        fine:data.fine || "",
+
+        defaultValue:data.defaultValue ?? 0,
+
+        highlight:data.highlight ?? "",
+
+        functions:data.functions || ""
+
+    };
+
+    channels.push(channel);
 
     renderChannels();
 
 }
 
 
-/* =================================
-   删除通道
-================================= */
+function deleteChannel(index){
 
-function deleteChannel(index) {
-
-    channels.splice(index, 1);
+    channels.splice(index,1);
 
     renderChannels();
 
 }
 
 
-/* =================================
-   清空
-================================= */
-
-function clearChannels() {
-
-    if (channels.length === 0) {
-
-        return;
-
-    }
-
-
-    if (
-        !confirm("确定清空全部通道吗？")
-    ) {
-
-        return;
-
-    }
-
+function clearChannels(){
 
     channels = [];
 
-    generatedXML = "";
-
-    document
-        .getElementById("downloadButton")
-        .classList.add("hidden");
-
-    document
-        .getElementById("previewBox")
-        .classList.add("hidden");
-
-
     renderChannels();
+
+    document.getElementById("xmlPreview").value = "";
+
+    document.getElementById("downloadBtn").style.display = "none";
+
+    document.getElementById("status").textContent =
+        "通道已清空。";
 
 }
 
 
-/* =================================
-   渲染
-================================= */
+/* =========================
+   通道表格
+========================= */
 
-function renderChannels() {
+function renderChannels(){
 
-    const table =
-        document.getElementById(
-            "channelTable"
-        );
+    const body = document.getElementById("channelBody");
 
+    body.innerHTML = "";
 
-    const emptyMessage =
-        document.getElementById(
-            "emptyMessage"
-        );
+    channels.forEach((ch,index)=>{
 
+        const map = attributeMap[ch.attribute] || {};
 
-    table.innerHTML = "";
+        const feature = ch.feature || map.feature || "";
+        const preset = ch.preset || map.preset || "";
 
+        const tr = document.createElement("tr");
 
-    if (channels.length === 0) {
+        tr.innerHTML = `
 
-        emptyMessage.style.display =
-            "block";
-
-    } else {
-
-        emptyMessage.style.display =
-            "none";
-
-    }
-
-
-    channels.forEach(
-        function(channel, index) {
-
-
-        const row =
-            document.createElement("tr");
-
-
-        row.innerHTML = `
-
-            <td class="channel-number">
+            <td class="index-cell">
                 ${index + 1}
             </td>
 
-
             <td>
-
                 <input
-                    type="text"
-                    value="${escapeXML(channel.name)}"
-                    placeholder="例如 Dimmer"
-                    onchange="
-                        channels[${index}].name =
-                        this.value
-                    "
+                    value="${escapeXML(ch.name)}"
+                    onchange="updateChannel(${index},'name',this.value)"
                 >
-
             </td>
 
-
             <td>
-
                 <select
-                    onchange="
-                        channels[${index}].attribute =
-                        this.value
-                    "
+                    onchange="updateChannel(${index},'attribute',this.value)"
                 >
-
-                    ${attributeOptions.map(
-
-                        function(option) {
-
-                            return `
-
-                                <option
-                                    value="${option}"
-                                    ${
-                                        option ===
-                                        channel.attribute
-                                        ? "selected"
-                                        : ""
-                                    }
-                                >
-
-                                    ${option}
-
-                                </option>
-
-                            `;
-
-                        }
-
-                    ).join("")}
-
+                    ${attributeOptionsHTML(ch.attribute)}
                 </select>
-
             </td>
 
+            <td>
+                <input
+                    value="${escapeXML(feature)}"
+                    onchange="updateChannel(${index},'feature',this.value)"
+                >
+            </td>
 
             <td>
+                <input
+                    value="${escapeXML(preset)}"
+                    onchange="updateChannel(${index},'preset',this.value)"
+                >
+            </td>
 
+            <td>
+                <input
+                    type="number"
+                    min="1"
+                    max="512"
+                    value="${escapeXML(ch.fine)}"
+                    placeholder="例如19"
+                    onchange="updateChannel(${index},'fine',this.value)"
+                >
+            </td>
+
+            <td>
                 <input
                     type="number"
                     min="0"
                     max="255"
-                    value="${channel.start}"
-                    onchange="
-                        channels[${index}].start =
-                        Number(this.value)
-                    "
+                    value="${escapeXML(ch.defaultValue)}"
+                    onchange="updateChannel(${index},'defaultValue',this.value)"
                 >
-
             </td>
 
-
             <td>
-
                 <input
                     type="number"
                     min="0"
-                    max="255"
-                    value="${channel.end}"
-                    onchange="
-                        channels[${index}].end =
-                        Number(this.value)
-                    "
+                    max="100"
+                    value="${escapeXML(ch.highlight)}"
+                    placeholder="可空"
+                    onchange="updateChannel(${index},'highlight',this.value)"
                 >
-
             </td>
 
-
             <td>
-
                 <input
-                    type="number"
-                    min="0"
-                    max="255"
-                    value="${channel.defaultValue}"
-                    onchange="
-                        channels[${index}].defaultValue =
-                        Number(this.value)
-                    "
+                    value="${escapeXML(ch.functions)}"
+                    placeholder="例如 OPEN:0-10;STROBE:11-100"
+                    onchange="updateChannel(${index},'functions',this.value)"
                 >
-
             </td>
 
-
             <td>
-
                 <button
                     class="delete-btn"
-                    onclick="
-                        deleteChannel(${index})
-                    "
+                    onclick="deleteChannel(${index})"
                 >
                     删除
                 </button>
-
             </td>
 
         `;
 
-
-        table.appendChild(row);
+        body.appendChild(tr);
 
     });
 
+}
 
-    updateStatus();
+
+function updateChannel(index,key,value){
+
+    channels[index][key] = value;
 
 }
 
 
-/* =================================
-   状态
-================================= */
+/* =========================
+   8CH 示例
+========================= */
 
-function updateStatus() {
-
-    document.getElementById(
-        "status"
-    ).innerText =
-
-        "当前通道：" +
-        channels.length +
-        " CH";
-
-}
-
-
-/* =================================
-   示例
-================================= */
-
-function loadExample() {
-
-    channels = [];
-
-
-    document.getElementById(
-        "manufacturer"
-    ).value =
-        "leite";
-
-
-    document.getElementById(
-        "fixtureName"
-    ).value =
-        "TEST LIGHT";
-
-
-    document.getElementById(
-        "shortManufacturer"
-    ).value =
-        "leite";
-
-
-    document.getElementById(
-        "modeName"
-    ).value =
-        "8CH";
-
+function load8CH(){
 
     channels = [
 
         {
-            name: "Dimmer",
-            attribute: "Dimmer",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"Dimmer",
+            attribute:"DIM",
+            feature:"DIMMER",
+            preset:"DIMMER",
+            fine:"",
+            defaultValue:0,
+            highlight:100,
+            functions:""
         },
 
         {
-            name: "Red",
-            attribute: "ColorRGB_R",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"Red",
+            attribute:"RED",
+            feature:"COLORRGB",
+            preset:"COLOR",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
         },
 
         {
-            name: "Green",
-            attribute: "ColorRGB_G",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"Green",
+            attribute:"GREEN",
+            feature:"COLORRGB",
+            preset:"COLOR",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
         },
 
         {
-            name: "Blue",
-            attribute: "ColorRGB_B",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"Blue",
+            attribute:"BLUE",
+            feature:"COLORRGB",
+            preset:"COLOR",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
         },
 
         {
-            name: "White",
-            attribute: "ColorRGB_W",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"White",
+            attribute:"WHITE",
+            feature:"COLORRGB",
+            preset:"COLOR",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
         },
 
         {
-            name: "Strobe",
-            attribute: "Strobe",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"Strobe",
+            attribute:"SHUTTER",
+            feature:"SHUTTER",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:"OPEN:0-10;STROBE:11-200;OPEN:201-255"
         },
 
         {
-            name: "Zoom",
-            attribute: "Zoom",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"Zoom",
+            attribute:"ZOOM",
+            feature:"ZOOM",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
         },
 
         {
-            name: "Focus",
-            attribute: "Focus",
-            start: 0,
-            end: 255,
-            defaultValue: 0
+            name:"Control",
+            attribute:"CONTROL",
+            feature:"CONTROL",
+            preset:"CONTROL",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
         }
 
     ];
-
-
-    generatedXML = "";
-
-
-    document
-        .getElementById("downloadButton")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("previewBox")
-        .classList.add("hidden");
-
 
     renderChannels();
 
 }
 
 
-/* =================================
-   生成 XML
-================================= */
+/* =========================
+   20CH 示例
+========================= */
 
-function generateXML() {
+function load20CH(){
 
-    const manufacturer =
-        document.getElementById(
-            "manufacturer"
-        ).value.trim();
+    channels = [
 
+        {
+            name:"Pan",
+            attribute:"PAN",
+            feature:"POSITION",
+            preset:"POSITION",
+            fine:"19",
+            defaultValue:32767,
+            highlight:"",
+            functions:""
+        },
 
-    const fixtureName =
-        document.getElementById(
-            "fixtureName"
-        ).value.trim();
+        {
+            name:"Tilt",
+            attribute:"TILT",
+            feature:"POSITION",
+            preset:"POSITION",
+            fine:"20",
+            defaultValue:32767,
+            highlight:"",
+            functions:""
+        },
 
+        {
+            name:"Dimmer",
+            attribute:"DIM",
+            feature:"DIMMER",
+            preset:"DIMMER",
+            fine:"",
+            defaultValue:0,
+            highlight:100,
+            functions:""
+        },
 
-    const shortManufacturer =
-        document.getElementById(
-            "shortManufacturer"
-        ).value.trim();
+        {
+            name:"Shutter",
+            attribute:"SHUTTER",
+            feature:"SHUTTER",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:255,
+            highlight:100,
+            functions:"OPEN:0-3;STROBE:4-103;OPEN:104-107;RANDOM:108-207;OPEN:208-212;RANDOM:213-251;OPEN:252-255"
+        },
 
+        {
+            name:"Color",
+            attribute:"COLOR1",
+            feature:"COLOR1",
+            preset:"COLOR",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:"WHITE:0-8;RED:9-17;YELLOW:18-26;BLUE:27-35;GREEN:36-44;ORANGE:45-53"
+        },
 
-    const modeName =
-        document.getElementById(
-            "modeName"
-        ).value.trim();
+        {
+            name:"Gobo",
+            attribute:"GOBO1",
+            feature:"GOBO1",
+            preset:"GOBO",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:"C1:0-9;C2:10-19;C3:20-29;C4:30-39"
+        },
 
+        {
+            name:"Gobo Rotate",
+            attribute:"GOBO1_POS",
+            feature:"GOBO1",
+            preset:"GOBO",
+            fine:"",
+            defaultValue:128,
+            highlight:"",
+            functions:""
+        },
 
-    if (!fixtureName) {
+        {
+            name:"Frost",
+            attribute:"FROST",
+            feature:"BEAM1",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
-        alert(
-            "请填写 Fixture Name"
-        );
+        {
+            name:"Effect",
+            attribute:"EFFECT",
+            feature:"BEAM1",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
-        return;
+        {
+            name:"Prism",
+            attribute:"PRISMA1",
+            feature:"BEAM1",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:"OPEN:0-127;PRISM:128-255"
+        },
 
-    }
+        {
+            name:"Prism Rotate",
+            attribute:"PRISMA1_POS",
+            feature:"BEAM1",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
+        {
+            name:"Focus",
+            attribute:"FOCUS",
+            feature:"FOCUS",
+            preset:"FOCUS",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
-    if (!modeName) {
+        {
+            name:"Zoom",
+            attribute:"ZOOM",
+            feature:"ZOOM",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
-        alert(
-            "请填写 Mode Name"
-        );
+        {
+            name:"Control",
+            attribute:"CONTROL",
+            feature:"CONTROL",
+            preset:"CONTROL",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:"NORMAL:0-249;RESET:250-255"
+        },
 
-        return;
+        {
+            name:"Control 2",
+            attribute:"CONTROL",
+            feature:"CONTROL",
+            preset:"CONTROL",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
-    }
+        {
+            name:"Effect 2",
+            attribute:"EFFECT",
+            feature:"BEAM1",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
+        {
+            name:"CTC",
+            attribute:"CTC",
+            feature:"COLOR1",
+            preset:"COLOR",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
-    if (channels.length === 0) {
+        {
+            name:"Iris",
+            attribute:"IRIS",
+            feature:"IRIS",
+            preset:"BEAM",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:""
+        },
 
-        alert(
-            "请至少添加一个通道"
-        );
+        {
+            name:"Lamp Control",
+            attribute:"CONTROL",
+            feature:"CONTROL",
+            preset:"CONTROL",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:"NORMAL:0-99;LAMP OFF:100-105;LAMP ON:200-205"
+        },
 
-        return;
-
-    }
-
-
-    let channelXML = "";
-
-
-    channels.forEach(
-        function(channel, index) {
-
-            channelXML +=
-`
-        <Channel>
-            <Index>${index + 1}</Index>
-            <Name>${escapeXML(channel.name)}</Name>
-            <Attribute>${escapeXML(channel.attribute)}</Attribute>
-            <DMXStart>${channel.start}</DMXStart>
-            <DMXEnd>${channel.end}</DMXEnd>
-            <Default>${channel.defaultValue}</Default>
-        </Channel>
-`;
-
+        {
+            name:"Reset",
+            attribute:"CONTROL",
+            feature:"CONTROL",
+            preset:"CONTROL",
+            fine:"",
+            defaultValue:0,
+            highlight:"",
+            functions:"NORMAL:0-249;RESET:250-255"
         }
-    );
 
+    ];
 
-    generatedXML =
-`<?xml version="1.0" encoding="UTF-8"?>
-
-<MA2Fixture>
-
-    <Manufacturer>
-        ${escapeXML(manufacturer)}
-    </Manufacturer>
-
-    <ShortManufacturer>
-        ${escapeXML(shortManufacturer)}
-    </ShortManufacturer>
-
-    <FixtureName>
-        ${escapeXML(fixtureName)}
-    </FixtureName>
-
-    <ModeName>
-        ${escapeXML(modeName)}
-    </ModeName>
-
-    <ChannelCount>
-        ${channels.length}
-    </ChannelCount>
-
-    <Channels>
-${channelXML}
-    </Channels>
-
-</MA2Fixture>`;
-
-
-    document.getElementById(
-        "xmlPreview"
-    ).value =
-        generatedXML;
-
-
-    document
-        .getElementById("previewBox")
-        .classList.remove("hidden");
-
-
-    document
-        .getElementById("downloadButton")
-        .classList.remove("hidden");
-
-
-    document.getElementById(
-        "status"
-    ).innerText =
-
-        "XML 已生成：" +
-        fixtureName +
-        " / " +
-        modeName +
-        " / " +
-        channels.length +
-        " CH";
-
+    renderChannels();
 
 }
 
 
-/* =================================
-   下载 XML
-================================= */
+/* =========================
+   DMX 8bit → 24bit
+========================= */
 
-function downloadXML() {
+function dmx24(value){
 
-    if (!generatedXML) {
+    value = Number(value);
 
-        alert(
-            "请先点击「生成 XML」"
+    if(value < 0) value = 0;
+
+    if(value > 255) value = 255;
+
+    return Math.round(value * 65536);
+
+}
+
+
+/* =========================
+   百分比
+========================= */
+
+function percent(value){
+
+    value = Number(value);
+
+    return ((value / 255) * 100).toFixed(3)
+        .replace(/\.?0+$/,"");
+
+}
+
+
+/* =========================
+   XML ChannelSet
+========================= */
+
+function createChannelSet(name,from,to,index){
+
+    return `
+<ChannelSet
+    index="${index}"
+    name="${escapeXML(name)}"
+    from_dmx="${from}"
+    to_dmx="${to}"/>`;
+
+}
+
+
+/* =========================
+   XML ChannelFunction
+========================= */
+
+function createChannelFunction(
+    channel,
+    functionIndex,
+    name,
+    from,
+    to
+){
+
+    const attr = channel.attribute || "DUMMY";
+
+    const map = attributeMap[attr] || {};
+
+    const feature =
+        channel.feature ||
+        map.feature ||
+        "CONTROL";
+
+    const preset =
+        channel.preset ||
+        map.preset ||
+        "CONTROL";
+
+    const user =
+        map.user ||
+        channel.name ||
+        attr;
+
+    const min24 = dmx24(from);
+
+    const max24 = dmx24(to);
+
+    let result = "";
+
+    result += `
+<ChannelFunction
+    index="${functionIndex}"`;
+
+    if(name){
+
+        result += `
+    name="${escapeXML(name)}"`;
+
+    }
+
+    result += `
+    from="${percent(from)}"
+    to="${percent(to)}"
+    min_dmx_24="${min24}"
+    max_dmx_24="${max24}"
+    subattribute="${escapeXML(attr)}"
+    subattribute_user_name="${escapeXML(user)}"
+    attribute="${escapeXML(attr)}"
+    attribute_user_name="${escapeXML(user)}"
+    feature="${escapeXML(feature)}"
+    feature_user_name="${escapeXML(feature)}"
+    preset="${escapeXML(preset)}"
+    preset_user_name="${escapeXML(preset)}">`;
+
+    /*
+       如果有功能段
+       自动生成 ChannelSet
+    */
+
+    if(name){
+
+        result += createChannelSet(
+            name,
+            from,
+            to,
+            0
         );
+
+    }
+
+    result += `
+</ChannelFunction>`;
+
+    return result;
+
+}
+
+
+/* =========================
+   解析功能范围
+========================= */
+
+function parseFunctions(channel){
+
+    const text =
+        String(channel.functions || "").trim();
+
+    if(!text){
+
+        return [
+            {
+                name:"",
+                from:0,
+                to:255
+            }
+        ];
+
+    }
+
+    const list = text
+        .split(";")
+        .map(x=>x.trim())
+        .filter(Boolean);
+
+    const result = [];
+
+    list.forEach(item=>{
+
+        const parts = item.split(":");
+
+        if(parts.length < 2){
+            return;
+        }
+
+        const name =
+            parts[0].trim();
+
+        const range =
+            parts[1].trim();
+
+        const nums =
+            range.split("-");
+
+        if(nums.length !== 2){
+            return;
+        }
+
+        let from =
+            Number(nums[0]);
+
+        let to =
+            Number(nums[1]);
+
+        if(isNaN(from) || isNaN(to)){
+            return;
+        }
+
+        from =
+            Math.max(0,Math.min(255,from));
+
+        to =
+            Math.max(0,Math.min(255,to));
+
+        result.push({
+            name,
+            from,
+            to
+        });
+
+    });
+
+    if(result.length === 0){
+
+        result.push({
+            name:"",
+            from:0,
+            to:255
+        });
+
+    }
+
+    return result;
+
+}
+
+
+/* =========================
+   ChannelType
+========================= */
+
+function createChannelType(channel,index){
+
+    const attr =
+        channel.attribute || "DUMMY";
+
+    const map =
+        attributeMap[attr] || {};
+
+    const feature =
+        channel.feature ||
+        map.feature ||
+        "CONTROL";
+
+    const preset =
+        channel.preset ||
+        map.preset ||
+        "CONTROL";
+
+    const defaultValue =
+        channel.defaultValue === ""
+        ? 0
+        : Number(channel.defaultValue);
+
+    let result = "";
+
+    result += `
+<ChannelType
+    index="${index}"
+    attribute="${escapeXML(attr)}"
+    feature="${escapeXML(feature)}"
+    preset="${escapeXML(preset)}"
+    coarse="${index + 1}"`;
+
+    if(channel.fine){
+
+        result += `
+    fine="${escapeXML(channel.fine)}"`;
+
+    }
+
+    if(channel.highlight !== ""){
+
+        result += `
+    highlight_value="${escapeXML(channel.highlight)}"`;
+
+    }
+
+    result += `
+    default="${defaultValue}">`;
+
+    const funcs =
+        parseFunctions(channel);
+
+    funcs.forEach((fn,i)=>{
+
+        result += createChannelFunction(
+            channel,
+            i,
+            fn.name,
+            fn.from,
+            fn.to
+        );
+
+    });
+
+    result += `
+</ChannelType>`;
+
+    return result;
+
+}
+
+
+/* =========================
+   生成 XML
+========================= */
+
+function generateXML(){
+
+    if(channels.length === 0){
+
+        alert("请先添加通道。");
 
         return;
 
     }
 
+    const manufacturer =
+        document.getElementById("manufacturer").value.trim();
+
+    const shortManufacturer =
+        document.getElementById("shortManufacturer").value.trim();
 
     const fixtureName =
-        document.getElementById(
-            "fixtureName"
-        ).value.trim();
+        document.getElementById("fixtureName").value.trim();
 
+    const shortName =
+        document.getElementById("shortName").value.trim();
 
     const modeName =
-        document.getElementById(
-            "modeName"
-        ).value.trim();
+        document.getElementById("modeName").value.trim();
 
+    const fixtureIndex =
+        document.getElementById("fixtureIndex").value;
+
+    const beamType =
+        document.getElementById("beamType").value;
+
+    const beamAngle =
+        document.getElementById("beamAngle").value;
+
+    const now =
+        new Date().toISOString();
+
+    let channelXML = "";
+
+    channels.forEach((channel,index)=>{
+
+        channelXML +=
+            createChannelType(channel,index);
+
+    });
+
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+
+<MA
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://schemas.malighting.de/grandma2/xml/MA"
+    xsi:schemaLocation="http://schemas.malighting.de/grandma2/xml/MA http://schemas.malighting.de/grandma2/xml/3.1.2/MA.xsd"
+    major_vers="3"
+    minor_vers="1"
+    stream_vers="2">
+
+<Info
+    datetime="${now}"
+    showfile="MA2 Fixture Generator"/>
+
+<FixtureType
+    index="${escapeXML(fixtureIndex)}"
+    name="${escapeXML(fixtureName)}"
+    mode="${escapeXML(modeName)}">
+
+<short_name>${escapeXML(shortName)}</short_name>
+
+<manufacturer>${escapeXML(manufacturer)}</manufacturer>
+
+<short_manufacturer>${escapeXML(shortManufacturer)}</short_manufacturer>
+
+
+<Modules index="0">
+
+<Module
+    index="0"
+    class="Headmover"
+    beamtype="${escapeXML(beamType)}"
+    beam_angle="${escapeXML(beamAngle)}">
+
+<Body>
+
+<Size
+    x="0.3"
+    y="0.3"
+    z="0.5"/>
+
+</Body>
+
+${channelXML}
+
+</Module>
+
+</Modules>
+
+
+<Instances index="1">
+
+<Instance
+    index="0"
+    module_index="0"/>
+
+</Instances>
+
+
+<Wheels index="2">
+</Wheels>
+
+
+<VirtualFunctionBlocks index="3"/>
+
+
+<FixtureMacroCollect index="5">
+</FixtureMacroCollect>
+
+
+<Body/>
+
+
+<AutoPresets index="4"/>
+
+
+</FixtureType>
+
+</MA>`;
+
+    generatedXML = xml;
+
+    document.getElementById("xmlPreview").value =
+        generatedXML;
+
+    document.getElementById("downloadBtn").style.display =
+        "inline-block";
+
+    document.getElementById("status").textContent =
+        "XML 已生成，共 " +
+        channels.length +
+        " 个通道，可以下载。";
+
+}
+
+
+/* =========================
+   下载 XML
+========================= */
+
+function downloadXML(){
+
+    if(!generatedXML){
+
+        alert("请先生成 XML。");
+
+        return;
+
+    }
+
+    const fixtureName =
+        document.getElementById("fixtureName").value.trim() ||
+        "MA2_Fixture";
+
+    const modeName =
+        document.getElementById("modeName").value.trim() ||
+        "Mode";
 
     const fileName =
         fixtureName +
@@ -1192,83 +1581,45 @@ function downloadXML() {
         modeName +
         ".xml";
 
-
     const blob =
         new Blob(
             [generatedXML],
             {
-                type:
-                    "application/xml"
+                type:"application/xml;charset=utf-8"
             }
         );
 
-
     const url =
-        window.URL.createObjectURL(
-            blob
-        );
+        URL.createObjectURL(blob);
 
+    const a =
+        document.createElement("a");
 
-    const link =
-        document.createElement(
-            "a"
-        );
+    a.href = url;
 
+    a.download = fileName;
 
-    link.href = url;
+    document.body.appendChild(a);
 
-    link.download = fileName;
+    a.click();
 
+    document.body.removeChild(a);
 
-    link.setAttribute(
-        "download",
-        fileName
-    );
-
-
-    document.body.appendChild(
-        link
-    );
-
-
-    link.click();
-
-
-    setTimeout(
-        function() {
-
-            document.body.removeChild(
-                link
-            );
-
-            window.URL.revokeObjectURL(
-                url
-            );
-
-        },
-        1000
-    );
-
-
-    document.getElementById(
-        "status"
-    ).innerText =
-
-        "已下载：" +
-        fileName;
+    setTimeout(()=>{
+        URL.revokeObjectURL(url);
+    },1000);
 
 }
 
 
-/* =================================
-   页面初始化
-================================= */
+/* =========================
+   初始化
+========================= */
 
-renderChannels();
+load8CH();
 
 </script>
 
-
 </body>
-
 </html>
+```
